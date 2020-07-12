@@ -1,0 +1,23 @@
+{
+  "compilerOptions": {
+    "jsx": "react",
+    "module": "es6",
+    "moduleResolution": "node",
+    "noImplicitAny": true,
+    "noImplicitReturns": true,
+    "noImplicitThis": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "strict": true,
+    "target": "ES2019",
+    "lib": ["es2015", "es2017", "es2018", "es2019", "dom"],
+    "typeRoots": [ "./typings", "./node_modules/@types" ],
+    "sourceMap": true
+  },
+  "include": [
+    "./typings/**/*",
+    "src/**/*",
+    "tests/**/*"
+  ],
+  "exclude": [ "node_modules" ]
+}

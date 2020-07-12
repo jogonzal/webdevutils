@@ -1,0 +1,63 @@
+import { ApplicationInsights } from '@microsoft/applicationinsights-web'
+import { initializeIcons } from '@uifabric/icons'
+import * as React from 'react'
+import { render } from 'react-dom'
+import { registerOnThemeChangeCallback, ITheme } from 'office-ui-fabric-react'
+import { App } from './components/App'
+import { Log } from './shared/logging/Log'
+import { ThemeUtils } from './shared/theme/ThemeUtils'
+import { initializeSettings as initializeAppSettings } from './shared/settings/SettingsDatabase'
+import { getCurrentUser } from './shared/getCurrentUser'
+
+const appInsights = new ApplicationInsights({
+  config: {
+    instrumentationKey: '32fb18f1-357e-43db-afae-7ec05f923b50',
+    disableFetchTracking: false,
+    // How long does the user need to be inactive for a session to expire: 5 minutes
+    sessionRenewalMs: 5 * 60 * 1000, // 5 minutes
+    // Max session length
+    sessionExpirationMs: 10 * 60 * 1000 // 10 minutes
+  }
+})
+appInsights.loadAppInsights()
+appInsights.trackPageView() // Manually call trackPageView to establish the current user/session/pageview
+appInsights.context.sessionManager.update() // Update session
+const currentUser = getCurrentUser()
+if (currentUser) {
+  appInsights.setAuthenticatedUserContext(currentUser.UsuarioClave)
+}
+Log.logger.configureTelemetry(appInsights) // Pass in the logger
+
+Log.logger.info(`AppInsights UserId:${appInsights.context.user.id}, sessionId ${appInsights.context.sessionManager.automaticSession.id}`)
+
+// Used in index.html
+import faviconIco from './assets/img/favicon.ico'
+
+// This if is to just use this value
+if (faviconIco) {
+  Log.logger.info('Starting app...')
+}
+
+initializeIcons()
+
+registerOnThemeChangeCallback((theme: ITheme) => {
+  Log.logger.info('Theme changed!')
+  const root = document.getElementsByTagName('html')[0]!
+  root.style.backgroundColor = theme.semanticColors.bodyBackground
+  root.style.color = theme.semanticColors.bodyText
+})
+
+async function start(): Promise<void> {
+  const settings = await initializeAppSettings()
+  if (settings) {
+    ThemeUtils.loadTheme(settings.theme)
+  }
+
+  render((
+    <App />
+  ), document.getElementById('root'), () => {
+    Log.logger.info('Done rendering!')
+  })
+}
+
+start()
