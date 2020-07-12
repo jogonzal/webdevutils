@@ -43,8 +43,8 @@ module.exports = merge.smartStrategy({
   output: {
     filename: '[name]_[contenthash].min.js',
     path: paths.DIST,
-    // publicPath: 'https://jorgewebdeploymentakamai.azureedge.net/dincloud/', // Akamai CDN
-    publicPath: 'https://jorgewebdeployment.azureedge.net/dincloud/', // Microsoft CDN
+    // publicPath: 'https://jorgewebdeploymentakamai.azureedge.net/posadation/', // Akamai CDN
+    publicPath: 'https://jorgewebdeployment.azureedge.net/posadation/', // Microsoft CDN
   },
   module: {
     rules: [{

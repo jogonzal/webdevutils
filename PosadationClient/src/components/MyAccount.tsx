@@ -33,7 +33,7 @@ export class MyAccount extends React.Component<Props, State> {
     if (currentUser) {
       return (
         <>
-          <Text variant='large'>La empresa que esta seleccionada actualmente es <strong>{ empresa }</strong>. El usuario <em>{ currentUser.UsuarioClave }</em> si esta registrado con esta empresa. Bienvenido a DinCloud!</Text>
+          <Text variant='large'>La empresa que esta seleccionada actualmente es <strong>{ empresa }</strong>. El usuario <em>{ currentUser.UsuarioClave }</em> si esta registrado con esta empresa. Bienvenido a Posadation!</Text>
         </>
       )
     }

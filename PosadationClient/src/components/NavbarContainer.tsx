@@ -32,7 +32,7 @@ export class NavbarContainer extends React.Component<Props> {
                 <Image src={ logoPng } height='44px' width='44px' style={ { paddingRight: '10px', height: '44px', width: '44px' } }/>
                 <Stack style={ { paddingLeft: '10px' } } >
                   <Text variant='large'>{ empresa }</Text>
-                  <Text variant='small'>DinCloud</Text>
+                  <Text variant='small'>Posadation</Text>
                 </Stack>
               </div>
               <div style={ { flexGrow: 1 } }>

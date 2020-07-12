@@ -6,7 +6,7 @@ const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin')
 module.exports = env => {
   return {
     entry: {
-      dincloud: './src/index.tsx'
+      posadation: './src/index.tsx'
     },
     plugins: [
       new ForkTsCheckerWebpackPlugin({

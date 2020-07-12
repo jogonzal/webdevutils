@@ -53,7 +53,7 @@ export class TelemetryLogger {
 }
 
 export class Log {
-  private static telemetryLogger: TelemetryLogger = new TelemetryLogger('DinCloud')
+  private static telemetryLogger: TelemetryLogger = new TelemetryLogger('Posadation')
 
   static get logger(): TelemetryLogger {
     return this.telemetryLogger

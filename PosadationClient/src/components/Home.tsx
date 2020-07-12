@@ -59,7 +59,7 @@ export class Home extends React.Component<Props, State> {
               <StackItem align='center'>
                 <img src={ logoGrandePng } />
               </StackItem>
-              <Text variant='xxLarge' style={ { paddingTop: '20px' } }>DinCloud</Text>
+              <Text variant='xxLarge' style={ { paddingTop: '20px' } }>Posadation</Text>
               <Text variant='medium'>Usuario: { currentUser.UsuarioNombre }</Text>
               <Text variant='medium'>Empresa: { getCurrentSistema()?.SistemaNombreEmpresa }</Text>
               { this.renderVendedorMessage() }

@@ -112,8 +112,8 @@ export class ErrorDialogContent extends React.Component<Props, State> {
       const currentMetadata = getCurrentMetadata()
       const currentUserName = getCurrentUser()?.UsuarioNombre
       const emailTarget = 'support@dinlabel.com'
-      const subject = `Reporte de error en DinCloud ${currentMetadata.Empresa}`
-      const content = `Usando DinCloud para ${currentMetadata.Empresa}, vi este error: ${errorDescription}\n\nMensaje de usuario:${this.state.userMessage}\n\nMás detalles sobre el error:\n${errorDiagnostics}\n\nAtentamente, ${currentUserName}\n`
+      const subject = `Reporte de error en Posadation ${currentMetadata.Empresa}`
+      const content = `Usando Posadation para ${currentMetadata.Empresa}, vi este error: ${errorDescription}\n\nMensaje de usuario:${this.state.userMessage}\n\nMás detalles sobre el error:\n${errorDiagnostics}\n\nAtentamente, ${currentUserName}\n`
       const mailtoLink = `mailto:${encodeURIComponent(emailTarget)}?cc=${encodeURIComponent(currentMetadata.Email)}&subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(content)}`
       window.open(mailtoLink)
     }
