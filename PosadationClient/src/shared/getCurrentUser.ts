@@ -1,4 +1,3 @@
-import { Empresa } from '../components/MyAccount'
 import { UsuarioModel } from '../models/UsuarioModel'
 import { SistemaModel } from '../models/SistemaModel'
 import { shouldMockApis } from './utils/shouldMockApis'
@@ -22,7 +21,6 @@ export function getCurrentUser(): UsuarioModel | undefined {
 }
 
 interface IMetadata {
-  Empresa: Empresa
   Email: string
 }
 
@@ -30,7 +28,6 @@ declare const __cloudMetadata__: IMetadata
 export function getCurrentMetadata(): IMetadata {
   if (shouldMockApis()) {
     return {
-      Empresa: 'Test',
       Email: 'MOCKEMAIL',
     }
   }

@@ -4,7 +4,6 @@ import { Stack, StackItem } from 'office-ui-fabric-react/lib/Stack'
 import { Text } from 'office-ui-fabric-react/lib/Text'
 import * as React from 'react'
 import logoPng from '../assets/img/logo.png'
-import { getCurrentMetadata } from '../shared/getCurrentUser'
 import { DinCloudCommandBar } from './Navbar/DinCloudCommandNavbar'
 import { OfflineNotification } from './OfflineNotification'
 import { VerticalStack } from './Stacks/VerticalStack'
@@ -22,7 +21,6 @@ export class NavbarContainer extends React.Component<Props> {
   }
 
   render() {
-    const empresa = getCurrentMetadata().Empresa
     return (
       <VerticalStack grow={ true } verticalFill={ true } >
         <StackItem tokens={ { margin: '4px' } }>
@@ -31,7 +29,7 @@ export class NavbarContainer extends React.Component<Props> {
               <div style={ { display: 'flex', justifyContent: 'center', alignItems: 'center', cursor: 'pointer' } } onClick={ this.onHomeClick } >
                 <Image src={ logoPng } height='44px' width='44px' style={ { paddingRight: '10px', height: '44px', width: '44px' } }/>
                 <Stack style={ { paddingLeft: '10px' } } >
-                  <Text variant='large'>{ empresa }</Text>
+                  <Text variant='large'>Posadation</Text>
                   <Text variant='small'>Posadation</Text>
                 </Stack>
               </div>

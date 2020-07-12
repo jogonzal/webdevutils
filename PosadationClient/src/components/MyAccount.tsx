@@ -1,19 +1,10 @@
-import { Text, Link, Separator, Icon, DefaultButton, PrimaryButton } from 'office-ui-fabric-react'
+import { Text, Separator, Icon, DefaultButton, PrimaryButton } from 'office-ui-fabric-react'
 import * as React from 'react'
-import { EnumValue } from '../shared/DataTypes'
-import { getCurrentMetadata, getCurrentUser } from '../shared/getCurrentUser'
+import { getCurrentUser } from '../shared/getCurrentUser'
 import { BoxLabel } from '../shared/wrappers/BoxLabel'
 import { UsuarioModel } from '../models/UsuarioModel'
 import { HorizontalStack } from './Stacks/HorizontalStack'
 import { VerticalStack } from './Stacks/VerticalStack'
-
-export type Empresa = 'CTEtiquetas' | 'Etiprint' | 'Apitsa' | 'Test' | 'Undefined'
-export const Empresa = {
-  CTEtiquetas: new EnumValue<Empresa>('CTEtiquetas'),
-  Etiprint: new EnumValue<Empresa>('Etiprint'),
-  Apitsa: new EnumValue<Empresa>('Apitsa'),
-  Test: new EnumValue<Empresa>('Test'),
-}
 
 type State = {
 }
@@ -27,23 +18,12 @@ export class MyAccount extends React.Component<Props, State> {
   }
 
   renderCurrentUserInfoOrNotRegisteredWarning() {
-    const empresa = getCurrentMetadata().Empresa
     const currentUser = getCurrentUser()
 
     if (currentUser) {
       return (
         <>
-          <Text variant='large'>La empresa que esta seleccionada actualmente es <strong>{ empresa }</strong>. El usuario <em>{ currentUser.UsuarioClave }</em> si esta registrado con esta empresa. Bienvenido a Posadation!</Text>
-        </>
-      )
-    }
-
-    if (empresa !== 'Undefined') {
-      return (
-        <>
-          <Text variant='large'>El usuario <strong>{ getCurrentMetadata().Email }</strong> no esta registrado en la empresa <strong>{ getCurrentMetadata().Empresa }</strong></Text>
-          <Separator />
-          <Text>Para arreglar este error, contacte a el administrador de la empresa para registrarse, <Link href='/signout'>inicie sesión con una cuenta diferente</Link>, o seleccione otra empresa.</Text>
+          <Text>El usuario <em>{ currentUser.UsuarioClave }</em> si existe. Bienvenido a Posadation!</Text>
         </>
       )
     }
