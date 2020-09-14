@@ -58,18 +58,51 @@ namespace Posadation.Hubs
 			{
 				UsuarioClave = Guid.NewGuid().ToString(),
 			};
-			await this.Clients.All.SendAsync("ReceiveMessage", $"{this.UserFromDb.UsuarioClave} has joined the chat");
 		}
 
 		public async override Task OnDisconnectedAsync(Exception exception)
 		{
-			await this.Clients.All.SendAsync("ReceiveMessage", $"{this.UserFromDb.UsuarioClave} has left the chat");
+			// TODO: find the user's group and disconnect from chat
+			//await Groups.RemoveFromGroupAsync(Context.ConnectionId, groupId);
+			//await this.Clients.All.SendAsync("ReceiveMessage", $"{this.UserFromDb.UsuarioClave} has left the chat");
 		}
 
-		public async Task SendMessage(string message)
+		public async Task SendMessage(string message, string groupId)
 		{
+			if (string.IsNullOrEmpty(groupId))
+			{
+				throw new Exception("GroupId is empty");
+			}
+
 			Log.Logger.LogInformation($"Websocket connected! '{this.UserFromDb.UsuarioClave}' says: '{message}'. Replying...");
-			await Clients.All.SendAsync("ReceiveMessage", $"{this.UserFromDb.UsuarioClave} says: {message}");
+			//await Clients.All.SendAsync("ReceiveMessage", $"{this.UserFromDb.UsuarioClave} says: {message}");
+			await Clients.Group(groupId).SendAsync("ReceiveMessage", $"{this.UserFromDb.UsuarioClave} says: {message}");
+		}
+
+		public async Task JoinGroup(string groupId)
+		{
+			if (string.IsNullOrEmpty(groupId))
+			{
+				throw new Exception("GroupId is empty");
+			}
+
+			Log.Logger.LogInformation($"Requesting to join group {groupId}");
+
+			await Groups.AddToGroupAsync(Context.ConnectionId, groupId);
+			await Clients.Group(groupId).SendAsync("ReceiveMessage", $"{this.UserFromDb.UsuarioClave} has joined the group '{groupId}' ");
+		}
+
+		public async Task LeaveGroup(string groupId)
+		{
+			if (string.IsNullOrEmpty(groupId))
+			{
+				throw new Exception("GroupId is empty");
+			}
+
+			Log.Logger.LogInformation($"Requesting to leave group {groupId}");
+
+			await Groups.RemoveFromGroupAsync(Context.ConnectionId, groupId);
+			await Clients.Group(groupId).SendAsync("ReceiveMessage", $"{this.UserFromDb.UsuarioClave} has left the group '{groupId}' ");
 		}
 	}
 }

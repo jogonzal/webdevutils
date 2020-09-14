@@ -1,5 +1,5 @@
 import * as signalR from '@aspnet/signalr'
-import { ITextField, PrimaryButton, Text, TextField } from 'office-ui-fabric-react'
+import { ITextField, PrimaryButton, Text, TextField, Spinner } from 'office-ui-fabric-react'
 import * as React from 'react'
 import { DialogMessages } from '../shared/dialogs/DialogMessages'
 import { getCurrentUser } from '../shared/getCurrentUser'
@@ -13,6 +13,9 @@ type State = {
   connection: signalR.HubConnection | undefined
   connecting: boolean
   messages: string[]
+  group: string
+  joiningGroup: boolean
+  joinedGroup: boolean
 }
 
 export class SignalRTest extends React.Component<IProps, State> {
@@ -25,6 +28,9 @@ export class SignalRTest extends React.Component<IProps, State> {
       connection: undefined,
       messages: [],
       connecting: true,
+      group: 'gamechat1',
+      joiningGroup: false,
+      joinedGroup: false,
     }
   }
 
@@ -61,6 +67,10 @@ export class SignalRTest extends React.Component<IProps, State> {
           // Scroll to bottom by default
           // eslint-disable-next-line @typescript-eslint/no-explicit-any
           const textField = this.textFieldRef.current as any
+          if (!textField) {
+            Log.logger.warn('Received a message, but chat log was null')
+            return
+          }
           const textElement = textField._textElement.current
           textElement.scrollTop = textElement.scrollHeight
         })
@@ -82,7 +92,7 @@ export class SignalRTest extends React.Component<IProps, State> {
     }
 
     try {
-      await this.state.connection.invoke('SendMessage', this.state.message)
+      await this.state.connection.invoke('SendMessage', this.state.message, this.state.group)
       this.setState({
         message: '',
       })
@@ -96,7 +106,7 @@ export class SignalRTest extends React.Component<IProps, State> {
     await this.state.connection?.stop()
   }
 
-  onKeyDown = async (keyEvent: React.KeyboardEvent) => {
+  onMessageKeyDown = async (keyEvent: React.KeyboardEvent) => {
     if (keyEvent.key === 'Enter') {
       await this.sendMessage()
     }
@@ -118,6 +128,51 @@ export class SignalRTest extends React.Component<IProps, State> {
     return (
       <>
         <Text>{ this.renderConnectionState() }</Text>
+        { this.renderContent() }
+      </>
+    )
+  }
+
+  joinGroup = async () => {
+    if (!this.state.connection) {
+      throw new Error('No connection!')
+    }
+
+    this.setState({
+      joiningGroup: true,
+    })
+
+    try {
+      await this.state.connection.invoke('JoinGroup', this.state.group)
+      this.setState({
+        joinedGroup: true,
+      })
+    } catch (error) {
+      DialogMessages.showErrorMessage(error)
+      throw error
+    } finally {
+      this.setState({
+        joiningGroup: false,
+      })
+    }
+  }
+
+  renderContent() {
+    if (this.state.joiningGroup) {
+      return <Spinner label='Joining group...' />
+    }
+
+    if (!this.state.joinedGroup) {
+      return ( <>
+        <TextField
+          onChange={ (_ev, val) => this.setState({ group: val ?? '' }) }
+          value={ this.state.group } />
+        <PrimaryButton onClick={ this.joinGroup }>Join group</PrimaryButton>
+      </> )
+    }
+
+    return (
+      <>
         <PrimaryButton onClick={ this.sendMessage }>Send message</PrimaryButton>
         <PrimaryButton onClick={ this.disconnect } >Disconnect</PrimaryButton>
         <PrimaryButton onClick={ this.connect } >Connect</PrimaryButton>
@@ -125,7 +180,7 @@ export class SignalRTest extends React.Component<IProps, State> {
           label='Type your message here:'
           onChange={ (_ev, val) => this.setState({ message: val ?? '' }) }
           value={ this.state.message }
-          onKeyDown={ this.onKeyDown } />
+          onKeyDown={ this.onMessageKeyDown } />
         <TextField
           componentRef={ this.textFieldRef }
           value={ this.state.messages.join('\n') }
