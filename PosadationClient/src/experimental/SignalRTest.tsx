@@ -46,7 +46,7 @@ export class SignalRTest extends React.Component<IProps, State> {
         connecting: true,
       })
       const connection = new signalR.HubConnectionBuilder()
-        .withUrl('/hubs/chatHub')
+        .withUrl('/hubs/chat')
         .configureLogging(signalR.LogLevel.Information)
         .build()
 
