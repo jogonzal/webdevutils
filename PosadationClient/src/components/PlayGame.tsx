@@ -20,7 +20,6 @@ type State = {
   error?: unknown
   connection: signalR.HubConnection | undefined
   connecting: boolean
-  username: string
 }
 
 type RouteParams = {
@@ -34,7 +33,6 @@ export class PlayGame extends React.Component<Props, State> {
     super(props)
     this.state = {
       connecting: false,
-      username: AuthInfo.getUserId(),
       connection: undefined,
     }
   }
@@ -83,7 +81,7 @@ export class PlayGame extends React.Component<Props, State> {
         connecting: false,
       })
 
-      await connection.invoke('CreateOrJoinGame', id, this.state.username)
+      await connection.invoke('CreateOrJoinGame', id, AuthInfo.getUserId())
     } catch (error) {
       this.setState({
         error,
@@ -92,9 +90,13 @@ export class PlayGame extends React.Component<Props, State> {
     }
   }
 
-  onStartGameClick = () => {
+  onCreateGameClick = () => {
     const myGuid = createGuid()
     window.location.href = '/#/playgame/' + myGuid
+  }
+
+  onStartGameClick = () => {
+    // TODO
   }
 
   render(): JSX.Element {
@@ -108,7 +110,7 @@ export class PlayGame extends React.Component<Props, State> {
       return (
         <>
           <Text>Click here to start a game!</Text>
-          <PrimaryButton onClick={ this.onStartGameClick }>Start game!</PrimaryButton>
+          <PrimaryButton onClick={ this.onCreateGameClick }>Start game!</PrimaryButton>
         </>
       )
     }
@@ -134,17 +136,18 @@ export class PlayGame extends React.Component<Props, State> {
     return (
       <>
         <TextField
-          label='Leader'
-          value={ this.state.gameMetadata.LeaderUserId } />
-        <TextField
           label='Current user'
           value={ AuthInfo.getUserId() } />
+        <TextField
+          label='Leader'
+          value={ this.state.gameMetadata.LeaderUserId } />
         <TextField
           label='Users'
           value={ this.state.gameMetadata.UsersArray } />
         <TextField
           label='Link for game'
           value={ window.location.href } />
+        { this.state.gameMetadata.LeaderUserId === AuthInfo.getUserId() && <PrimaryButton onClick={ this.onStartGameClick }>Start game</PrimaryButton> }
       </>
     )
   }
