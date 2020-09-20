@@ -1,9 +1,12 @@
 ﻿using Microsoft.AspNetCore.Http.Connections.Features;
 using Microsoft.AspNetCore.SignalR;
 using Microsoft.Extensions.Logging;
+using Newtonsoft.Json;
 using PosadationServer.Logging;
 using PosadationServer.Models;
+using PosadationServer.Storage;
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace Posadation.Hubs
@@ -13,16 +16,9 @@ namespace Posadation.Hubs
 
 	public class GameHub : Hub
 	{
-		private Usuario UserFromDb
+		public async override Task OnDisconnectedAsync(Exception exception)
 		{
-			get
-			{
-				return this.Context.Items["UserFromDb"] as Usuario;
-			}
-			set
-			{
-				this.Context.Items["UserFromDb"] = value;
-			}
+			// On disconnect, notify the group
 		}
 
 		public async override Task OnConnectedAsync()
@@ -54,17 +50,31 @@ namespace Posadation.Hubs
 			//	throw new Exception("No registered user");
 			//}
 
-			this.UserFromDb = new Usuario()
-			{
-				UsuarioClave = Guid.NewGuid().ToString(),
-			};
-			await this.Clients.All.SendAsync("ReceiveMessage", $"{this.UserFromDb.UsuarioClave} has joined the chat");
+			//await this.Clients.All.SendAsync("ReceiveMessage", $"{this.UserFromDb.UsuarioClave} has joined the chat");
 		}
 
-		public async Task SendMessage(string message)
+		public async Task CreateOrJoinGame(string gameId, string userId)
 		{
-			Log.Logger.LogInformation($"Websocket connected! '{this.UserFromDb.UsuarioClave}' says: '{message}'. Replying...");
-			await Clients.All.SendAsync("ReceiveMessage", $"{this.UserFromDb.UsuarioClave} says: {message}");
+			if (string.IsNullOrEmpty(gameId))
+			{
+				throw new Exception("GroupId is empty");
+			}
+
+			Log.Logger.LogInformation($"Requesting to join game {gameId}");
+
+			GameTableEntity game = GameTable.GetGameObject(gameId);
+			if (game == null)
+			{
+				// Join game as admin
+				game = await GameTable.CreateGame(gameId, userId);
+			} else
+			{
+				await GameTable.AddUserToGame(userId, game);
+			}
+
+			// Add to group and update game metadata for everyone
+			await Groups.AddToGroupAsync(Context.ConnectionId, gameId);
+			await Clients.Group(gameId).SendAsync("GameMetadataUpdate", JsonConvert.SerializeObject(game));
 		}
 	}
 }

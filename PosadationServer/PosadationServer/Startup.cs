@@ -9,6 +9,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Posadation.Hubs;
+using PosadationServer.Storage;
 
 namespace PosadationServer
 {
@@ -33,6 +34,8 @@ namespace PosadationServer
 			}).AddJsonProtocol(options => {
 				options.PayloadSerializerOptions.PropertyNamingPolicy = null;
 			});
+
+			GameTable.ConnectionString = Configuration.GetConnectionString("azureStorage");
 		}
 
 		// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

@@ -1,6 +1,7 @@
 import * as signalR from '@aspnet/signalr'
 import { ITextField, PrimaryButton, Text, TextField, Spinner } from 'office-ui-fabric-react'
 import * as React from 'react'
+import * as Peer from 'simple-peer'
 import { DialogMessages } from '../shared/dialogs/DialogMessages'
 import { getCurrentUser } from '../shared/getCurrentUser'
 import { getErrorAsString } from '../shared/logging/getErrorAsString'
@@ -12,26 +13,53 @@ type State = {
   message: string
   connection: signalR.HubConnection | undefined
   connecting: boolean
-  messages: string[]
+  signalRMessages: string[]
+  p2pMessages: string[]
   group: string
   joiningGroup: boolean
   joinedGroup: boolean
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  signalData?: any
 }
 
 export class SignalRTest extends React.Component<IProps, State> {
   textFieldRef = React.createRef<ITextField>()
+  initiatorPeer = new Peer({ initiator: true })
+  receivingPeer = new Peer()
 
   constructor(props: IProps) {
     super(props)
     this.state = {
       message: '',
       connection: undefined,
-      messages: [],
+      signalRMessages: [],
+      p2pMessages: [],
       connecting: true,
       group: 'gamechat1',
       joiningGroup: false,
       joinedGroup: false,
+      signalData: undefined,
     }
+
+    this.initiatorPeer.on('data', data => {
+      Log.logger.info('got a message from peer: ' + data)
+
+      this.setState({
+        p2pMessages: [...this.state.p2pMessages, data]
+      })
+    })
+
+    this.initiatorPeer.on('signal', data => {
+      Log.logger.info('Got a signal!')
+
+      this.setState({
+        signalData: data,
+      })
+    })
+
+    this.initiatorPeer.on('connect', () => {
+      Log.logger.info('Connected!')
+    })
   }
 
   onConnectionClose = (error: Error | undefined) => {
@@ -62,7 +90,7 @@ export class SignalRTest extends React.Component<IProps, State> {
       connection.on('ReceiveMessage', (message) => {
         Log.logger.info('Received message!')
         this.setState({
-          messages: [...this.state.messages, message ],
+          signalRMessages: [...this.state.signalRMessages, message ],
         }, () => {
           // Scroll to bottom by default
           // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -74,6 +102,12 @@ export class SignalRTest extends React.Component<IProps, State> {
           const textElement = textField._textElement.current
           textElement.scrollTop = textElement.scrollHeight
         })
+      })
+
+      connection.on('PeerToPeerConnection', (serializedData) => {
+        Log.logger.info('Received serialized data!')
+
+        this.initiatorPeer.signal(JSON.parse(serializedData))
       })
 
       this.setState({
@@ -93,6 +127,7 @@ export class SignalRTest extends React.Component<IProps, State> {
 
     try {
       await this.state.connection.invoke('SendMessage', this.state.message, this.state.group)
+      await this.initiatorPeer.send('hey, how is it going?')
       this.setState({
         message: '',
       })
@@ -138,12 +173,16 @@ export class SignalRTest extends React.Component<IProps, State> {
       throw new Error('No connection!')
     }
 
+    if (!this.state.signalData) {
+      throw new Error('Signal data not ready')
+    }
+
     this.setState({
       joiningGroup: true,
     })
 
     try {
-      await this.state.connection.invoke('JoinGroup', this.state.group)
+      await this.state.connection.invoke('JoinGroup', this.state.group, JSON.stringify(this.state.signalData))
       this.setState({
         joinedGroup: true,
       })
@@ -182,8 +221,15 @@ export class SignalRTest extends React.Component<IProps, State> {
           value={ this.state.message }
           onKeyDown={ this.onMessageKeyDown } />
         <TextField
+          label='SignalRMessages'
           componentRef={ this.textFieldRef }
-          value={ this.state.messages.join('\n') }
+          value={ this.state.signalRMessages.join('\n') }
+          rows={ 20 }
+          multiline={ true } />
+        <TextField
+          label='P2PMessages'
+          componentRef={ this.textFieldRef }
+          value={ this.state.p2pMessages.join('\n') }
           rows={ 20 }
           multiline={ true } />
       </>

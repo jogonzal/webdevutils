@@ -3,6 +3,7 @@ import { Route, Switch , HashRouter } from 'react-router-dom'
 import { SignalRTest } from '../experimental/SignalRTest'
 import './../assets/scss/App.scss'
 import { getCurrentUser } from '../shared/getCurrentUser'
+import { WebRtcTest } from '../experimental/WebRtcText'
 import { DebugPanel } from './DebugPanel'
 import { Home } from './Home'
 import { NotFound } from './MiniComponents/NotFound'
@@ -10,6 +11,7 @@ import { MyAccount } from './MyAccount'
 import { NavbarContainer } from './NavbarContainer'
 import { Settings } from './Settings/Settings'
 import { Blacky } from './Blacky'
+import { PlayGame } from './PlayGame'
 
 type State = {
 }
@@ -55,6 +57,8 @@ export class App extends React.Component<Props, State> {
             <Route path='/debugpanel' component={ DebugPanel } />
             <Route path='/test/signalr' component={ SignalRTest } />
             <Route path='/blacky' component={ Blacky } />
+            <Route path='/webrtctest' component={ WebRtcTest } />
+            <Route path='/playgame/:id?' component={ PlayGame } />
 
             <Route component={ NotFound } />
             <Route />

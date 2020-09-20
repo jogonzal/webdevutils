@@ -66,6 +66,12 @@ export class DebugPanel extends React.Component<Props, State> {
               <li>
                 <Link href='/#/blacky' target='_blank' >Blacky</Link>
               </li>
+              <li>
+                <Link href='/#/webrtctest' target='_blank' >WebRtc</Link>
+              </li>
+              <li>
+                <Link href='/#/playgame' target='_blank' >Play game</Link>
+              </li>
             </ul>
           </BoxLabel>
         </HorizontalStack>

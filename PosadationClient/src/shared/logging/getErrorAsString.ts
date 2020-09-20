@@ -1,4 +1,5 @@
-export function getErrorAsString(error?: Error): string {
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export function getErrorAsString(error?: any): string {
   if (!error) {
     return ''
   }

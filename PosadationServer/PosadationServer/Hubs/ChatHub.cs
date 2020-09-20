@@ -79,7 +79,7 @@ namespace Posadation.Hubs
 			await Clients.Group(groupId).SendAsync("ReceiveMessage", $"{this.UserFromDb.UsuarioClave} says: {message}");
 		}
 
-		public async Task JoinGroup(string groupId)
+		public async Task JoinGroup(string groupId, string serializedData)
 		{
 			if (string.IsNullOrEmpty(groupId))
 			{
@@ -90,6 +90,7 @@ namespace Posadation.Hubs
 
 			await Groups.AddToGroupAsync(Context.ConnectionId, groupId);
 			await Clients.Group(groupId).SendAsync("ReceiveMessage", $"{this.UserFromDb.UsuarioClave} has joined the group '{groupId}' ");
+			await Clients.Group(groupId).SendAsync("PeerToPeerConnection", serializedData);
 		}
 
 		public async Task LeaveGroup(string groupId)

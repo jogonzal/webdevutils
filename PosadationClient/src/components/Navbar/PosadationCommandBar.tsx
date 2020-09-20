@@ -6,7 +6,7 @@ function createBrowseTo(to: string): string {
   return '/#/' + to
 }
 
-export class DinCloudCommandBar extends React.Component {
+export class PosadationCommandBar extends React.Component {
   public render(): JSX.Element {
     return (
       <CommandBar

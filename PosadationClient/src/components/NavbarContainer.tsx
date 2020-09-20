@@ -4,7 +4,7 @@ import { Stack, StackItem } from 'office-ui-fabric-react/lib/Stack'
 import { Text } from 'office-ui-fabric-react/lib/Text'
 import * as React from 'react'
 import logoPng from '../assets/img/logo.png'
-import { DinCloudCommandBar } from './Navbar/DinCloudCommandNavbar'
+import { PosadationCommandBar } from './Navbar/PosadationCommandBar'
 import { OfflineNotification } from './OfflineNotification'
 import { VerticalStack } from './Stacks/VerticalStack'
 
@@ -34,7 +34,7 @@ export class NavbarContainer extends React.Component<Props> {
                 </Stack>
               </div>
               <div style={ { flexGrow: 1 } }>
-                <DinCloudCommandBar />
+                <PosadationCommandBar />
               </div>
             </nav>
             <Separator styles={ { root: { padding: '0px', height: '5px' } } }/>
