@@ -30,7 +30,7 @@ namespace PosadationServer
 			services.AddSignalR(hubOptions =>
 			{
 				hubOptions.EnableDetailedErrors = true;
-				hubOptions.KeepAliveInterval = TimeSpan.FromMinutes(2);
+				hubOptions.KeepAliveInterval = TimeSpan.FromSeconds(10);
 			}).AddJsonProtocol(options => {
 				options.PayloadSerializerOptions.PropertyNamingPolicy = null;
 			});
