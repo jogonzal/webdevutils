@@ -2,16 +2,17 @@ import * as React from 'react'
 import { TextField, PrimaryButton, Text } from 'office-ui-fabric-react'
 import { RouteComponentProps } from 'react-router-dom'
 import * as signalR from '@aspnet/signalr'
-import * as Faker from 'faker'
 import { createGuid } from '../shared/utils/createGuid'
 import { getErrorAsString } from '../shared/logging/getErrorAsString'
 import { Log } from '../shared/logging/Log'
+import { AuthInfo } from '../shared/AuthInfo'
 
 interface IGameTableEntity {
   PartitionKey: string
   RowKey: string
   LeaderUserId: string
   UsersArray: string
+  GameEnded: boolean
 }
 
 type State = {
@@ -33,7 +34,7 @@ export class PlayGame extends React.Component<Props, State> {
     super(props)
     this.state = {
       connecting: false,
-      username: Faker.name.findName(),
+      username: AuthInfo.getUserId(),
       connection: undefined,
     }
   }
@@ -71,7 +72,7 @@ export class PlayGame extends React.Component<Props, State> {
       connection.onclose(this.onConnectionClose)
 
       connection.on('GameMetadataUpdate', (serializedGame: string) => {
-        Log.logger.info('Received game metadata!')
+        Log.logger.info('Received game metadata! ' + serializedGame)
         this.setState({
           gameMetadata: JSON.parse(serializedGame),
         })
@@ -124,11 +125,20 @@ export class PlayGame extends React.Component<Props, State> {
       )
     }
 
+    if (this.state.gameMetadata.GameEnded) {
+      return (
+        <Text>The game has ended!</Text>
+      )
+    }
+
     return (
       <>
         <TextField
           label='Leader'
           value={ this.state.gameMetadata.LeaderUserId } />
+        <TextField
+          label='Current user'
+          value={ AuthInfo.getUserId() } />
         <TextField
           label='Users'
           value={ this.state.gameMetadata.UsersArray } />

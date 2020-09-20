@@ -23,6 +23,7 @@ namespace PosadationServer.Storage
 
 		public string LeaderUserId { get; set; }
 		public string UsersArray { get; set; }
+		public bool GameEnded { get; set; }
 	}
 
 	public static class GameTable
@@ -75,13 +76,57 @@ namespace PosadationServer.Storage
 			return result.Result as GameTableEntity;
 		}
 
+		internal static async Task RemoveUserFromGame(string userId, GameTableEntity entity)
+		{
+			if (String.IsNullOrWhiteSpace(ConnectionString) || ConnectionString == "DONOTINPUTSECRETSHERE")
+			{
+				// Ignore if no connection string is configured
+				return;
+			}
+
+			try
+			{
+				// edit the entity
+				List<string> users = JsonConvert.DeserializeObject<List<string>>(entity.UsersArray);
+				if (!users.Contains(userId) && entity.LeaderUserId != userId)
+				{
+					return;
+				}
+				users.Remove(userId);
+				entity.UsersArray = JsonConvert.SerializeObject(users);
+				if (entity.LeaderUserId == userId)
+				{
+					entity.LeaderUserId = users.Count > 0 ? users[0] : "";
+				}
+
+				// Retrieve a reference to the table.
+				var table = GetTableClient();
+
+				// Create the TableOperation object that updates the entity
+				var result = await table.ExecuteAsync(TableOperation.Replace(entity));
+
+				if (result.HttpStatusCode != 204)
+				{
+					throw new Exception(JsonConvert.SerializeObject(result));
+				}
+			}
+			catch (Exception error)
+			{
+				Log.Logger.LogInformation($"Ran into an error when updating history table {error.ToString()}");
+				throw;
+			}
+		}
+
 		public static async Task<GameTableEntity> CreateGame(string gameId, string leaderId)
 		{
 			// Create a new entity.
 			GameTableEntity entry = new GameTableEntity(gameId)
 			{
 				LeaderUserId = leaderId,
-				UsersArray = JsonConvert.SerializeObject(new List<string>()),
+				UsersArray = JsonConvert.SerializeObject(new List<string>()
+				{
+					leaderId,
+				}),
 			};
 
 			if (String.IsNullOrWhiteSpace(ConnectionString) || ConnectionString == "DONOTINPUTSECRETSHERE")
@@ -118,12 +163,54 @@ namespace PosadationServer.Storage
 			{
 				// edit the entity
 				List<string> users = JsonConvert.DeserializeObject<List<string>>(entity.UsersArray);
-				if (users.Contains(userId))
+				if (users.Contains(userId) && !string.IsNullOrEmpty(entity.LeaderUserId))
+				{
+					// No leader update and this user is gone already
+					return;
+				}
+
+				users.Add(userId);
+				users = users.Distinct().ToList();
+				entity.UsersArray = JsonConvert.SerializeObject(users);
+				if (string.IsNullOrEmpty(entity.LeaderUserId))
+				{
+					entity.LeaderUserId = users[0];
+				}
+
+				// Retrieve a reference to the table.
+				var table = GetTableClient();
+
+				// Create the TableOperation object that updates the entity
+				var result = await table.ExecuteAsync(TableOperation.Replace(entity));
+
+				if (result.HttpStatusCode != 204)
+				{
+					throw new Exception(JsonConvert.SerializeObject(result));
+				}
+			}
+			catch (Exception error)
+			{
+				Log.Logger.LogInformation($"Ran into an error when updating history table {error.ToString()}");
+				throw;
+			}
+		}
+
+		public static async Task EndGame(GameTableEntity entity)
+		{
+			if (String.IsNullOrWhiteSpace(ConnectionString) || ConnectionString == "DONOTINPUTSECRETSHERE")
+			{
+				// Ignore if no connection string is configured
+				return;
+			}
+
+			try
+			{
+				// edit the entity
+				if (entity.GameEnded)
 				{
 					return;
 				}
-				users.Add(userId);
-				entity.UsersArray = JsonConvert.SerializeObject(users);
+				entity.GameEnded = true;
 
 				// Retrieve a reference to the table.
 				var table = GetTableClient();
