@@ -9,7 +9,6 @@ type State = {
 }
 
 type Props = {
-  vendedorAgenteClave?: number
 }
 
 export class Home extends React.Component<Props, State> {
