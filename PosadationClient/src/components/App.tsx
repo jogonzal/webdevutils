@@ -8,7 +8,6 @@ import { DebugPanel } from './DebugPanel'
 import { Home } from './Home'
 import { NotFound } from './MiniComponents/NotFound'
 import { MyAccount } from './MyAccount'
-import { NavbarContainer } from './NavbarContainer'
 import { Settings } from './Settings/Settings'
 import { Blacky } from './Blacky'
 import { PlayGame } from './PlayGame'
@@ -43,7 +42,7 @@ export class App extends React.Component<Props, State> {
 
     return (
       <HashRouter>
-        <NavbarContainer>
+        {/* <NavbarContainer> */}
           <Switch>
             <Route exact={ true } path='/' component={ Home } />
 
@@ -63,7 +62,7 @@ export class App extends React.Component<Props, State> {
             <Route component={ NotFound } />
             <Route />
           </Switch>
-        </NavbarContainer>
+        {/* </NavbarContainer> */}
       </HashRouter>
     )
   }
