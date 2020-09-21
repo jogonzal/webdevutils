@@ -2,7 +2,7 @@
 import { Log } from './logging/Log'
 
 export class AuthInfo {
-  private static readonly userIdCacheKey = 'LocalUserId'
+  private static readonly userIdCacheKey = 'LocalUserId2'
   public static getUserId(): string {
     const userId = localStorage.getItem(this.userIdCacheKey)
     if (userId) {
