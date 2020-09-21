@@ -6,7 +6,6 @@ import { getCurrentUser } from '../shared/getCurrentUser'
 import { WebRtcTest } from '../experimental/WebRtcText'
 import { DebugPanel } from './DebugPanel'
 import { Home } from './Home'
-import { NotFound } from './MiniComponents/NotFound'
 import { MyAccount } from './MyAccount'
 import { Settings } from './Settings/Settings'
 import { Blacky } from './Blacky'
@@ -57,9 +56,9 @@ export class App extends React.Component<Props, State> {
             <Route path='/test/signalr' component={ SignalRTest } />
             <Route path='/blacky' component={ Blacky } />
             <Route path='/webrtctest' component={ WebRtcTest } />
-            <Route path='/playgame/:id?' component={ PlayGame } />
+            <Route path='/playgame/:id' component={ PlayGame } />
 
-            <Route component={ NotFound } />
+            <Route component={ Home } />
             <Route />
           </Switch>
         {/* </NavbarContainer> */}

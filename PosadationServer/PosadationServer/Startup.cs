@@ -30,7 +30,7 @@ namespace PosadationServer
 			services.AddSignalR(hubOptions =>
 			{
 				hubOptions.EnableDetailedErrors = true;
-				hubOptions.KeepAliveInterval = TimeSpan.FromSeconds(10);
+				hubOptions.KeepAliveInterval = TimeSpan.FromSeconds(10); // Needs to be < 30, JS SignalR timeout is 30
 			}).AddJsonProtocol(options => {
 				options.PayloadSerializerOptions.PropertyNamingPolicy = null;
 			});

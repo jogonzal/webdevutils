@@ -88,7 +88,7 @@ module.exports = env => {
           ]
         },
         {
-          test: /\.(jpe?g|png|gif|svg|ttf|woff|woff2|eot|ico|json)$/i,
+          test: /\.(jpe?g|png|gif|svg|ttf|woff|woff2|eot|ico|json|mp3)$/i,
           loader: 'file-loader',
           options:{
             name: 'asset/[name].[ext]?h=[contenthash]'

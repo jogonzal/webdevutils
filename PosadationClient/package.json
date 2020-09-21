@@ -27,6 +27,8 @@
     "@types/papaparse": "^5.0.3",
     "@types/react": "^16.3.16",
     "@types/react-dom": "^16.0.6",
+    "@types/react-sound": "^1.2.2",
+    "@types/shortid": "^0.0.29",
     "@types/simple-peer": "^9.6.0",
     "@typescript-eslint/eslint-plugin": "^3.2.0",
     "@typescript-eslint/eslint-plugin-tslint": "^3.2.0",
@@ -81,6 +83,8 @@
     "react-dom": "^16.8.0",
     "react-google-charts": "^3.0.15",
     "react-router-dom": "^5.1.2",
+    "react-sound": "^1.2.0",
+    "shortid": "^2.2.15",
     "simple-peer": "^9.7.2",
     "sweetalert2": "^9.10.9",
     "sweetalert2-react-content": "^3.0.1"

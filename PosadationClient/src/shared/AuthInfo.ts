@@ -11,7 +11,7 @@ export class AuthInfo {
     }
 
     Log.logger.info('Creating a new user')
-    userId = Faker.name.findName()
+    userId = Faker.name.firstName()
     localStorage.setItem(this.userIdCacheKey, userId)
     return userId
   }

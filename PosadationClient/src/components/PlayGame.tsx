@@ -1,11 +1,12 @@
 import * as React from 'react'
-import { TextField, PrimaryButton, Text } from 'office-ui-fabric-react'
+import { TextField, PrimaryButton, Text, Stack, Label, Persona, PersonaSize, PersonaPresence } from 'office-ui-fabric-react'
 import { RouteComponentProps } from 'react-router-dom'
 import * as signalR from '@aspnet/signalr'
-import { createGuid } from '../shared/utils/createGuid'
+import Sound from 'react-sound'
 import { getErrorAsString } from '../shared/logging/getErrorAsString'
 import { Log } from '../shared/logging/Log'
 import { AuthInfo } from '../shared/AuthInfo'
+import countryMp3 from '../assets/music/country.mp3'
 
 interface IGameTableEntity {
   PartitionKey: string
@@ -23,7 +24,7 @@ type State = {
 }
 
 type RouteParams = {
-  id: string | undefined
+  id: string
 }
 
 type Props = RouteComponentProps<RouteParams>
@@ -41,12 +42,6 @@ export class PlayGame extends React.Component<Props, State> {
     await this.makeConnection()
   }
 
-  async componentDidUpdate(oldProps: Props) {
-    if (this.props.match.params.id && !oldProps.match.params.id) {
-      await this.makeConnection()
-    }
-  }
-
   onConnectionClose = (error: Error | undefined) => {
     Log.logger.error(`Connection closed :(. Error: ${getErrorAsString(error)}`)
     this.setState({
@@ -56,9 +51,6 @@ export class PlayGame extends React.Component<Props, State> {
 
   makeConnection = async () => {
     const id = this.props.match.params.id
-    if (!id) {
-      return
-    }
 
     try {
       const connection = new signalR.HubConnectionBuilder()
@@ -90,28 +82,30 @@ export class PlayGame extends React.Component<Props, State> {
     }
   }
 
-  onCreateGameClick = () => {
-    const myGuid = createGuid()
-    window.location.href = '/#/playgame/' + myGuid
-  }
-
   onStartGameClick = () => {
     // TODO
   }
 
   render(): JSX.Element {
+    return (
+      <>
+        <Sound
+          url={ countryMp3 }
+          playStatus={ 'PLAYING' }
+          playFromPosition={ 0 /* in milliseconds */}
+          // onLoading={this.handleSongLoading}
+          // onPlaying={this.handleSongPlaying}
+          // onFinishedPlaying={this.handleSongFinishedPlaying}
+        />
+        { this.renderContent() }
+      </>
+    )
+  }
+
+  renderContent() {
     if (this.state.error) {
       return (
         <Text>Error! {getErrorAsString(this.state.error)}</Text>
-      )
-    }
-
-    if (!this.props.match.params.id) {
-      return (
-        <>
-          <Text>Click here to start a game!</Text>
-          <PrimaryButton onClick={ this.onCreateGameClick }>Start game!</PrimaryButton>
-        </>
       )
     }
 
@@ -134,21 +128,70 @@ export class PlayGame extends React.Component<Props, State> {
     }
 
     return (
-      <>
+      <Stack horizontal horizontalAlign='space-around'>
+        <Stack maxWidth='900px' grow={ true }>
+          <div style={ { height: '15px' } }></div>
+          <Text variant='xxLarge'>Welcome to clicking game, <strong>{AuthInfo.getUserId()}</strong>!</Text>
+          { this.renderGameContent(this.state.gameMetadata) }
+        </Stack>
+      </Stack>
+    )
+  }
+
+  onCopyInviteLink = async () => {
+    await navigator.clipboard.writeText(window.location.href)
+  }
+
+  renderGameContent(gameMetadata: IGameTableEntity) {
+    const users: string[] = JSON.parse(gameMetadata.UsersArray)
+
+    return ( <>
+      <div style={ { height: '15px' } }></div>
+      <Text>Copy this link and share it with other players!</Text>
+      <Stack horizontal>
         <TextField
-          label='Current user'
-          value={ AuthInfo.getUserId() } />
-        <TextField
-          label='Leader'
-          value={ this.state.gameMetadata.LeaderUserId } />
-        <TextField
-          label='Users'
-          value={ this.state.gameMetadata.UsersArray } />
-        <TextField
-          label='Link for game'
           value={ window.location.href } />
-        { this.state.gameMetadata.LeaderUserId === AuthInfo.getUserId() && <PrimaryButton onClick={ this.onStartGameClick }>Start game</PrimaryButton> }
-      </>
+        <PrimaryButton onClick={ this.onCopyInviteLink }>Copy invite link</PrimaryButton>
+      </Stack>
+      <div style={ { height: '15px' } }></div>
+      <Stack>
+        <Label>Joined players</Label>
+        <Stack horizontal wrap>
+          { users.map(u => {
+            return (
+              <Persona
+                key={ u }
+                size={PersonaSize.size72}
+                presence={PersonaPresence.online}
+                text={ u }
+                // onRenderCoin={_onRenderCoin}
+                // imageAlt="Ted Randall, status is available at 4 PM"
+                // imageUrl={TestImages.personaMale}
+                />
+            )
+          }) }
+        </Stack>
+      </Stack>
+      <div style={ { height: '15px' } }></div>
+      { this.renderNeedMorePlayers(users, gameMetadata) }
+    </> )
+  }
+
+  renderNeedMorePlayers = (users: string[], gameMetadata: IGameTableEntity) => {
+    if (users.length <= 1) {
+      return (
+        <Text>Waiting for players to join...</Text>
+      )
+    }
+
+    if (gameMetadata.LeaderUserId !== AuthInfo.getUserId()) {
+      return (
+        <Text>Waiting for <strong>{gameMetadata.LeaderUserId}</strong> to start game...</Text>
+      )
+    }
+
+    return (
+      <PrimaryButton>Start game!</PrimaryButton>
     )
   }
 }

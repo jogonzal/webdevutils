@@ -2,6 +2,7 @@ import { StackItem } from 'office-ui-fabric-react/lib/Stack'
 import { Text } from 'office-ui-fabric-react/lib/Text'
 import * as React from 'react'
 import { PrimaryButton } from 'office-ui-fabric-react'
+import * as shortId from 'shortid'
 import { AuthInfo } from '../shared/AuthInfo'
 import { VerticalStack } from './Stacks/VerticalStack'
 
@@ -30,7 +31,7 @@ export class Home extends React.Component<Props, State> {
             <VerticalStack>
               <Text variant='xxLarge' style={ { paddingTop: '20px' } }>Posadation</Text>
               <Text variant='medium'>Usuario: { currentUser }</Text>
-              <PrimaryButton href='/#/playgame'>Play game!</PrimaryButton>
+              <PrimaryButton href={`/#/playgame/${shortId.generate()}`}>Play game!</PrimaryButton>
             </VerticalStack>
           </StackItem>
         </VerticalStack>
