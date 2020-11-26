@@ -5,6 +5,7 @@ import { RouteComponentProps } from 'react-router-dom'
 import * as shortId from 'shortid'
 
 import melee from '../assets/sounds/melee/melee.wav'
+import smashNo from '../assets/sounds/melee/menu-no.wav'
 import smashOk from '../assets/sounds/melee/menu-ok.wav'
 import toggle from '../assets/sounds/melee/menu-toggle.wav'
 import { AuthInfo } from '../shared/AuthInfo'
@@ -60,7 +61,18 @@ export class PlayGame extends React.Component<Props, State> {
     })
   }
 
+  onUserTextboxKeyDown = (key: React.KeyboardEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    if (key.key === 'Enter') {
+      this.onCreateOrStartGameClick()
+    }
+  }
+
   onCreateOrStartGameClick = async () => {
+    if (!this.state.user) {
+      new Audio(smashNo).play()
+      return
+    }
+
     new Audio(smashOk).play()
     this.setState({
       gameStarted: true,
@@ -133,7 +145,7 @@ export class PlayGame extends React.Component<Props, State> {
           <StackItem align='center'>
             <Stack>
               <Text variant='xxLarge' style={ { paddingTop: '20px' } }>Game!</Text>
-              <TextField placeholder='Username' value={ this.state.user } onChange={ (_inp, val) => this.setState({ user: val ?? '' }) } />
+              <TextField onKeyDown={ this.onUserTextboxKeyDown } autoFocus={ true } placeholder='Username' value={ this.state.user } onChange={ (_inp, val) => this.setState({ user: val ?? '' }) } />
               <PrimaryButton disabled={ this.state.user === '' } onClick={ this.onCreateOrStartGameClick } >Play game!</PrimaryButton>
             </Stack>
           </StackItem>
