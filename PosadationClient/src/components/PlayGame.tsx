@@ -4,7 +4,9 @@ import * as React from 'react'
 import { RouteComponentProps } from 'react-router-dom'
 import * as shortId from 'shortid'
 
+import melee from '../assets/sounds/melee/melee.wav'
 import smashOk from '../assets/sounds/melee/menu-ok.wav'
+import toggle from '../assets/sounds/melee/menu-toggle.wav'
 import { AuthInfo } from '../shared/AuthInfo'
 import { getErrorAsString } from '../shared/logging/getErrorAsString'
 import { Log } from '../shared/logging/Log'
@@ -43,12 +45,13 @@ export class PlayGame extends React.Component<Props, State> {
     }
   }
 
-  // async componentDidMount() {
-  //   if (this.state.user && this.props.match.params.id) {
-  //     // If user and game is available, start game
-  //     await this.makeConnection(this.state.user, this.props.match.params.id)
-  //   }
-  // }
+  async componentDidMount() {
+    new Audio(melee).play()
+    // if (this.state.user && this.props.match.params.id) {
+    //   // If user and game is available, start game
+    //   await this.makeConnection(this.state.user, this.props.match.params.id)
+    // }
+  }
 
   onConnectionClose = (error: Error | undefined) => {
     Log.logger.error(`Connection closed :(. Error: ${getErrorAsString(error)}`)
@@ -58,6 +61,7 @@ export class PlayGame extends React.Component<Props, State> {
   }
 
   onCreateOrStartGameClick = async () => {
+    new Audio(smashOk).play()
     this.setState({
       gameStarted: true,
     })
@@ -93,6 +97,10 @@ export class PlayGame extends React.Component<Props, State> {
         this.setState({
           gameMetadata: JSON.parse(serializedGame),
         })
+      })
+
+      connection.on('PlayerJoined', () => {
+        new Audio(toggle).play()
       })
 
       this.setState({
