@@ -21,6 +21,11 @@ export class Home extends React.Component<Props, State> {
     }
   }
 
+  onCreateGameClick = () => {
+    const url = `/#/playgame/${shortId.generate().substr(0, 5)}`
+    AuthInfo.setUserId(this.state.userName)
+  }
+
   render() {
     const currentUser = AuthInfo.getUserId()
 
@@ -35,7 +40,7 @@ export class Home extends React.Component<Props, State> {
             <VerticalStack>
               <Text variant='xxLarge' style={ { paddingTop: '20px' } }>Posadation</Text>
               <TextField placeholder='Username' value={ this.state.userName } onChange={ (_inp, val) => this.setState({ userName: val ?? '' }) } />
-              <PrimaryButton disabled={ this.state.userName === '' } href={`/#/playgame/${shortId.generate().substr(0, 5)}`} >Play game!</PrimaryButton>
+              <PrimaryButton disabled={ this.state.userName === '' } onClick={ this.onCreateGameClick } >Play game!</PrimaryButton>
             </VerticalStack>
           </StackItem>
         </VerticalStack>
