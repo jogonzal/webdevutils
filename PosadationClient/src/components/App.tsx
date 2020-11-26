@@ -1,15 +1,15 @@
+import './../assets/globalStyles/App.css'
+
 import * as React from 'react'
-import { Route, Switch , HashRouter } from 'react-router-dom'
+import { HashRouter,Route, Switch  } from 'react-router-dom'
+
 import { SignalRTest } from '../experimental/SignalRTest'
-import './../assets/scss/App.scss'
-import { getCurrentUser } from '../shared/getCurrentUser'
-import { WebRtcTest } from '../experimental/WebRtcText'
-import { DebugPanel } from './DebugPanel'
-import { Home } from './Home'
-import { MyAccount } from './MyAccount'
-import { Settings } from './Settings/Settings'
 import { Blacky } from './Blacky'
+import { DebugPanel } from './DebugPanel'
+import { NotFound } from './MiniComponents/NotFound'
+import { MyAccount } from './MyAccount'
 import { PlayGame } from './PlayGame'
+import { Settings } from './Settings/Settings'
 
 type State = {
 }
@@ -33,17 +33,12 @@ export class App extends React.Component<Props, State> {
   }
 
   render() {
-    const currentUser = getCurrentUser()
-    // Si el usuario no esta registrado en la empresa, tiene que primero escoger empresa
-    if (!currentUser) {
-      return <MyAccount />
-    }
-
     return (
       <HashRouter>
         {/* <NavbarContainer> */}
           <Switch>
-            <Route exact={ true } path='/' component={ Home } />
+            <Route exact={ true } path='/' component={ PlayGame } />
+            <Route path='/g/:id?' component={ PlayGame } />
 
             { /* Cuenta, settings, permisos */ }
             <Route path='/myAccount' component={ MyAccount } />
@@ -55,10 +50,8 @@ export class App extends React.Component<Props, State> {
             <Route path='/debugpanel' component={ DebugPanel } />
             <Route path='/test/signalr' component={ SignalRTest } />
             <Route path='/blacky' component={ Blacky } />
-            <Route path='/webrtctest' component={ WebRtcTest } />
-            <Route path='/playgame/:id' component={ PlayGame } />
 
-            <Route component={ Home } />
+            <Route component={ NotFound } />
             <Route />
           </Switch>
         {/* </NavbarContainer> */}

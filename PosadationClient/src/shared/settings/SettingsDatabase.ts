@@ -1,7 +1,8 @@
 import Dexie from 'dexie'
-import { Theme } from '../theme/ThemeUtils'
-import { Log } from '../logging/Log'
+
 import { EnumValue } from '../DataTypes'
+import { Log } from '../logging/Log'
+import { Theme } from '../theme/ThemeUtils'
 
 export type TableType = 'ReactTable' | 'OfficeUIFabric'
 export const TableType = {

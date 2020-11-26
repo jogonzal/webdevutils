@@ -1,13 +1,14 @@
 import * as React from 'react'
 
-type Props = {}
+interface IProps {
+}
 
-type State = {
+interface IState {
   isOffline: boolean
 }
 
-export class OfflineNotification extends React.Component<Props, State> {
-  constructor(props: Props) {
+export class OfflineNotification extends React.Component<IProps, IState> {
+  constructor(props: IProps) {
     super(props)
     this.state = {
       isOffline: false,

@@ -1,21 +1,23 @@
-import { Link, Text, PrimaryButton, Separator } from 'office-ui-fabric-react'
+import { Link, PrimaryButton, Separator,Text } from '@fluentui/react'
 import * as React from 'react'
-import { getCurrentUser, getCurrentAgenteOverride, clearAgenteOverride, setAgenteOverride, getCurrentSistema } from '../shared/getCurrentUser'
+
+import { UsuarioModel } from '../models/UsuarioModel'
+import { DialogMessages } from '../shared/dialogs/DialogMessages'
+import { clearAgenteOverride, getCurrentAgenteOverride, getCurrentSistema,getCurrentUser, setAgenteOverride } from '../shared/getCurrentUser'
 import { Log } from '../shared/logging/Log'
 import { MessageError } from '../shared/MessageError'
-import { DialogMessages } from '../shared/dialogs/DialogMessages'
 import { BoxLabel } from '../shared/wrappers/BoxLabel'
-import { UsuarioModel } from '../models/UsuarioModel'
-import { VerticalStack } from './Stacks/VerticalStack'
 import { HorizontalStack } from './Stacks/HorizontalStack'
+import { VerticalStack } from './Stacks/VerticalStack'
 
-type Props = {}
-type State = {
+interface IProps {
+}
+interface IState {
   agenteSeleccionado?: number
 }
 
-export class DebugPanel extends React.Component<Props, State> {
-  constructor(props: Props) {
+export class DebugPanel extends React.Component<IProps, IState> {
+  constructor(props: IProps) {
     super(props)
 
     this.state = {

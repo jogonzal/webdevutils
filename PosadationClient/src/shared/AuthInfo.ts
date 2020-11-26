@@ -3,17 +3,16 @@ import { Log } from './logging/Log'
 
 export class AuthInfo {
   private static readonly userIdCacheKey = 'LocalUserId2'
-  public static getUserId(): string {
-    const userId = localStorage.getItem(this.userIdCacheKey)
+  public static getUserId(): string | undefined {
+    const userId = sessionStorage.getItem(this.userIdCacheKey)
     if (userId) {
       Log.logger.info('Using user from local storage')
       return userId
     }
 
-    Log.logger.info('No user!')
-    throw new Error('No user!')
+    return undefined
     // userId = Faker.name.firstName()
-    // localStorage.setItem(this.userIdCacheKey, userId)
+    // sessionStorage.setItem(this.userIdCacheKey, userId)
     // return userId
   }
 
@@ -22,6 +21,6 @@ export class AuthInfo {
       throw new Error('Bad userId')
     }
 
-    localStorage.setItem(this.userIdCacheKey, userId)
+    sessionStorage.setItem(this.userIdCacheKey, userId)
   }
 }

@@ -33,7 +33,7 @@ export class ApiError extends Error {
         } else if (json.error && json.error.message) {
           this.oDataError = json.error
         }
-      } catch (error) {
+      } catch (_error: unknown) {
         return
       }
     }

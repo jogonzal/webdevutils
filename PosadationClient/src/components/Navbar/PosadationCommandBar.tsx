@@ -1,5 +1,6 @@
-import { CommandBar, ICommandBarItemProps } from 'office-ui-fabric-react/lib/CommandBar'
+import { CommandBar, ICommandBarItemProps } from '@fluentui/react/lib/CommandBar'
 import * as React from 'react'
+
 import { getCurrentUser } from '../../shared/getCurrentUser'
 
 function createBrowseTo(to: string): string {

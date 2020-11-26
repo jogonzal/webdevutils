@@ -1,13 +1,14 @@
+import { ITheme,registerOnThemeChangeCallback } from '@fluentui/react'
 import { ApplicationInsights } from '@microsoft/applicationinsights-web'
 import { initializeIcons } from '@uifabric/icons'
 import * as React from 'react'
 import { render } from 'react-dom'
-import { registerOnThemeChangeCallback, ITheme } from 'office-ui-fabric-react'
+
 import { App } from './components/App'
-import { Log } from './shared/logging/Log'
-import { ThemeUtils } from './shared/theme/ThemeUtils'
-import { initializeSettings as initializeAppSettings } from './shared/settings/SettingsDatabase'
 import { getCurrentUser } from './shared/getCurrentUser'
+import { Log } from './shared/logging/Log'
+import { initializeSettings as initializeAppSettings } from './shared/settings/SettingsDatabase'
+import { ThemeUtils } from './shared/theme/ThemeUtils'
 
 const appInsights = new ApplicationInsights({
   config: {
@@ -42,7 +43,7 @@ initializeIcons()
 
 registerOnThemeChangeCallback((theme: ITheme) => {
   Log.logger.info('Theme changed!')
-  const root = document.getElementsByTagName('html')[0]!
+  const root = document.getElementsByTagName('html')[0]
   root.style.backgroundColor = theme.semanticColors.bodyBackground
   root.style.color = theme.semanticColors.bodyText
 })

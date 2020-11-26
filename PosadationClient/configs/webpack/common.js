@@ -10,16 +10,8 @@ module.exports = env => {
       posadation: './src/index.tsx'
     },
     plugins: [
-      new ForkTsCheckerWebpackPlugin({
-        measureCompilationTime: true,
-        tsconfig: './tsconfig.json',
-        reportFiles: [
-          "src/**/*",
-        ],
-        // Async false will make webpack compilation wait on this typechecker to finish before
-        // reporting the compilation result. If typechecking fails, then webpack compilation fails too.
-        async: false,
-      }),
+      // Speed up build and eslint
+      new ForkTsCheckerWebpackPlugin(),
 
       // Check for circular dependencies
       new CircularDependencyPlugin({
@@ -88,7 +80,7 @@ module.exports = env => {
           ]
         },
         {
-          test: /\.(jpe?g|png|gif|svg|ttf|woff|woff2|eot|ico|json|mp3)$/i,
+          test: /\.(jpe?g|png|gif|svg|ttf|woff|woff2|eot|ico|json|mp3|wav)$/i,
           loader: 'file-loader',
           options:{
             name: 'asset/[name].[ext]?h=[contenthash]'
@@ -96,6 +88,7 @@ module.exports = env => {
         }
       ]
     },
+    devtool: 'source-map',
     devServer: {
       // These are to allow for local development without CORS issues
       historyApiFallback: true,

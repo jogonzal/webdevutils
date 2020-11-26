@@ -1,12 +1,13 @@
-import { DefaultButton, Link, TextField } from 'office-ui-fabric-react'
-import { Text } from 'office-ui-fabric-react/lib/Text'
+import { DefaultButton, Link, TextField } from '@fluentui/react'
+import { Text } from '@fluentui/react/lib/Text'
 import * as React from 'react'
+
 import { ApiError } from '../../shared/ApiError'
 import { getCurrentMetadata, getCurrentUser } from '../../shared/getCurrentUser'
 import { getErrorAsString } from '../../shared/logging/getErrorAsString'
-import { VerticalStack } from '../Stacks/VerticalStack'
 import { Log } from '../../shared/logging/Log'
 import { MessageError } from '../../shared/MessageError'
+import { VerticalStack } from '../Stacks/VerticalStack'
 
 type Props = {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any

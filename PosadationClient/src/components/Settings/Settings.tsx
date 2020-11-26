@@ -1,17 +1,19 @@
+import { Spinner, Text } from '@fluentui/react'
 import * as React from 'react'
-import { Spinner, Text } from 'office-ui-fabric-react'
-import { SelectInputWrapper } from '../../shared/wrappers/SelectInputWrapper'
-import { IAppSettings, settingsDatabase } from '../../shared/settings/SettingsDatabase'
-import { VerticalStack } from '../Stacks/VerticalStack'
-import { ThemeUtils, Theme } from '../../shared/theme/ThemeUtils'
 
-type Props = {}
-type State = {
+import { IAppSettings, settingsDatabase } from '../../shared/settings/SettingsDatabase'
+import { Theme,ThemeUtils } from '../../shared/theme/ThemeUtils'
+import { SelectInputWrapper } from '../../shared/wrappers/SelectInputWrapper'
+import { VerticalStack } from '../Stacks/VerticalStack'
+
+interface IProps {
+}
+interface IState {
   appSettings?: IAppSettings
 }
 
-export class Settings extends React.Component<Props, State> {
-  constructor(props: Props) {
+export class Settings extends React.Component<IProps, IState> {
+  constructor(props: IProps) {
     super(props)
     this.state = {
       appSettings: undefined,

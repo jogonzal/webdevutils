@@ -8,12 +8,3 @@ body, html, #root {
   min-height:100%;
   min-width:100%;
 }
-
-/*Hide header groups in ReactTable*/
-.-headerGroups {
-  height: 0px;
-}
-
-div[role=group] {
-  outline: none;
-}

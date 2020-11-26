@@ -1,8 +1,8 @@
+import { getTheme, ITheme, registerOnThemeChangeCallback, removeOnThemeChangeCallback } from '@fluentui/react'
+import { StackItem } from '@fluentui/react/lib/Stack'
+import { Text } from '@fluentui/react/lib/Text'
 import { mergeStyles } from '@uifabric/styling'
-import { StackItem } from 'office-ui-fabric-react/lib/Stack'
-import { Text } from 'office-ui-fabric-react/lib/Text'
 import * as React from 'react'
-import { getTheme, ITheme, registerOnThemeChangeCallback, removeOnThemeChangeCallback } from 'office-ui-fabric-react'
 
 type Props = {
   label: string

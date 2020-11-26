@@ -1,6 +1,6 @@
+import { getTheme, ITheme, registerOnThemeChangeCallback, removeOnThemeChangeCallback } from '@fluentui/react'
 import * as React from 'react'
 import { Chart } from 'react-google-charts'
-import { ITheme, getTheme, registerOnThemeChangeCallback, removeOnThemeChangeCallback } from 'office-ui-fabric-react'
 
 type Props = {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any

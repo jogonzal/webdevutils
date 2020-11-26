@@ -1,6 +1,7 @@
-import { IRefObject } from 'office-ui-fabric-react'
-import { ITextField, TextField } from 'office-ui-fabric-react/lib/TextField'
+import { IRefObject } from '@fluentui/react'
+import { ITextField, TextField } from '@fluentui/react/lib/TextField'
 import * as React from 'react'
+
 import { Log } from '../logging/Log'
 
 type State = {

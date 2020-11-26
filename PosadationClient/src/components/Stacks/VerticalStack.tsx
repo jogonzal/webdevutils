@@ -1,4 +1,4 @@
-import { Alignment, IStackTokens, Stack } from 'office-ui-fabric-react/lib/Stack'
+import { Alignment, IStackTokens, Stack } from '@fluentui/react/lib/Stack'
 import * as React from 'react'
 
 type Props = {

@@ -1,6 +1,7 @@
-import { ComboBox, IComboBox, IComboBoxOption } from 'office-ui-fabric-react/lib/index'
-import { Text } from 'office-ui-fabric-react/lib/Text'
+import { ComboBox, IComboBox, IComboBoxOption } from '@fluentui/react/lib/index'
+import { Text } from '@fluentui/react/lib/Text'
 import * as React from 'react'
+
 import { VerticalStack } from '../../components/Stacks/VerticalStack'
 import { EnumClass, lookupEnumString } from '../DataTypes'
 import { Log } from '../logging/Log'

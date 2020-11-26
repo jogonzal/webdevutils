@@ -1,4 +1,5 @@
-import { loadTheme, createTheme } from 'office-ui-fabric-react'
+import { createTheme,loadTheme } from '@fluentui/react'
+
 import { EnumValue } from '../DataTypes'
 
 export type Theme = 'Light' | 'Dark'

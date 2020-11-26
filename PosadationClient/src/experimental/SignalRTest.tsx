@@ -1,7 +1,7 @@
 import * as signalR from '@aspnet/signalr'
-import { ITextField, PrimaryButton, Text, TextField, Spinner } from 'office-ui-fabric-react'
+import { ITextField, PrimaryButton, Spinner,Text, TextField } from '@fluentui/react'
 import * as React from 'react'
-import * as Peer from 'simple-peer'
+
 import { DialogMessages } from '../shared/dialogs/DialogMessages'
 import { getCurrentUser } from '../shared/getCurrentUser'
 import { getErrorAsString } from '../shared/logging/getErrorAsString'
@@ -24,8 +24,6 @@ type State = {
 
 export class SignalRTest extends React.Component<IProps, State> {
   textFieldRef = React.createRef<ITextField>()
-  initiatorPeer = new Peer({ initiator: true })
-  receivingPeer = new Peer()
 
   constructor(props: IProps) {
     super(props)
@@ -40,26 +38,6 @@ export class SignalRTest extends React.Component<IProps, State> {
       joinedGroup: false,
       signalData: undefined,
     }
-
-    this.initiatorPeer.on('data', data => {
-      Log.logger.info('got a message from peer: ' + data)
-
-      this.setState({
-        p2pMessages: [...this.state.p2pMessages, data]
-      })
-    })
-
-    this.initiatorPeer.on('signal', data => {
-      Log.logger.info('Got a signal!')
-
-      this.setState({
-        signalData: data,
-      })
-    })
-
-    this.initiatorPeer.on('connect', () => {
-      Log.logger.info('Connected!')
-    })
   }
 
   onConnectionClose = (error: Error | undefined) => {
@@ -99,22 +77,21 @@ export class SignalRTest extends React.Component<IProps, State> {
             Log.logger.warn('Received a message, but chat log was null')
             return
           }
+          // eslint-disable-next-line no-underscore-dangle
           const textElement = textField._textElement.current
           textElement.scrollTop = textElement.scrollHeight
         })
       })
 
-      connection.on('PeerToPeerConnection', (serializedData) => {
+      connection.on('PeerToPeerConnection', (_serializedData) => {
         Log.logger.info('Received serialized data!')
-
-        this.initiatorPeer.signal(JSON.parse(serializedData))
       })
 
       this.setState({
         connection,
         connecting: false,
       })
-    } catch (error) {
+    } catch (error: unknown) {
       DialogMessages.showErrorMessage(error)
       throw error
     }
@@ -127,11 +104,7 @@ export class SignalRTest extends React.Component<IProps, State> {
 
     try {
       await this.state.connection.invoke('SendMessage', this.state.message, this.state.group)
-      await this.initiatorPeer.send('hey, how is it going?')
-      this.setState({
-        message: '',
-      })
-    } catch (error) {
+    } catch (error: unknown) {
       DialogMessages.showErrorMessage(error)
       throw error
     }
@@ -186,7 +159,7 @@ export class SignalRTest extends React.Component<IProps, State> {
       this.setState({
         joinedGroup: true,
       })
-    } catch (error) {
+    } catch (error: unknown) {
       DialogMessages.showErrorMessage(error)
       throw error
     } finally {

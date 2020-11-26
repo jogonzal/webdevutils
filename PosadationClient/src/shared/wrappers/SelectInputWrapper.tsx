@@ -1,5 +1,6 @@
-import { Dropdown, IDropdownOption } from 'office-ui-fabric-react/lib/Dropdown'
+import { Dropdown, IDropdownOption } from '@fluentui/react/lib/Dropdown'
 import * as React from 'react'
+
 import { EnumClass, EnumValueType, lookupEnumString } from '../DataTypes'
 import { Log } from '../logging/Log'
 

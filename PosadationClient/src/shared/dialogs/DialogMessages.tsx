@@ -1,6 +1,7 @@
 import * as React from 'react'
 import sweetalert2, { SweetAlertIcon, SweetAlertResult } from 'sweetalert2'
 import withReactContent from 'sweetalert2-react-content'
+
 import { ErrorDialogContent } from '../../components/Errors/ErrorDialogContent'
 
 const swalReact = withReactContent(sweetalert2)

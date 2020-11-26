@@ -1,5 +1,6 @@
-import { Text, Image } from 'office-ui-fabric-react'
+import { Image,Text } from '@fluentui/react'
 import * as React from 'react'
+
 import blacky1 from '../assets/img/blacky/blacky1.jpeg'
 import blacky2 from '../assets/img/blacky/blacky2.jpeg'
 import blacky3 from '../assets/img/blacky/blacky3.jpeg'
@@ -11,13 +12,14 @@ import blacky8 from '../assets/img/blacky/blacky8.jpeg'
 import blacky9 from '../assets/img/blacky/blacky9.jpeg'
 import blacky10 from '../assets/img/blacky/blacky10.jpeg'
 import blacky11 from '../assets/img/blacky/blacky11.jpeg'
-
 import { VerticalStack } from './Stacks/VerticalStack'
 
-type Props = {}
-type State = {}
+interface IProps {
+}
+interface IState {
+}
 
-export class Blacky extends React.Component<Props, State> {
+export class Blacky extends React.Component<IProps, IState> {
   render() {
     return (
       <VerticalStack padding={ 20 }>

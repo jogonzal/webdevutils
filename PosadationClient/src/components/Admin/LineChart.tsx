@@ -1,7 +1,7 @@
+import { getTheme, ITheme, registerOnThemeChangeCallback, removeOnThemeChangeCallback } from '@fluentui/react'
 import * as React from 'react'
 import { Chart } from 'react-google-charts'
-import { GoogleDataTableRow, GoogleDataTableColumn, ChartWrapperOptions } from 'react-google-charts/dist/types'
-import { ITheme, getTheme, registerOnThemeChangeCallback, removeOnThemeChangeCallback } from 'office-ui-fabric-react'
+import { ChartWrapperOptions,GoogleDataTableColumn, GoogleDataTableRow } from 'react-google-charts/dist/types'
 
 type Props = {
   rows: GoogleDataTableRow[]

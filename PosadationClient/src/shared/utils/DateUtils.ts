@@ -28,7 +28,7 @@ export class DateUtils {
       }
       return new Date(date.getTime() + date.getTimezoneOffset() * 60000)
       // Log.logger.info(`Deserialized date ${dateStr} into ${newDate}`)
-    } catch (error) {
+    } catch (error: unknown) {
       Log.logger.error(`Error when deserializing date ${getErrorAsString(error)}`)
       throw error
     }
@@ -67,7 +67,7 @@ export class DateUtils {
       }
 
       return new Date(dateStr)
-    } catch (error) {
+    } catch (error: unknown) {
       Log.logger.warn(`Failed to parse date ${getErrorAsString(error)}`)
       return undefined
     }

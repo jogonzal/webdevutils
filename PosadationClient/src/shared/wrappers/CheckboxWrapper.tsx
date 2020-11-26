@@ -1,5 +1,6 @@
-import { Checkbox } from 'office-ui-fabric-react/lib/Checkbox'
+import { Checkbox } from '@fluentui/react/lib/Checkbox'
 import * as React from 'react'
+
 import { VerticalStack } from '../../components/Stacks/VerticalStack'
 
 type Props = {

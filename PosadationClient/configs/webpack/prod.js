@@ -1,5 +1,5 @@
 const path = require('path');
-const merge = require('webpack-merge')
+const { merge } = require('webpack-merge')
 const common = require('./common.js')
 const webpack = require('webpack')
 const MiniCssExtractPlugin = require("mini-css-extract-plugin")
@@ -10,21 +10,12 @@ const paths = {
   SRC: path.join(__dirname, '..', '..', 'src')
 }
 
-module.exports = merge.smartStrategy({
-  plugins: 'append'
-})(common(), {
+module.exports = merge(common(), {
   mode: 'production',
   optimization: {
+    minimize: true,
     minimizer: [
-      new TerserPlugin({
-        include: /\.min\.js$/,
-        sourceMap: true,
-        parallel: true,
-        cache: true,
-        terserOptions: {
-          extractComments: true
-        }
-      })
+      new TerserPlugin()
     ]
   },
   plugins: [
@@ -39,7 +30,6 @@ module.exports = merge.smartStrategy({
       chunkFilename: '[id]_[contenthash].css'
     }),
   ],
-  devtool: 'source-map',
   output: {
     filename: '[name]_[contenthash].min.js',
     path: paths.DIST,
@@ -51,8 +41,7 @@ module.exports = merge.smartStrategy({
       test: /\.s?css$/,
       use: [
         MiniCssExtractPlugin.loader,
-        { loader: 'css-loader', options: { importLoaders: 1 } },
-        'postcss-loader'
+        { loader: 'css-loader', options: { importLoaders: 1 } }
       ],
     }]
   }

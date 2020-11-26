@@ -1,16 +1,18 @@
-import { Image } from 'office-ui-fabric-react/lib/Image'
-import { Separator } from 'office-ui-fabric-react/lib/Separator'
-import { Stack, StackItem } from 'office-ui-fabric-react/lib/Stack'
-import { Text } from 'office-ui-fabric-react/lib/Text'
+import { Image } from '@fluentui/react/lib/Image'
+import { Separator } from '@fluentui/react/lib/Separator'
+import { Stack, StackItem } from '@fluentui/react/lib/Stack'
+import { Text } from '@fluentui/react/lib/Text'
 import * as React from 'react'
+
 import logoPng from '../assets/img/logo.png'
 import { PosadationCommandBar } from './Navbar/PosadationCommandBar'
 import { OfflineNotification } from './OfflineNotification'
 import { VerticalStack } from './Stacks/VerticalStack'
 
-type Props = {}
+interface IProps {
+}
 
-export class NavbarContainer extends React.Component<Props> {
+export class NavbarContainer extends React.Component<IProps> {
   onHomeClick = (ev: React.MouseEvent<HTMLDivElement>) => {
     // CNTRL CLICK means new tab
     if (ev.ctrlKey) {

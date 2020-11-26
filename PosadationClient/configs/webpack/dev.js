@@ -1,5 +1,5 @@
 const path = require('path')
-const merge = require('webpack-merge')
+const { merge } = require('webpack-merge')
 const common = require('./common')
 
 const paths = {
@@ -7,9 +7,7 @@ const paths = {
   SRC: path.join(__dirname, '..', '..', 'src')
 }
 
-module.exports = merge.smartStrategy({
-  plugins: 'append'
-})(common(), {
+module.exports = merge(common(), {
   mode: 'development',
   output: {
     filename: '[name].js',
@@ -17,12 +15,11 @@ module.exports = merge.smartStrategy({
     crossOriginLoading: 'anonymous',
     publicPath: 'http://localhost:8080/'
   },
-  devtool: 'cheap-module-source-map',
   module: {
     rules: [
       {
         test: /\.s?css$/,
-        use: ['style-loader', { loader: 'css-loader', options: { importLoaders: 1 } }, 'postcss-loader',],
+        use: [ 'style-loader', { loader: 'css-loader', options: { importLoaders: 1 } } ],
       }
     ]
   }

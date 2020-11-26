@@ -1,8 +1,9 @@
-import { Text, Separator, Icon, DefaultButton, PrimaryButton } from 'office-ui-fabric-react'
+import { DefaultButton, Icon, PrimaryButton,Separator, Text } from '@fluentui/react'
 import * as React from 'react'
+
+import { UsuarioModel } from '../models/UsuarioModel'
 import { getCurrentUser } from '../shared/getCurrentUser'
 import { BoxLabel } from '../shared/wrappers/BoxLabel'
-import { UsuarioModel } from '../models/UsuarioModel'
 import { HorizontalStack } from './Stacks/HorizontalStack'
 import { VerticalStack } from './Stacks/VerticalStack'
 
