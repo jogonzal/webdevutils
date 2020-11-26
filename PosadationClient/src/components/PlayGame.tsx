@@ -8,7 +8,6 @@ import melee from '../assets/sounds/melee/melee.wav'
 import smashNo from '../assets/sounds/melee/menu-no.wav'
 import smashOk from '../assets/sounds/melee/menu-ok.wav'
 import toggle from '../assets/sounds/melee/menu-toggle.wav'
-import { AuthInfo } from '../shared/AuthInfo'
 import { getErrorAsString } from '../shared/logging/getErrorAsString'
 import { Log } from '../shared/logging/Log'
 
@@ -18,6 +17,7 @@ interface IGameTableEntity {
   LeaderUserId: string
   UsersArray: string
   GameEnded: boolean
+  GameStarted: boolean
 }
 
 type State = {
@@ -115,6 +115,14 @@ export class PlayGame extends React.Component<Props, State> {
         new Audio(toggle).play()
       })
 
+      connection.on('GameStarted', () => {
+        new Audio(toggle).play()
+      })
+
+      connection.on('GameEnded', () => {
+        new Audio(smashNo).play()
+      })
+
       this.setState({
         connection
       })
@@ -133,9 +141,8 @@ export class PlayGame extends React.Component<Props, State> {
   }
 
   onStartGameClick = () => {
-    // TODO!
-    const audio = new Audio(smashOk)
-    audio.play()
+    new Audio(smashOk).play()
+    this.state.connection?.invoke('StartGame')
   }
 
   render(): JSX.Element {
@@ -157,7 +164,7 @@ export class PlayGame extends React.Component<Props, State> {
       <Stack horizontal horizontalAlign='space-around'>
         <Stack maxWidth='900px' grow={ true }>
           <div style={ { height: '15px' } }></div>
-          <Text variant='xxLarge'>Welcome, <strong>{AuthInfo.getUserId()}!</strong>!</Text>
+          <Text variant='xxLarge'>Welcome, <strong>{ this.state.user }!</strong>!</Text>
           { this.renderContent() }
         </Stack>
       </Stack>
@@ -227,19 +234,23 @@ export class PlayGame extends React.Component<Props, State> {
           </Stack>
         </Stack>
         <div style={ { height: '15px' } }></div>
-        { this.renderNeedMorePlayers(users, gameMetadata) }
+        { this.renderStartedGame(users, gameMetadata) }
       </Stack>
     )
   }
 
-  renderNeedMorePlayers = (users: string[], gameMetadata: IGameTableEntity) => {
+  renderStartedGame = (users: string[], gameMetadata: IGameTableEntity) => {
+    if (gameMetadata.GameStarted) {
+      return <Text>Game started!!</Text>
+    }
+
     if (users.length <= 1) {
       return (
         <Text>Waiting for players to join...</Text>
       )
     }
 
-    if (gameMetadata.LeaderUserId !== AuthInfo.getUserId()) {
+    if (gameMetadata.LeaderUserId !== this.state.user) {
       return (
         <Text>Waiting for <strong>{gameMetadata.LeaderUserId}</strong> to start game...</Text>
       )

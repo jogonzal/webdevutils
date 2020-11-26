@@ -118,7 +118,8 @@ namespace Posadation.Hubs
 				game = await GameTable.CreateGame(gameId, userId);
 			} else
 			{
-				if (!game.GameEnded)
+				// If game has ended or started, there's no join (spectator mode)
+				if (!game.GameEnded && !game.GameStarted)
 				{
 					await GameTable.AddUserToGame(userId, game);
 				}
@@ -126,9 +127,10 @@ namespace Posadation.Hubs
 
 			this.SetGameMetadata(userId, gameId);
 
-			// Add to group and update game metadata for everyone
+			// Add to group and update game metadata for everyone and send notification
 			await Groups.AddToGroupAsync(Context.ConnectionId, gameId);
 			await Clients.Group(gameId).SendAsync("GameMetadataUpdate", JsonConvert.SerializeObject(game));
+			await Clients.Group(gameId).SendAsync("PlayerJoined", userId);
 		}
 
 		public async Task EndGame()
@@ -153,6 +155,32 @@ namespace Posadation.Hubs
 			await GameTable.EndGame(game);
 
 			await Clients.Group(userMetadata.GameId).SendAsync("GameMetadataUpdate", JsonConvert.SerializeObject(game));
+			await Clients.Group(userMetadata.GameId).SendAsync("GameEnded");
+		}
+
+		public async Task StartGame()
+		{
+			var userMetadata = this.GetUserMetadata();
+			if (userMetadata == null)
+			{
+				throw new Exception("Game metadata is null");
+			}
+
+			GameTableEntity game = GameTable.GetGameObject(userMetadata.GameId);
+			if (game == null)
+			{
+				throw new Exception("Game is null!");
+			}
+
+			if (userMetadata.UserId != game.LeaderUserId)
+			{
+				throw new Exception("Only leader can end!");
+			}
+
+			await GameTable.StartGame(game);
+
+			await Clients.Group(userMetadata.GameId).SendAsync("GameMetadataUpdate", JsonConvert.SerializeObject(game));
+			await Clients.Group(userMetadata.GameId).SendAsync("GameStarted");
 		}
 	}
 }

@@ -50,9 +50,7 @@ registerOnThemeChangeCallback((theme: ITheme) => {
 
 async function start(): Promise<void> {
   const settings = await initializeAppSettings()
-  if (settings) {
-    ThemeUtils.loadTheme(settings.theme)
-  }
+  ThemeUtils.loadTheme(settings.theme)
 
   render((
     <App />

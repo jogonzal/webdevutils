@@ -24,6 +24,7 @@ namespace PosadationServer.Storage
 		public string LeaderUserId { get; set; }
 		public string UsersArray { get; set; }
 		public bool GameEnded { get; set; }
+		public bool GameStarted { get; set; }
 	}
 
 	public static class GameTable
@@ -211,6 +212,41 @@ namespace PosadationServer.Storage
 					return;
 				}
 				entity.GameEnded = true;
+
+				// Retrieve a reference to the table.
+				var table = GetTableClient();
+
+				// Create the TableOperation object that updates the entity
+				var result = await table.ExecuteAsync(TableOperation.Replace(entity));
+
+				if (result.HttpStatusCode != 204)
+				{
+					throw new Exception(JsonConvert.SerializeObject(result));
+				}
+			}
+			catch (Exception error)
+			{
+				Log.Logger.LogInformation($"Ran into an error when updating history table {error.ToString()}");
+				throw;
+			}
+		}
+
+		public static async Task StartGame(GameTableEntity entity)
+		{
+			if (String.IsNullOrWhiteSpace(ConnectionString) || ConnectionString == "DONOTINPUTSECRETSHERE")
+			{
+				// Ignore if no connection string is configured
+				return;
+			}
+
+			try
+			{
+				// edit the entity
+				if (entity.GameStarted)
+				{
+					return;
+				}
+				entity.GameStarted = true;
 
 				// Retrieve a reference to the table.
 				var table = GetTableClient();
