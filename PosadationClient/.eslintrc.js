@@ -47,7 +47,6 @@ module.exports = {
     "@typescript-eslint/no-empty-interface": "off", // I legitimately use empty interfaces
     "@typescript-eslint/no-inferrable-types": "off", // Ok to have redundant types
     "@typescript-eslint/explicit-module-boundary-types": "off", // Ok to have "any's" and similar things in public functions (no different from local functions)
-    "sort-imports": ['error'], // Ordered imports
     // Import ordering plugin
     "sort-imports": "off",
     "import/order": "off",
@@ -97,5 +96,9 @@ module.exports = {
         }
       }
     ],
+    "eqeqeq": [ "error", "always"],
+    "@typescript-eslint/strict-boolean-expressions": [ "error", { "allowNullableObject": true, "allowNullableBoolean": true, "allowAny": true } ],
+    "space-infix-ops": ["error"], // spacing between operators
+    "keyword-spacing": ["error"], // spacing after keywords
   }
 };
