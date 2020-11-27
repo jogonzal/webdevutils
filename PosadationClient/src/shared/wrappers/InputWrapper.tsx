@@ -69,7 +69,7 @@ export class InputWrapper extends React.Component<Props, State> {
         disabled={ this.props.readOnly }
         style={ this.getTextFieldStyle() }
         rows={ this.props.rows }
-        multiline={ (!!this.props.rows && this.props.rows > 1) }
+        multiline={ (this.props.rows !== undefined && this.props.rows > 1) }
         onKeyDown={ this.props.onKeyDown }
         suffix={ this.props.suffix } />
     )

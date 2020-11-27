@@ -15,6 +15,7 @@ export function getCurrentUser(): UsuarioModel | undefined {
       LastModifiedTime:'2010-10-10T00:00:00',
     }
   }
+  // eslint-disable-next-line @typescript-eslint/strict-boolean-expressions
   if (__cloudUser__ && !__cloudUser__.UsuarioLenguage) {
     __cloudUser__.UsuarioLenguage = 'es-mx' // Default to ESMX
   }
@@ -46,22 +47,4 @@ export function getCurrentSistema(): SistemaModel | undefined {
     }
   }
   return __sistema__
-}
-
-
-const agenteLocalStorageKey = 'AgenteOverride'
-export function getCurrentAgenteOverride(): number | undefined {
-  const sContent = localStorage.getItem(agenteLocalStorageKey)
-  if (!sContent) {
-    return undefined
-  }
-  return parseInt(sContent, 10)
-}
-
-export function setAgenteOverride(agenteNumber: number) {
-  localStorage.setItem(agenteLocalStorageKey, agenteNumber?.toString())
-}
-
-export function clearAgenteOverride() {
-  localStorage.removeItem(agenteLocalStorageKey)
 }

@@ -78,6 +78,7 @@ export class PlayGame extends React.Component<Props, State> {
       gameStarted: true,
     })
 
+    // eslint-disable-next-line @typescript-eslint/strict-boolean-expressions
     const gameId = this.props.match.params.id || shortId.generate().substr(0, 5)
     const url = `/#/g/${gameId}`
     window.location.href = url
@@ -146,7 +147,7 @@ export class PlayGame extends React.Component<Props, State> {
   }
 
   render(): JSX.Element {
-    if (!this.props.match.params.id || !this.state.user || !this.state.gameStarted) {
+    if (this.props.match.params.id === undefined || !this.state.user || !this.state.gameStarted) {
       return (
         <Stack padding={ 15 }>
           <StackItem align='center'>
@@ -197,7 +198,7 @@ export class PlayGame extends React.Component<Props, State> {
   }
 
   onCopyInviteLink = async () => {
-    if (navigator.clipboard) {
+    if (navigator.clipboard !== undefined && navigator.clipboard !== null) {
       await navigator.clipboard.writeText(window.location.href)
     }
   }

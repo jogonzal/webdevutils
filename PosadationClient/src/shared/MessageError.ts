@@ -5,6 +5,6 @@ export class MessageError extends Error {
   }
 
   public static isMessageError(error: Error): error is MessageError {
-    return error && (error as MessageError).name === 'MessageError'
+    return error !== undefined && error !== null && (error as MessageError).name === 'MessageError'
   }
 }

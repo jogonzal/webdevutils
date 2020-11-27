@@ -65,7 +65,7 @@ export class ErrorDialogContent extends React.Component<Props, State> {
         // errorDiagnostics += `RestApiInternalErrorMessage: ${error.restApiError.InternalErrorMessage}\n`
 
         // SQL errors
-        if (error.restApiError.ErrorCode === '-2146232060' && error.restApiError.InternalErrorMessage) {
+        if (error.restApiError.ErrorCode === '-2146232060' && error.restApiError.InternalErrorMessage !== undefined) {
           if (error.restApiError.InternalErrorMessage.indexOf('duplicate key') !== -1) {
             errorDescription = 'La clave que has especificado ya existe y por lo tanto no puede ser creada.'
           } else if (error.restApiError.InternalErrorMessage.indexOf('FOREIGN KEY') !== -1) {

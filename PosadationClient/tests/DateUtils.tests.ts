@@ -20,9 +20,6 @@ test('Serialize the date en-us', () => {
 
 test('Serialize/deserialize date with timezone', () => {
   const date = DateUtils.deserializeDate('2020-01-22T07:19:18.733Z')
-  if (!date) {
-    throw new Error('date is undefined')
-  }
   const dateAsStr = DateUtils.serializeToString(date)
   expect(dateAsStr).toBe('2020-01-22')
 })

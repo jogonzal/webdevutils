@@ -3,7 +3,7 @@ import * as React from 'react'
 
 import { UsuarioModel } from '../models/UsuarioModel'
 import { DialogMessages } from '../shared/dialogs/DialogMessages'
-import { clearAgenteOverride, getCurrentAgenteOverride, getCurrentSistema,getCurrentUser, setAgenteOverride } from '../shared/getCurrentUser'
+import { getCurrentSistema, getCurrentUser } from '../shared/getCurrentUser'
 import { Log } from '../shared/logging/Log'
 import { MessageError } from '../shared/MessageError'
 import { BoxLabel } from '../shared/wrappers/BoxLabel'
@@ -12,38 +12,8 @@ import { VerticalStack } from './Stacks/VerticalStack'
 
 interface IProps {
 }
-interface IState {
-  agenteSeleccionado?: number
-}
 
-export class DebugPanel extends React.Component<IProps, IState> {
-  constructor(props: IProps) {
-    super(props)
-
-    this.state = {
-      agenteSeleccionado: getCurrentAgenteOverride(),
-    }
-  }
-
-  onAgenteChanged = (newVal: number | undefined) => {
-    this.setState({ agenteSeleccionado: newVal })
-  }
-
-  onBorrarAgenteOverride = () => {
-    clearAgenteOverride()
-    window.location.reload()
-  }
-
-  onGrabarAgenteOverride = async () => {
-    if (!this.state.agenteSeleccionado) {
-      return
-    }
-
-    setAgenteOverride(this.state.agenteSeleccionado)
-    await DialogMessages.simpleNotificationDialog('Override grabado!', 'success', 'Override grabado')
-    window.location.reload()
-  }
-
+export class DebugPanel extends React.Component<IProps> {
   renderAdminDebugPanel(currentUser: UsuarioModel) {
     if (!currentUser?.UsuarioAccesoAdmin) {
       return null

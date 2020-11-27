@@ -67,7 +67,7 @@ export class ComboBoxWrapper extends React.Component<Props, State> {
 
   renderDisplayNombre = () => {
     let displayValue = lookupEnumString(this.props.options, this.props.value)
-    if (!displayValue) {
+    if (displayValue === undefined) {
       displayValue = this.props.value
     }
     return (
