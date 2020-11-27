@@ -102,7 +102,7 @@ namespace Posadation.Hubs
 			//await this.Clients.All.SendAsync("ReceiveMessage", $"{this.UserFromDb.UsuarioClave} has joined the chat");
 		}
 
-		public async Task CreateOrJoinGame(string gameId, string userId)
+		public async Task CreateOrJoinGame(string gameId, string userId, string userName)
 		{
 			if (string.IsNullOrEmpty(gameId) || string.IsNullOrEmpty(userId))
 			{
@@ -115,13 +115,13 @@ namespace Posadation.Hubs
 			if (game == null)
 			{
 				// Join game as admin
-				game = await GameTable.CreateGame(gameId, userId);
+				game = await GameTable.CreateGame(gameId, userId, userName);
 			} else
 			{
 				// If game has ended or started, there's no join (spectator mode)
 				if (!game.GameEnded && !game.GameStarted)
 				{
-					await GameTable.AddUserToGame(userId, game);
+					await GameTable.AddUserToGame(userId, userName, game);
 				}
 			}
 
@@ -131,6 +131,28 @@ namespace Posadation.Hubs
 			await Groups.AddToGroupAsync(Context.ConnectionId, gameId);
 			await Clients.Group(gameId).SendAsync("GameMetadataUpdate", JsonConvert.SerializeObject(game));
 			await Clients.Group(gameId).SendAsync("PlayerJoined", userId);
+		}
+
+		public async Task ControllerJoin(string gameId, string userId)
+		{
+			if (string.IsNullOrEmpty(gameId) || string.IsNullOrEmpty(userId))
+			{
+				throw new Exception("GroupId or user is empty");
+			}
+
+			Log.Logger.LogInformation($"Controller from user {userId} requesting to join game {gameId}");
+			await Clients.Group(gameId).SendAsync("ControllerJoined", gameId, userId);
+		}
+
+		public async Task ControllerSendSignal(string gameId, string userId, string signal)
+		{
+			if (string.IsNullOrEmpty(gameId) || string.IsNullOrEmpty(userId) || string.IsNullOrEmpty(signal))
+			{
+				throw new Exception("GroupId or user is empty");
+			}
+
+			Log.Logger.LogInformation($"Controller from user {userId} sending signal for game {gameId}");
+			await Clients.Group(gameId).SendAsync("ControllerSendSignal", gameId, userId, signal);
 		}
 
 		public async Task EndGame()

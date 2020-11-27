@@ -9,6 +9,12 @@ using System.Threading.Tasks;
 
 namespace PosadationServer.Storage
 {
+	public class User
+	{
+		public string Id { get; set; }
+		public string Name { get; set; }
+	}
+
 	public class GameTableEntity : TableEntity
 	{
 		public GameTableEntity(string gameId)
@@ -88,16 +94,17 @@ namespace PosadationServer.Storage
 			try
 			{
 				// edit the entity
-				List<string> users = JsonConvert.DeserializeObject<List<string>>(entity.UsersArray);
-				if (!users.Contains(userId) && entity.LeaderUserId != userId)
+				List<User> users = JsonConvert.DeserializeObject<List<User>>(entity.UsersArray);
+				if (!users.Any(u => u.Id == userId) && entity.LeaderUserId != userId)
 				{
 					return;
 				}
-				users.Remove(userId);
+				var userToRemove = users.SingleOrDefault(u => u.Id == userId);
+				users.Remove(userToRemove);
 				entity.UsersArray = JsonConvert.SerializeObject(users);
 				if (entity.LeaderUserId == userId)
 				{
-					entity.LeaderUserId = users.Count > 0 ? users[0] : "";
+					entity.LeaderUserId = users.Count > 0 ? users[0].Id : "";
 				}
 
 				// Retrieve a reference to the table.
@@ -118,15 +125,19 @@ namespace PosadationServer.Storage
 			}
 		}
 
-		public static async Task<GameTableEntity> CreateGame(string gameId, string leaderId)
+		public static async Task<GameTableEntity> CreateGame(string gameId, string leaderId, string leaderName)
 		{
 			// Create a new entity.
 			GameTableEntity entry = new GameTableEntity(gameId)
 			{
 				LeaderUserId = leaderId,
-				UsersArray = JsonConvert.SerializeObject(new List<string>()
+				UsersArray = JsonConvert.SerializeObject(new List<User>()
 				{
-					leaderId,
+					new User()
+					{
+						Id=leaderId,
+						Name=leaderName,
+					},
 				}),
 			};
 
@@ -152,7 +163,7 @@ namespace PosadationServer.Storage
 			}
 		}
 
-		public static async Task AddUserToGame(string userId, GameTableEntity entity)
+		public static async Task AddUserToGame(string userId, string userName, GameTableEntity entity)
 		{
 			if (String.IsNullOrWhiteSpace(ConnectionString) || ConnectionString == "DONOTINPUTSECRETSHERE")
 			{
@@ -163,19 +174,19 @@ namespace PosadationServer.Storage
 			try
 			{
 				// edit the entity
-				List<string> users = JsonConvert.DeserializeObject<List<string>>(entity.UsersArray);
-				if (users.Contains(userId) && !string.IsNullOrEmpty(entity.LeaderUserId))
+				List<User> users = JsonConvert.DeserializeObject<List<User>>(entity.UsersArray);
+				if (users.Any(u => u.Id == userId) && !string.IsNullOrEmpty(entity.LeaderUserId))
 				{
 					// No leader update and this user is gone already
 					return;
 				}
 
-				users.Add(userId);
+				users.Add(new User() { Id = userId, Name = userName });
 				users = users.Distinct().ToList();
 				entity.UsersArray = JsonConvert.SerializeObject(users);
 				if (string.IsNullOrEmpty(entity.LeaderUserId))
 				{
-					entity.LeaderUserId = users[0];
+					entity.LeaderUserId = users[0].Id;
 				}
 
 				// Retrieve a reference to the table.

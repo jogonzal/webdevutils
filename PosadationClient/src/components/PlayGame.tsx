@@ -1,5 +1,6 @@
 import * as signalR from '@aspnet/signalr'
 import { Label, Persona, PersonaPresence, PersonaSize, PrimaryButton, Spinner, Stack, StackItem, Text, TextField } from '@fluentui/react'
+import { toDataURL } from 'qrcode'
 import * as React from 'react'
 import { RouteComponentProps } from 'react-router-dom'
 import * as shortId from 'shortid'
@@ -8,29 +9,24 @@ import melee from '../assets/sounds/melee/melee.wav'
 import smashNo from '../assets/sounds/melee/menu-no.wav'
 import smashOk from '../assets/sounds/melee/menu-ok.wav'
 import toggle from '../assets/sounds/melee/menu-toggle.wav'
+import { IUser } from '../shared/IUser'
 import { getErrorAsString } from '../shared/logging/getErrorAsString'
 import { Log } from '../shared/logging/Log'
-
-interface IGameTableEntity {
-  PartitionKey: string
-  RowKey: string
-  LeaderUserId: string
-  UsersArray: string
-  GameEnded: boolean
-  GameStarted: boolean
-}
+import { createGuid } from '../shared/utils/createGuid'
 
 type State = {
   gameMetadata?: IGameTableEntity
   error?: unknown
   connection: signalR.HubConnection | undefined
   connecting: boolean
-  user: string
+  user: IUser | undefined
+  userInTextBox: string
   gameStarted: boolean
+  qrCodeDataUrl: string | undefined
 }
 
 type RouteParams = {
-  id?: string
+  gameId?: string
 }
 
 type Props = RouteComponentProps<RouteParams>
@@ -41,8 +37,10 @@ export class PlayGame extends React.Component<Props, State> {
     this.state = {
       connecting: false,
       connection: undefined,
-      user: '',
-      gameStarted: false
+      user: undefined,
+      gameStarted: false,
+      qrCodeDataUrl: undefined,
+      userInTextBox: '',
     }
   }
 
@@ -68,30 +66,30 @@ export class PlayGame extends React.Component<Props, State> {
   }
 
   onCreateOrStartGameClick = async () => {
-    if (!this.state.user) {
+    if (!this.state.userInTextBox) {
       new Audio(smashNo).play()
       return
     }
 
     new Audio(smashOk).play()
+    const user = {
+      Id: createGuid(),
+      Name: this.state.userInTextBox,
+    }
     this.setState({
-      gameStarted: true,
+      user,
     })
 
     // eslint-disable-next-line @typescript-eslint/strict-boolean-expressions
-    const gameId = this.props.match.params.id || shortId.generate().substr(0, 5)
+    const gameId = this.props.match.params.gameId || shortId.generate().substr(0, 5)
     const url = `/#/g/${gameId}`
     window.location.href = url
 
-    if (!this.state.user) {
-      throw new Error('User not defined!!')
-    }
-
     // If user and game is available, start game
-    await this.makeConnection(this.state.user, gameId)
+    await this.makeConnection(user, gameId)
   }
 
-  makeConnection = async (user: string, gameId: string) => {
+  makeConnection = async (user: IUser, gameId: string) => {
     try {
       this.setState({
         connecting: true,
@@ -128,7 +126,7 @@ export class PlayGame extends React.Component<Props, State> {
         connection
       })
 
-      await connection.invoke('CreateOrJoinGame', gameId, user)
+      await connection.invoke('CreateOrJoinGame', gameId, user.Id, user.Name)
     } catch (error: unknown) {
       this.setState({
         error,
@@ -141,20 +139,29 @@ export class PlayGame extends React.Component<Props, State> {
     }
   }
 
-  onStartGameClick = () => {
+  onStartGameClick = async () => {
     new Audio(smashOk).play()
     this.state.connection?.invoke('StartGame')
+    const canvas = document.createElement('canvas')
+    canvas.width = 300
+    canvas.height = 300
+    const url = window.location.protocol + '//' + window.location.host + '#/mobile/' + this.props.match.params.gameId + '/' + this.state.user?.Id
+    Log.logger.info(url)
+    const dataUrl = await toDataURL(canvas, url)
+    this.setState({
+      qrCodeDataUrl: dataUrl,
+    })
   }
 
   render(): JSX.Element {
-    if (this.props.match.params.id === undefined || !this.state.user || !this.state.gameStarted) {
+    if (this.props.match.params.gameId === undefined || !this.state.user) {
       return (
         <Stack padding={ 15 }>
           <StackItem align='center'>
             <Stack>
               <Text variant='xxLarge' style={ { paddingTop: '20px' } }>Game!</Text>
-              <TextField onKeyDown={ this.onUserTextboxKeyDown } autoFocus={ true } placeholder='Username' value={ this.state.user } onChange={ (_inp, val) => this.setState({ user: val ?? '' }) } />
-              <PrimaryButton disabled={ this.state.user === '' } onClick={ this.onCreateOrStartGameClick } >Play game!</PrimaryButton>
+              <TextField onKeyDown={ this.onUserTextboxKeyDown } autoFocus={ true } placeholder='Username' value={ this.state.userInTextBox } onChange={ (_inp, val) => this.setState({ userInTextBox: val ?? '' }) } />
+              <PrimaryButton disabled={ this.state.userInTextBox === '' } onClick={ this.onCreateOrStartGameClick } >Play game!</PrimaryButton>
             </Stack>
           </StackItem>
         </Stack>
@@ -165,7 +172,7 @@ export class PlayGame extends React.Component<Props, State> {
       <Stack horizontal horizontalAlign='space-around'>
         <Stack maxWidth='900px' grow={ true }>
           <div style={ { height: '15px' } }></div>
-          <Text variant='xxLarge'>Welcome, <strong>{ this.state.user }!</strong>!</Text>
+          <Text variant='xxLarge'>Welcome, <strong>{ this.state.user.Name }!</strong>!</Text>
           { this.renderContent() }
         </Stack>
       </Stack>
@@ -204,7 +211,7 @@ export class PlayGame extends React.Component<Props, State> {
   }
 
   renderGameContent(gameMetadata: IGameTableEntity) {
-    const users: string[] = JSON.parse(gameMetadata.UsersArray)
+    const users: IUser[] = JSON.parse(gameMetadata.UsersArray)
 
     return (
       <Stack>
@@ -222,10 +229,10 @@ export class PlayGame extends React.Component<Props, State> {
             { users.map(u => {
               return (
                 <Persona
-                  key={ u }
+                  key={ u.Id }
                   size={PersonaSize.size72}
                   presence={PersonaPresence.online}
-                  text={ u }
+                  text={ u.Name }
                   // onRenderCoin={_onRenderCoin}
                   // imageAlt="Ted Randall, status is available at 4 PM"
                   // imageUrl={TestImages.personaMale}
@@ -240,25 +247,36 @@ export class PlayGame extends React.Component<Props, State> {
     )
   }
 
-  renderStartedGame = (users: string[], gameMetadata: IGameTableEntity) => {
+  getUserWithId = (userId: string, users: IUser[]): IUser | undefined => {
+    return users.find(u => u.Id === userId)
+  }
+
+  renderStartedGame = (users: IUser[], gameMetadata: IGameTableEntity) => {
     if (gameMetadata.GameStarted) {
-      return <Text>Game started!!</Text>
+      return (
+        <>
+          <Text>Game started!!</Text>
+          { this.state.qrCodeDataUrl !== undefined && <img width={ 300 } height={ 300 } src={ this.state.qrCodeDataUrl }></img> }
+        </>
+      )
     }
 
-    if (users.length <= 1) {
+    if (users.length <= 0) { // TODO change back to 1
       return (
         <Text>Waiting for players to join...</Text>
       )
     }
 
-    if (gameMetadata.LeaderUserId !== this.state.user) {
+    if (gameMetadata.LeaderUserId !== this.state.user?.Id) {
       return (
-        <Text>Waiting for <strong>{gameMetadata.LeaderUserId}</strong> to start game...</Text>
+        <Text>Waiting for <strong>{ this.getUserWithId(gameMetadata.LeaderUserId, users)?.Name }</strong> to start game...</Text>
       )
     }
 
     return (
-      <PrimaryButton onClick={ this.onStartGameClick }>Start game!</PrimaryButton>
+      <>
+        <PrimaryButton onClick={ this.onStartGameClick }>Start game!</PrimaryButton>
+      </>
     )
   }
 }

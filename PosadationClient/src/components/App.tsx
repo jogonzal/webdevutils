@@ -7,6 +7,7 @@ import { SignalRTest } from '../experimental/SignalRTest'
 import { Blacky } from './Blacky'
 import { DebugPanel } from './DebugPanel'
 import { NotFound } from './MiniComponents/NotFound'
+import { MobileController } from './MobileController'
 import { MyAccount } from './MyAccount'
 import { PlayGame } from './PlayGame'
 import { Settings } from './Settings/Settings'
@@ -38,7 +39,8 @@ export class App extends React.Component<Props, State> {
         {/* <NavbarContainer> */}
           <Switch>
             <Route exact={ true } path='/' component={ PlayGame } />
-            <Route path='/g/:id?' component={ PlayGame } />
+            <Route path='/g/:gameId?' component={ PlayGame } />
+            <Route path='/mobile/:gameId/:playerId' component={ MobileController } />
 
             { /* Cuenta, settings, permisos */ }
             <Route path='/myAccount' component={ MyAccount } />
