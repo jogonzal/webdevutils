@@ -42,17 +42,14 @@ module.exports = {
     "plugin:react/recommended"
   ],
   rules: {
-    "@typescript-eslint/no-unused-vars": ["error", { "varsIgnorePattern": "_*", "argsIgnorePattern": "_*" } ], // Parameters that start with "_" are ok to be unused
-    "@typescript-eslint/no-empty-function": "off", // I legitimately use empty functions
-    "@typescript-eslint/no-empty-interface": "off", // I legitimately use empty interfaces
-    "@typescript-eslint/no-inferrable-types": "off", // Ok to have redundant types
-    "@typescript-eslint/explicit-module-boundary-types": "off", // Ok to have "any's" and similar things in public functions (no different from local functions)
     // Import ordering plugin
     "sort-imports": "off",
     "import/order": "off",
     "simple-import-sort/imports": "error",
+
     // Don't allow catch with any
     "@typescript-eslint/no-implicit-any-catch": "error",
+
     // Styling
     "no-trailing-spaces": "error",
     "comma-dangle": [ "error", "only-multiline" ],
@@ -66,6 +63,11 @@ module.exports = {
         ]
       }
     ],
+    "space-infix-ops": ["error"], // spacing between operators
+    "keyword-spacing": ["error"], // spacing after keywords
+    "quotes": ["error", "single"], // Prefer single quotes
+
+    // ESLINT rules
     "prefer-const": "error",
     "radix": "error",
     "no-with": "error",
@@ -81,6 +83,17 @@ module.exports = {
     "no-extra-bind": "error",
     "no-duplicate-case": "error",
     "no-console": "error",
+    "eqeqeq": [ "error", "always"],
+    "no-loss-of-precision": "error",
+    "no-alert": "error",
+    "no-caller": "error",
+
+    // Typescript-ESLINT
+    "@typescript-eslint/no-unused-vars": ["error", { "varsIgnorePattern": "_*", "argsIgnorePattern": "_*" } ], // Parameters that start with "_" are ok to be unused
+    "@typescript-eslint/no-empty-function": "off", // I legitimately use empty functions
+    "@typescript-eslint/no-empty-interface": "off", // I legitimately use empty interfaces
+    "@typescript-eslint/no-inferrable-types": "off", // Ok to have redundant types
+    "@typescript-eslint/explicit-module-boundary-types": "off", // Ok to have "any's" and similar things in public functions (no different from local functions)
     "@typescript-eslint/prefer-for-of": "error",
     "@typescript-eslint/no-namespace": "error",
     "@typescript-eslint/no-this-alias": "error",
@@ -96,9 +109,8 @@ module.exports = {
         }
       }
     ],
-    "eqeqeq": [ "error", "always"],
-    "@typescript-eslint/strict-boolean-expressions": [ "error", { "allowNullableObject": true, "allowNullableBoolean": true, "allowAny": true } ],
-    "space-infix-ops": ["error"], // spacing between operators
-    "keyword-spacing": ["error"], // spacing after keywords
+
+    // Esta regla causo problemas porque algunos campos son null...
+    // "@typescript-eslint/strict-boolean-expressions": [ "error", { "allowNullableObject": true, "allowNullableBoolean": true, "allowAny": true } ],
   }
 };

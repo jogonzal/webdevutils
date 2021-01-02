@@ -44,6 +44,9 @@ export class DebugPanel extends React.Component<IProps> {
               <li>
                 <Link href='/#/playgame' target='_blank' >Play game</Link>
               </li>
+              <li>
+                <Link href='/#/webdevutils' >Web dev utils</Link>
+              </li>
             </ul>
           </BoxLabel>
         </HorizontalStack>
