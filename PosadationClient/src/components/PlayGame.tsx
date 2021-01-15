@@ -4,6 +4,7 @@ import * as React from 'react'
 import { RouteComponentProps } from 'react-router-dom'
 import * as shortId from 'shortid'
 
+import go from '../assets/sounds/melee/go.wav'
 import melee from '../assets/sounds/melee/melee.wav'
 import smashNo from '../assets/sounds/melee/menu-no.wav'
 import smashOk from '../assets/sounds/melee/menu-ok.wav'
@@ -114,7 +115,11 @@ export class PlayGame extends React.Component<Props, State> {
       })
 
       connection.on('GameStarted', async () => {
-        await new Audio(ready).play()
+        const readyAudio = new Audio(ready)
+        readyAudio.onended = () => {
+          new Audio(go).play()
+        }
+        readyAudio.play()
       })
 
       connection.on('GameEnded', async () => {
