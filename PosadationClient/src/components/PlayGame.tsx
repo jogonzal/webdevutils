@@ -15,6 +15,9 @@ import { getErrorAsString } from '../shared/logging/getErrorAsString'
 import { Log } from '../shared/logging/Log'
 import { createGuid } from '../shared/utils/createGuid'
 
+const maxWidthGame = 600
+const maxHeightGame = 500
+
 type State = {
   gameMetadata?: IGameTableEntity
   error?: unknown
@@ -74,7 +77,9 @@ export class PlayGame extends React.Component<Props, State> {
     const user: IUser = {
       Id: createGuid(),
       Name: this.state.userInTextBox,
-      Color: ''
+      Color: '',
+      InitialX: 0,
+      InitialY: 0,
     }
     this.setState({
       user,
@@ -229,10 +234,7 @@ export class PlayGame extends React.Component<Props, State> {
                   presence={PersonaPresence.online}
                   text={ u.Name }
                   initialsColor= { u.Color }
-                  // onRenderCoin={_onRenderCoin}
-                  // imageAlt="Ted Randall, status is available at 4 PM"
-                  // imageUrl={TestImages.personaMale}
-                  />
+                />
               )
             }) }
           </Stack>
@@ -249,7 +251,7 @@ export class PlayGame extends React.Component<Props, State> {
 
   renderStartedGame = (users: IUser[], gameMetadata: IGameTableEntity) => {
     if (gameMetadata.GameStarted) {
-      return this.renderDivsInPosition()
+      return this.renderDivsInPosition(users)
     }
 
     if (users.length <= 0) { // TODO change back to 1
@@ -271,12 +273,27 @@ export class PlayGame extends React.Component<Props, State> {
     )
   }
 
-  public renderDivsInPosition(): JSX.Element {
+  public renderPersonasPositions(users: IUser[]): JSX.Element[] {
+    return users.map(u => {
+      return (
+        <div key={ u.Id } style={ { position: 'absolute', top: Math.random() * 500, left: Math.random() * 600 } } >
+          <Persona
+            size={PersonaSize.size24}
+            text={ u.Name }
+            hidePersonaDetails={ true }
+            initialsColor= { u.Color }
+          />
+        </div>
+      )
+    })
+  }
+
+  public renderDivsInPosition(users: IUser[]): JSX.Element {
     return (
       (
         <div style={ { width: '100%', height: '100%' } }>
-          <div style={ { position: 'relative', height: '500px', width: '600px', margin: 'auto', outline: 'black solid 1px' }}>
-            <div style={ { position: 'absolute', top: 300, left: 200 } } ></div>
+          <div style={ { position: 'relative', height: maxHeightGame + 'px', width: maxWidthGame + 'px', margin: 'auto', outline: 'black solid 1px' }}>
+            { this.renderPersonasPositions(users) }
           </div>
         </div>
       )

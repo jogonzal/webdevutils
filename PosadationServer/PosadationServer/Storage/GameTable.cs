@@ -14,6 +14,8 @@ namespace PosadationServer.Storage
 		public string Id { get; set; }
 		public string Name { get; set; }
 		public string Color { get; set; }
+		public int InitialX { get; set; }
+		public int InitialY { get; set; }
 	}
 
 	public class GameTableEntity : TableEntity
@@ -154,6 +156,14 @@ namespace PosadationServer.Storage
 			return Colors[colors[randomIndex]];
 		}
 
+		public static int GetRandomNum(int max)
+		{
+			return new Random().Next(0, max);
+		}
+
+		public static int MaxWidth = 600;
+		public static int MaxHeight = 500;
+
 		public static async Task<GameTableEntity> CreateGame(string gameId, string leaderId, string leaderName)
 		{
 			// Create a new entity.
@@ -167,6 +177,8 @@ namespace PosadationServer.Storage
 						Id=leaderId,
 						Name=leaderName,
 						Color=GetRandomColor(),
+						InitialX= GetRandomNum(MaxWidth),
+						InitialY= GetRandomNum(MaxHeight),
 					},
 				}),
 			};
@@ -216,6 +228,8 @@ namespace PosadationServer.Storage
 					Id = userId,
 					Name = userName,
 					Color = GetRandomColor(users),
+					InitialX = GetRandomNum(MaxWidth),
+					InitialY = GetRandomNum(MaxHeight),
 				});
 
 				users = users.Distinct().ToList();
