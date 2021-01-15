@@ -8,6 +8,7 @@ import melee from '../assets/sounds/melee/melee.wav'
 import smashNo from '../assets/sounds/melee/menu-no.wav'
 import smashOk from '../assets/sounds/melee/menu-ok.wav'
 import toggle from '../assets/sounds/melee/menu-toggle.wav'
+import ready from '../assets/sounds/melee/ready.wav'
 import { IUser } from '../shared/IUser'
 import { getErrorAsString } from '../shared/logging/getErrorAsString'
 import { Log } from '../shared/logging/Log'
@@ -108,16 +109,16 @@ export class PlayGame extends React.Component<Props, State> {
         })
       })
 
-      connection.on('PlayerJoined', () => {
-        new Audio(toggle).play()
+      connection.on('PlayerJoined', async () => {
+        await new Audio(toggle).play()
       })
 
-      connection.on('GameStarted', () => {
-        new Audio(toggle).play()
+      connection.on('GameStarted', async () => {
+        await new Audio(ready).play()
       })
 
-      connection.on('GameEnded', () => {
-        new Audio(smashNo).play()
+      connection.on('GameEnded', async () => {
+        await new Audio(smashNo).play()
       })
 
       this.setState({
@@ -268,9 +269,11 @@ export class PlayGame extends React.Component<Props, State> {
   public renderDivsInPosition(): JSX.Element {
     return (
       (
-        <>
-          <Text>Game started!!</Text>
-        </>
+        <div style={ { width: '100%', height: '100%' } }>
+          <div style={ { position: 'relative', height: '500px', width: '600px', margin: 'auto', outline: 'black solid 1px' }}>
+            <div style={ { position: 'absolute', top: 300, left: 200 } } ></div>
+          </div>
+        </div>
       )
     )
   }
