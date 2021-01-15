@@ -1,6 +1,5 @@
 import * as signalR from '@aspnet/signalr'
 import { Label, Persona, PersonaPresence, PersonaSize, PrimaryButton, Spinner, Stack, StackItem, Text, TextField } from '@fluentui/react'
-import { toDataURL } from 'qrcode'
 import * as React from 'react'
 import { RouteComponentProps } from 'react-router-dom'
 import * as shortId from 'shortid'
@@ -22,7 +21,6 @@ type State = {
   user: IUser | undefined
   userInTextBox: string
   gameStarted: boolean
-  qrCodeDataUrl: string | undefined
 }
 
 type RouteParams = {
@@ -39,7 +37,6 @@ export class PlayGame extends React.Component<Props, State> {
       connection: undefined,
       user: undefined,
       gameStarted: false,
-      qrCodeDataUrl: undefined,
       userInTextBox: '',
     }
   }
@@ -72,9 +69,10 @@ export class PlayGame extends React.Component<Props, State> {
     }
 
     new Audio(smashOk).play()
-    const user = {
+    const user: IUser = {
       Id: createGuid(),
       Name: this.state.userInTextBox,
+      Color: ''
     }
     this.setState({
       user,
@@ -142,15 +140,6 @@ export class PlayGame extends React.Component<Props, State> {
   onStartGameClick = async () => {
     new Audio(smashOk).play()
     this.state.connection?.invoke('StartGame')
-    const canvas = document.createElement('canvas')
-    canvas.width = 300
-    canvas.height = 300
-    const url = window.location.protocol + '//' + window.location.host + '#/mobile/' + this.props.match.params.gameId + '/' + this.state.user?.Id
-    Log.logger.info(url)
-    const dataUrl = await toDataURL(canvas, url)
-    this.setState({
-      qrCodeDataUrl: dataUrl,
-    })
   }
 
   render(): JSX.Element {
@@ -254,12 +243,7 @@ export class PlayGame extends React.Component<Props, State> {
 
   renderStartedGame = (users: IUser[], gameMetadata: IGameTableEntity) => {
     if (gameMetadata.GameStarted) {
-      return (
-        <>
-          <Text>Game started!!</Text>
-          { this.state.qrCodeDataUrl !== undefined && <img width={ 300 } height={ 300 } src={ this.state.qrCodeDataUrl }></img> }
-        </>
-      )
+      return this.renderDivsInPosition()
     }
 
     if (users.length <= 0) { // TODO change back to 1
@@ -278,6 +262,16 @@ export class PlayGame extends React.Component<Props, State> {
       <>
         <PrimaryButton onClick={ this.onStartGameClick }>Start game!</PrimaryButton>
       </>
+    )
+  }
+
+  public renderDivsInPosition(): JSX.Element {
+    return (
+      (
+        <>
+          <Text>Game started!!</Text>
+        </>
+      )
     )
   }
 }
