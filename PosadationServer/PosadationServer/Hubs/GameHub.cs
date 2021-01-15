@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.SignalR;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using PosadationServer.Logging;
-using PosadationServer.Models;
 using PosadationServer.Storage;
 using System;
 using System.Collections.Generic;

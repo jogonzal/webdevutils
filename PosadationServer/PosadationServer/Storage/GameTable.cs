@@ -13,6 +13,7 @@ namespace PosadationServer.Storage
 	{
 		public string Id { get; set; }
 		public string Name { get; set; }
+		public string Color { get; set; }
 	}
 
 	public class GameTableEntity : TableEntity
@@ -35,6 +36,17 @@ namespace PosadationServer.Storage
 
 	public static class GameTable
 	{
+		public static Dictionary<string, string> Colors = new Dictionary<string, string>() {
+			{"red", "red" },
+			{"blue", "blue" },
+			{"green", "green" },
+			{"purple", "purple" },
+			{"black", "black" },
+			{"yellow", "yellow" },
+			{"cyan", "cyan" },
+			{"brown", "brown" },
+		};
+
 		public static string ConnectionString { get; set; }
 
 		public static Lazy<CloudTable> getTableClient = new Lazy<CloudTable>(() =>
@@ -125,6 +137,23 @@ namespace PosadationServer.Storage
 			}
 		}
 
+		public static string GetRandomColor(List<User> users = null)
+		{
+			if (users == null)
+			{
+				int randomIndex2 = new Random().Next(0, Colors.Count - 1);
+				return Colors[Colors.Keys.ToArray()[randomIndex2]];
+			}
+
+			var colors = Colors.Keys.ToArray().Where(c => !users.Any(u => u.Color == c)).ToList();
+			if (colors.Count == 0)
+			{
+				colors = Colors.Keys.ToList();
+			}
+			int randomIndex = new Random().Next(0, colors.Count - 1);
+			return Colors[colors[randomIndex]];
+		}
+
 		public static async Task<GameTableEntity> CreateGame(string gameId, string leaderId, string leaderName)
 		{
 			// Create a new entity.
@@ -137,6 +166,7 @@ namespace PosadationServer.Storage
 					{
 						Id=leaderId,
 						Name=leaderName,
+						Color=GetRandomColor(),
 					},
 				}),
 			};
@@ -181,7 +211,13 @@ namespace PosadationServer.Storage
 					return;
 				}
 
-				users.Add(new User() { Id = userId, Name = userName });
+				users.Add(new User()
+				{
+					Id = userId,
+					Name = userName,
+					Color = GetRandomColor(users),
+				});
+
 				users = users.Distinct().ToList();
 				entity.UsersArray = JsonConvert.SerializeObject(users);
 				if (string.IsNullOrEmpty(entity.LeaderUserId))

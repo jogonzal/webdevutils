@@ -233,6 +233,7 @@ export class PlayGame extends React.Component<Props, State> {
                   size={PersonaSize.size72}
                   presence={PersonaPresence.online}
                   text={ u.Name }
+                  initialsColor= { u.Color }
                   // onRenderCoin={_onRenderCoin}
                   // imageAlt="Ted Randall, status is available at 4 PM"
                   // imageUrl={TestImages.personaMale}
