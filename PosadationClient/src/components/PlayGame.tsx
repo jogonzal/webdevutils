@@ -55,7 +55,8 @@ export class PlayGame extends React.Component<Props, State> {
   }
 
   private keySet: Set<string> = new Set<string>()
-  private interval: number = 0
+  private keyInputInterval: number = 0
+  private sendInputToServerInterval: number = 0
 
   componentDidMount() {
     new Audio(melee).play()
@@ -65,7 +66,8 @@ export class PlayGame extends React.Component<Props, State> {
     // }
     document.addEventListener('keydown', this.onKeyDown)
     document.addEventListener('keyup', this.onKeyUp)
-    this.interval = window.setInterval(this.checkKeysIntoState, 50)
+    this.keyInputInterval = window.setInterval(this.checkKeysIntoState, 50)
+    this.sendInputToServerInterval = window.setInterval(this.sendInputToServer, 150)
   }
 
   checkKeysIntoState = () => {
@@ -86,10 +88,18 @@ export class PlayGame extends React.Component<Props, State> {
     })
   }
 
+  sendInputToServer = async () => {
+    if (!this.state.connection) {
+      return
+    }
+
+    await this.state.connection.invoke('UpdateKeys', { leftKey: this.state.leftKey, rightKey: this.state.rightKey, upKey: this.state.upKey, downKey: this.state.downKey })
+  }
+
   componentWillUnmount() {
     document.removeEventListener('keydown', this.onKeyDown)
     document.removeEventListener('keyup', this.onKeyUp)
-    window.clearInterval(this.interval)
+    window.clearInterval(this.keyInputInterval)
   }
 
   private onKeyDown = (ev: KeyboardEvent) => {
