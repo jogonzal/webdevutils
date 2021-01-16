@@ -44,7 +44,6 @@ namespace PosadationServer.Storage
 			{"green", "green" },
 			{"purple", "purple" },
 			{"black", "black" },
-			{"yellow", "yellow" },
 			{"cyan", "cyan" },
 			{"brown", "brown" },
 		};
@@ -161,8 +160,9 @@ namespace PosadationServer.Storage
 			return new Random().Next(0, max);
 		}
 
-		public static int MaxWidth = 600;
-		public static int MaxHeight = 500;
+		public static int IconSize = 24;
+		public static int MaxXPosition = 600 - IconSize;
+		public static int MaxYPosition = 500 - IconSize;
 
 		public static async Task<GameTableEntity> CreateGame(string gameId, string leaderId, string leaderName)
 		{
@@ -177,8 +177,8 @@ namespace PosadationServer.Storage
 						Id=leaderId,
 						Name=leaderName,
 						Color=GetRandomColor(),
-						InitialX= GetRandomNum(MaxWidth),
-						InitialY= GetRandomNum(MaxHeight),
+						InitialX= GetRandomNum(MaxXPosition),
+						InitialY= GetRandomNum(MaxYPosition),
 					},
 				}),
 			};
@@ -228,8 +228,8 @@ namespace PosadationServer.Storage
 					Id = userId,
 					Name = userName,
 					Color = GetRandomColor(users),
-					InitialX = GetRandomNum(MaxWidth),
-					InitialY = GetRandomNum(MaxHeight),
+					InitialX = GetRandomNum(MaxXPosition),
+					InitialY = GetRandomNum(MaxYPosition),
 				});
 
 				users = users.Distinct().ToList();

@@ -26,6 +26,10 @@ type State = {
   user: IUser | undefined
   userInTextBox: string
   gameStarted: boolean
+  downKey: boolean
+  upKey: boolean
+  leftKey: boolean
+  rightKey: boolean
 }
 
 type RouteParams = {
@@ -43,15 +47,59 @@ export class PlayGame extends React.Component<Props, State> {
       user: undefined,
       gameStarted: false,
       userInTextBox: '',
+      downKey: false,
+      rightKey: false,
+      leftKey: false,
+      upKey: false,
     }
   }
 
-  async componentDidMount() {
+  private keySet: Set<string> = new Set<string>()
+  private interval: number = 0
+
+  componentDidMount() {
     new Audio(melee).play()
     // if (this.state.user && this.props.match.params.id) {
     //   // If user and game is available, start game
     //   await this.makeConnection(this.state.user, this.props.match.params.id)
     // }
+    document.addEventListener('keydown', this.onKeyDown)
+    document.addEventListener('keyup', this.onKeyUp)
+    this.interval = window.setInterval(this.checkKeysIntoState, 50)
+  }
+
+  checkKeysIntoState = () => {
+    const downKey = this.keySet.has('ArrowDown')
+    const upKey = this.keySet.has('ArrowUp')
+    const leftKey = this.keySet.has('ArrowLeft')
+    const rightKey = this.keySet.has('ArrowRight')
+
+    if (downKey === this.state.downKey && upKey === this.state.upKey && leftKey === this.state.leftKey && rightKey === this.state.rightKey) {
+      return
+    }
+
+    this.setState({
+      leftKey,
+      rightKey,
+      upKey,
+      downKey,
+    })
+  }
+
+  componentWillUnmount() {
+    document.removeEventListener('keydown', this.onKeyDown)
+    document.removeEventListener('keyup', this.onKeyUp)
+    window.clearInterval(this.interval)
+  }
+
+  private onKeyDown = (ev: KeyboardEvent) => {
+    Log.logger.info(`Key down ${ev.key}`)
+    this.keySet.add(ev.key)
+  }
+
+  private onKeyUp = (ev: KeyboardEvent) => {
+    Log.logger.info(`Key up ${ev.key}`)
+    this.keySet.delete(ev.key)
   }
 
   onConnectionClose = (error: Error | undefined) => {
@@ -276,7 +324,7 @@ export class PlayGame extends React.Component<Props, State> {
   public renderPersonasPositions(users: IUser[]): JSX.Element[] {
     return users.map(u => {
       return (
-        <div key={ u.Id } style={ { position: 'absolute', top: Math.random() * 500, left: Math.random() * 600 } } >
+        <div key={ u.Id } style={ { position: 'absolute', top: u.InitialY, left: u.InitialX } } >
           <Persona
             size={PersonaSize.size24}
             text={ u.Name }
@@ -289,9 +337,24 @@ export class PlayGame extends React.Component<Props, State> {
   }
 
   public renderDivsInPosition(users: IUser[]): JSX.Element {
+    const directions: string[] = []
+    if (this.state.leftKey) {
+      directions.push('LEFT')
+    }
+    if (this.state.rightKey) {
+      directions.push('RIGHT')
+    }
+    if (this.state.upKey) {
+      directions.push('UP')
+    }
+    if (this.state.downKey) {
+      directions.push('DOWN')
+    }
+    const directionsString = directions.join(' | ')
     return (
       (
         <div style={ { width: '100%', height: '100%' } }>
+          <Text>{ directionsString }</Text>
           <div style={ { position: 'relative', height: maxHeightGame + 'px', width: maxWidthGame + 'px', margin: 'auto', outline: 'black solid 1px' }}>
             { this.renderPersonasPositions(users) }
           </div>
