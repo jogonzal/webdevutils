@@ -70,6 +70,13 @@ export class PlayGame extends React.Component<Props, State> {
     this.sendInputToServerInterval = window.setInterval(this.sendInputToServer, 150)
   }
 
+  componentWillUnmount() {
+    document.removeEventListener('keydown', this.onKeyDown)
+    document.removeEventListener('keyup', this.onKeyUp)
+    window.clearInterval(this.keyInputInterval)
+    window.clearInterval(this.sendInputToServerInterval)
+  }
+
   checkKeysIntoState = () => {
     const downKey = this.keySet.has('ArrowDown')
     const upKey = this.keySet.has('ArrowUp')
@@ -94,12 +101,6 @@ export class PlayGame extends React.Component<Props, State> {
     }
 
     await this.state.connection.invoke('UpdateKeys', { leftKey: this.state.leftKey, rightKey: this.state.rightKey, upKey: this.state.upKey, downKey: this.state.downKey })
-  }
-
-  componentWillUnmount() {
-    document.removeEventListener('keydown', this.onKeyDown)
-    document.removeEventListener('keyup', this.onKeyUp)
-    window.clearInterval(this.keyInputInterval)
   }
 
   private onKeyDown = (ev: KeyboardEvent) => {
