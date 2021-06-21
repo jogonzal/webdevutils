@@ -26,8 +26,8 @@ export const ClipboardUtils: React.FC<Props> = () => {
   const [clipboardMetadata, setClipboardMetadata] = React.useState<IClipboardMetadata | undefined>(undefined)
 
   const onPaste = (clipboardEvent: React.ClipboardEvent<HTMLInputElement>) => {
-    let formats = clipboardEvent.clipboardData.types;
-    clipboardEvent.preventDefault();
+    let pastedContentTypes = clipboardEvent.clipboardData.types;
+    clipboardEvent.preventDefault(); // Don't paste normally
 
     const newMetadata: IClipboardMetadata = {
       html: '',
@@ -35,17 +35,16 @@ export const ClipboardUtils: React.FC<Props> = () => {
       files: []
     }
 
-    if (formats.indexOf(ClipboardOption.html) !== -1) {
+    // This could be used for files...
+    // if (pastedContentTypes.includes(ClipboardOption.files)) {
+    //   newMetadata.files = [...clipboardEvent.clipboardData.files]
+    // }
+
+    if (pastedContentTypes.includes(ClipboardOption.html)) {
       newMetadata.html = clipboardEvent.clipboardData.getData(ClipboardOption.html);
       newMetadata.text = clipboardEvent.clipboardData.getData(ClipboardOption.plainText);
-    } else if (formats.indexOf(ClipboardOption.plainText) !== -1) {
+    } else if (pastedContentTypes.includes(ClipboardOption.plainText)) {
       newMetadata.text = clipboardEvent.clipboardData.getData(ClipboardOption.plainText)
-    } else if (formats.indexOf(ClipboardOption.files) !== -1) {
-      let files: File[] = [];
-      for (let i = 0; i < clipboardEvent.clipboardData.files.length; i += 1) {
-        files.push(clipboardEvent.clipboardData.files[i]);
-      }
-      newMetadata.files = files
     }
 
     setClipboardMetadata(newMetadata)
