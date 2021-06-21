@@ -25,6 +25,7 @@ jobs:
         uses: actions/setup-node@v2
         with:
           node-version: '12.x'
+      - run: cd ./GameClient
       - run: yarn install
       - run: yarn lint
       - run: yarn test
@@ -33,18 +34,12 @@ jobs:
         uses: azure/login@v1
         with:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
-      - name: yarn
-        uses: azure/CLI@v1
-        with:
-          azcliversion: 2.0.72
-          inlineScript: |
-              az storage blob upload-batch --account-name jorgewebdeployment -d 'testcontainer' -s ./GameClient/dist
       - name: Upload to blob storage
         uses: azure/CLI@v1
         with:
           azcliversion: 2.0.72
           inlineScript: |
-              az storage blob upload-batch --account-name jorgewebdeployment -d 'testcontainer' -s ./GameClient/dist
+              az storage blob upload-batch --account-name jorgewebdeployment -d 'testcontainer' -s ./dist
       - name: logout
         run: |
               az logout
