@@ -17,16 +17,30 @@ jobs:
         run: |
           ls ${{ github.workspace }}
       - run: echo "🍏 This job's status is ${{ job.status }}."
+      - name: Install node and yarn
+        uses: actions/setup-node@v2
+        with:
+          node-version: '12.x'
+      - run: yarn install
+      - run: yarn lint
+      - run: yarn test
+      - run: yarn build:prod
       - name: Login to azure
         uses: azure/login@v1
         with:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
+      - name: yarn
+        uses: azure/CLI@v1
+        with:
+          azcliversion: 2.0.72
+          inlineScript: |
+              az storage blob upload-batch --account-name jorgewebdeployment -d 'testcontainer' -s ./GameClient/dist
       - name: Upload to blob storage
         uses: azure/CLI@v1
         with:
           azcliversion: 2.0.72
           inlineScript: |
-              az storage blob upload-batch --account-name jorgewebdeployment -d 'testcontainer' -s ./GameClient/configs/webpack
+              az storage blob upload-batch --account-name jorgewebdeployment -d 'testcontainer' -s ./GameClient/dist
       - name: logout
         run: |
               az logout
