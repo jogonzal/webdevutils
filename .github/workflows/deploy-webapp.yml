@@ -25,11 +25,14 @@ jobs:
         uses: actions/setup-node@v2
         with:
           node-version: '12.x'
-      - run: cd ./GameClient
-      - run: yarn install
+      - run: yarn install --frozen-lockfile
+        working-directory: ./GameClient
       - run: yarn lint
+        working-directory: ./GameClient
       - run: yarn test
+        working-directory: ./GameClient
       - run: yarn build:prod
+        working-directory: ./GameClient
       - name: Login to azure
         uses: azure/login@v1
         with:
@@ -39,7 +42,7 @@ jobs:
         with:
           azcliversion: 2.0.72
           inlineScript: |
-              az storage blob upload-batch --account-name jorgewebdeployment -d 'testcontainer' -s ./dist
+              az storage blob upload-batch --account-name jorgewebdeployment -d 'testcontainer' -s ./GameClient/dist
       - name: logout
         run: |
               az logout
