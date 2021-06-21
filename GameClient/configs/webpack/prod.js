@@ -33,8 +33,8 @@ module.exports = merge(common(), {
   output: {
     filename: '[name]_[contenthash].min.js',
     path: paths.DIST,
-    // publicPath: 'https://jorgewebdeploymentakamai.azureedge.net/posadation/', // Akamai CDN
-    publicPath: 'https://jorgewebdeployment.azureedge.net/posadation/', // Microsoft CDN
+    // publicPath: 'https://jorgewebdeploymentakamai.azureedge.net/websocketgame/', // Akamai CDN
+    publicPath: 'https://jorgewebdeployment.azureedge.net/websocketgame/', // Microsoft CDN
   },
   module: {
     rules: [{

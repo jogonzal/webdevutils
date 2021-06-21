@@ -1,7 +1,7 @@
 # Posadation
 
-### Server: /posadationserver
+### Server: /gameserver
 - ASP.NET core MVC + websockets
 
-### Client: /posadationclient
+### Client: /gameclient
 - React, webpack, typescript

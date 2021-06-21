@@ -92,7 +92,7 @@ namespace PosadationServer.Controllers
 #if DEBUG
 					fileUrl = "http://localhost:8080/" + fileName;
 #else
-						fileUrl = "https://jorgewebdeployment.blob.core.windows.net/posadation/" + fileName;
+						fileUrl = "https://jorgewebdeployment.blob.core.windows.net/websocketgame/" + fileName;
 #endif
 
 					var result = await httpClient.GetAsync(fileUrl);
