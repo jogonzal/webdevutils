@@ -1,5 +1,6 @@
 import { IStackTokens, Pivot, PivotItem, Stack } from '@fluentui/react'
 import * as React from 'react'
+import { ClipboardUtils } from './ClipboardUtils'
 
 import { EncodeDecodeUI } from './EncodeDecodeUI'
 import { JWTParse } from './JWTParse'
@@ -29,6 +30,9 @@ export const WebDevUtils: React.FC = () => {
         </PivotItem>
         <PivotItem headerText='JWT parse'>
           <JWTParse />
+        </PivotItem>
+        <PivotItem headerText='Clipboard utils'>
+          <ClipboardUtils />
         </PivotItem>
       </Pivot>
     </Stack>
