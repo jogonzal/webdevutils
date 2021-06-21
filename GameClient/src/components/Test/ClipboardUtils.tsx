@@ -26,7 +26,7 @@ export const ClipboardUtils: React.FC<Props> = () => {
   const [clipboardMetadata, setClipboardMetadata] = React.useState<IClipboardMetadata | undefined>(undefined)
 
   const onPaste = (clipboardEvent: React.ClipboardEvent<HTMLInputElement>) => {
-    let pastedContentTypes = clipboardEvent.clipboardData.types;
+    const pastedContentTypes = clipboardEvent.clipboardData.types;
     clipboardEvent.preventDefault(); // Don't paste normally
 
     const newMetadata: IClipboardMetadata = {

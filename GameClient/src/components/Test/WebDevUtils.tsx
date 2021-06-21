@@ -1,7 +1,7 @@
 import { IStackTokens, Pivot, PivotItem, Stack } from '@fluentui/react'
 import * as React from 'react'
-import { ClipboardUtils } from './ClipboardUtils'
 
+import { ClipboardUtils } from './ClipboardUtils'
 import { EncodeDecodeUI } from './EncodeDecodeUI'
 import { JWTParse } from './JWTParse'
 import { QueryParamParse } from './QueryParamParse'
