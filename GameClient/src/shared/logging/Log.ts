@@ -54,7 +54,7 @@ export class TelemetryLogger {
 }
 
 export class Log {
-  private static telemetryLogger: TelemetryLogger = new TelemetryLogger('Posadation')
+  private static telemetryLogger: TelemetryLogger = new TelemetryLogger('WebSocketGame')
 
   static get logger(): TelemetryLogger {
     return this.telemetryLogger

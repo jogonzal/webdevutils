@@ -5,7 +5,7 @@ import { Text } from '@fluentui/react/lib/Text'
 import * as React from 'react'
 
 import logoPng from '../assets/img/logo.png'
-import { PosadationCommandBar } from './Navbar/PosadationCommandBar'
+import { WebSocketCommandBar } from './Navbar/WebSocketCommandBar'
 import { OfflineNotification } from './OfflineNotification'
 import { VerticalStack } from './Stacks/VerticalStack'
 
@@ -31,12 +31,12 @@ export class NavbarContainer extends React.Component<IProps> {
               <div style={ { display: 'flex', justifyContent: 'center', alignItems: 'center', cursor: 'pointer' } } onClick={ this.onHomeClick } >
                 <Image src={ logoPng } height='44px' width='44px' style={ { paddingRight: '10px', height: '44px', width: '44px' } }/>
                 <Stack style={ { paddingLeft: '10px' } } >
-                  <Text variant='large'>Posadation</Text>
-                  <Text variant='small'>Posadation</Text>
+                  <Text variant='large'>WebSocketGame</Text>
+                  <Text variant='small'>WebSocketGame</Text>
                 </Stack>
               </div>
               <div style={ { flexGrow: 1 } }>
-                <PosadationCommandBar />
+                <WebSocketCommandBar />
               </div>
             </nav>
             <Separator styles={ { root: { padding: '0px', height: '5px' } } }/>

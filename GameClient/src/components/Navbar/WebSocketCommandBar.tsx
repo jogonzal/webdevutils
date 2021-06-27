@@ -7,7 +7,7 @@ function createBrowseTo(to: string): string {
   return '/#/' + to
 }
 
-export class PosadationCommandBar extends React.Component {
+export class WebSocketCommandBar extends React.Component {
   public render(): JSX.Element {
     return (
       <CommandBar

@@ -1,4 +1,4 @@
-# Posadation
+# WebSocketGame
 
 ### Server: /gameserver
 - ASP.NET core MVC + websockets

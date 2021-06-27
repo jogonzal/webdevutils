@@ -24,7 +24,7 @@ export class MyAccount extends React.Component<Props, State> {
     if (currentUser) {
       return (
         <>
-          <Text>El usuario <em>{ currentUser.UsuarioClave }</em> si existe. Bienvenido a Posadation!</Text>
+          <Text>El usuario <em>{ currentUser.UsuarioClave }</em> si existe. Bienvenido a WebSocketGame!</Text>
         </>
       )
     }

@@ -7,7 +7,7 @@ const CircularDependencyPlugin = require('circular-dependency-plugin')
 module.exports = env => {
   return {
     entry: {
-      posadation: './src/index.tsx'
+      websocketgame: './src/index.tsx'
     },
     plugins: [
       // Speed up build and eslint
