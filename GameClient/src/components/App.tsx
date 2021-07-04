@@ -39,7 +39,8 @@ export class App extends React.Component<Props, State> {
       <HashRouter>
         {/* <NavbarContainer> */}
           <Switch>
-            <Route exact={ true } path='/' component={ PlayGame } />
+            <Route exact={ true } path='/' component={ WebDevUtils } />
+            <Route path='/playgame?' component={ PlayGame } />
             <Route path='/g/:gameId?' component={ PlayGame } />
             <Route path='/mobile/:gameId/:playerId' component={ MobileController } />
 
