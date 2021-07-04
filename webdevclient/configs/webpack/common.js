@@ -7,7 +7,7 @@ const CircularDependencyPlugin = require('circular-dependency-plugin')
 module.exports = env => {
   return {
     entry: {
-      websocketgame: './src/index.tsx'
+      webdevutils: './src/index.tsx'
     },
     plugins: [
       // Run eslint and typescript in a separate process
