@@ -26,13 +26,13 @@ jobs:
         with:
           node-version: '12.x'
       - run: yarn install --frozen-lockfile
-        working-directory: ./GameClient
+        working-directory: ./webdevclient
       - run: yarn lint
-        working-directory: ./GameClient
+        working-directory: ./webdevclient
       - run: yarn test
-        working-directory: ./GameClient
+        working-directory: ./webdevclient
       - run: yarn build:prod
-        working-directory: ./GameClient
+        working-directory: ./webdevclient
       - name: Login to azure
         uses: azure/login@v1
         with:
@@ -42,7 +42,7 @@ jobs:
         with:
           azcliversion: 2.0.72
           inlineScript: |
-              az storage blob upload-batch --account-name jorgewebdeployment -d 'websocketgame' -s ./GameClient/dist
+              az storage blob upload-batch --account-name jorgewebdeployment -d 'websocketgame' -s ./webdevclient/dist
       - name: logout
         run: |
               az logout
