@@ -1,7 +1,6 @@
-import { getTheme, ITheme, registerOnThemeChangeCallback, removeOnThemeChangeCallback } from '@fluentui/react'
+import { getTheme, ITheme, mergeStyles,registerOnThemeChangeCallback, removeOnThemeChangeCallback } from '@fluentui/react'
 import { StackItem } from '@fluentui/react/lib/Stack'
 import { Text } from '@fluentui/react/lib/Text'
-import { mergeStyles } from '@uifabric/styling'
 import * as React from 'react'
 
 type Props = {

@@ -1,6 +1,5 @@
-import { ITheme,registerOnThemeChangeCallback } from '@fluentui/react'
+import { initializeIcons, ITheme, registerOnThemeChangeCallback } from '@fluentui/react'
 import { ApplicationInsights } from '@microsoft/applicationinsights-web'
-import { initializeIcons } from '@uifabric/icons'
 import * as React from 'react'
 import { render } from 'react-dom'
 
