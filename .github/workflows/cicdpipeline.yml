@@ -22,7 +22,7 @@ jobs:
         run: |
           dotnet restore ./webdevserver/WebDevServer/WebDevServer.csproj
           dotnet build ./webdevserver/WebDevServer/WebDevServer.csproj --configuration Release
-          dotnet publish ./webdevserver/WebDevServer/WebDevServer.csproj -c Release -o ./myapp
+          dotnet publish ./webdevserver/WebDevServer/WebDevServer.csproj -c Release -o ./webdevserver/WebDevServer/publishedApp
 
       # Deploy to Azure Web apps
       - name: 'Run Azure webapp deploy action using publish profile credentials'
@@ -30,7 +30,7 @@ jobs:
         with: 
           app-name: webdevutils # Replace with your app name
           publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE  }} # Define secret variable in repository settings as per action documentation
-          package: './webdevserver/webdevserver/myapp'
+          package: './webdevserver/WebDevServer/publishedApp'
 
   webClient-buildTestAndDeploy:
     runs-on: ubuntu-latest
