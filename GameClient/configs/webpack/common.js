@@ -10,8 +10,23 @@ module.exports = env => {
       websocketgame: './src/index.tsx'
     },
     plugins: [
-      // Speed up build and eslint
-      new ForkTsCheckerWebpackPlugin(),
+      // Run eslint and typescript in a separate process
+      new ForkTsCheckerWebpackPlugin({
+        // async:false = wait on ts/eslint before finishing
+        async: false,
+        typescript: {
+          diagnosticOptions: {
+            semantic: true,
+            syntactic: true,
+            declaration: true,
+            global: true,
+          },
+        },
+        // don't eslint test while compiling
+        eslint: {
+          files: "./src/**/*.{ts,tsx}",
+        }
+      }),
 
       // Check for circular dependencies
       new CircularDependencyPlugin({
@@ -56,12 +71,6 @@ module.exports = env => {
     },
     module: {
       rules: [
-        {
-          test: /\.(ts|tsx)$/,
-          enforce: 'pre',
-          loader: 'eslint-loader',
-          exclude: /node_modules/,
-        },
         {
           test: /\.tsx?$/,
           exclude: /node_modules/,
