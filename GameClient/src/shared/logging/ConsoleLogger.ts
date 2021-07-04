@@ -1,5 +1,5 @@
 /* eslint-disable no-console */
-import { IPrimitiveProperties } from './CustomActivity'
+import { IPrimitiveProperties } from './LoggingActivity'
 
 export class ConsoleLogger {
   private namespace: string

@@ -34,10 +34,6 @@ export async function initializeSettings(): Promise<IAppSettings> {
   return initialSettings
 }
 
-export function getInitialAppSettings(): IAppSettings {
-  return initialSettings
-}
-
 class SettingsDatabase extends Dexie {
   appSettings: Dexie.Table<IAppSettings, number> // number = type of the primkey
   constructor () {

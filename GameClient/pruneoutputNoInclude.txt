@@ -1,0 +1,8 @@
+\scripts\tsPruneUtils.ts:7 - IPruneInfo (used in module)
+\src\shared\ApiError.ts:1 - IRestApiError (used in module)
+\src\shared\ApiError.ts:9 - IODataError (used in module)
+\src\shared\logging\Log.ts:6 - TelemetryLogger (used in module)
+\src\shared\settings\SettingsDatabase.ts:7 - TableType (used in module)
+\src\shared\theme\ThemeUtils.ts:37 - lightTheme (used in module)
+\src\shared\utils\DateUtils.ts:4 - DateUtils (used in module)
+\src\shared\utils\NumberUtils.ts:1 - NumberUtils (used in module)

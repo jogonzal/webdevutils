@@ -1,7 +1,8 @@
 import { getErrorAsString } from './getErrorAsString'
 import { Log } from './Log'
 
-export class CustomActivity {
+// ts-prune-ignore-next
+export class LoggingActivity {
   private start: number
   private activityName: string
   private primitiveProperties: IPrimitiveProperties

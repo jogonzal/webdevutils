@@ -1,7 +1,7 @@
 import { ApplicationInsights } from '@microsoft/applicationinsights-web'
 
 import { ConsoleLogger } from './ConsoleLogger'
-import { IPrimitiveProperties } from './CustomActivity'
+import { IPrimitiveProperties } from './LoggingActivity'
 
 export class TelemetryLogger {
   private consoleLogger: ConsoleLogger

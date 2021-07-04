@@ -24,17 +24,3 @@ export function lookupEnumString<TDatabaseValue extends EnumValueType>(enumList:
 
   return undefined
 }
-
-export function lookupEnum<TDatabaseValue extends EnumValueType>(enumList: EnumClass<TDatabaseValue>, value: TDatabaseValue | undefined): string | undefined {
-  if (value === undefined) {
-    return undefined
-  }
-  for (const key of Object.keys(enumList)) {
-    const enumObj = enumList[key]
-    if (enumObj.databaseValue === value) {
-      return enumObj.niceDisplayString ?? enumObj.databaseValue.toString()
-    }
-  }
-
-  return undefined
-}
