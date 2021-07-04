@@ -22,6 +22,7 @@
     "detect-dead-code:noinclude": "ts-prune -p tsconfig.ts-pruneNoInclude.json > pruneoutput.txt",
     "detect-dead-code:include": "ts-prune -p tsconfig.ts-prune.json > pruneoutputNoInclude.txt ",
     "detect-dead-code": "npm run detect-dead-code:include && npm run detect-dead-code:noinclude && ts-node --project scripts/tsconfig.json scripts/printPruneInfo.ts",
+    "fail-if-dead-code": "npm run detect-dead-code:include && npm run detect-dead-code:noinclude && ts-node --project scripts/tsconfig.json scripts/failIfPruningNeeded.ts",
     "start:ngrok": "ngrok http 5000"
   },
   "devDependencies": {

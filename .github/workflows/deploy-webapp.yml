@@ -31,6 +31,8 @@ jobs:
         working-directory: ./webdevclient
       - run: yarn test
         working-directory: ./webdevclient
+      - run: yarn fail-if-dead-code
+        working-directory: ./webdevclient
       - run: yarn build:prod
         working-directory: ./webdevclient
       - name: Login to azure
