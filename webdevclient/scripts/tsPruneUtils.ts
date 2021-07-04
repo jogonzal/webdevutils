@@ -14,11 +14,11 @@ export function getPruneInfo(): IPruneInfo {
   const fileContent = fs.readFileSync('./pruneoutput.txt', 'utf-8')
   const fileContentNoInclude = fs.readFileSync('./pruneoutputNoInclude.txt', 'utf-8')
   let fileContentSplitByNewLine = [...fileContent.split('\n'), ...fileContentNoInclude.split('\n')]
+  // Remove duplicates
+  fileContentSplitByNewLine = [...new Set(fileContentSplitByNewLine)]
   // Locales are dynamic imports, so they shouldn't be considered
   fileContentSplitByNewLine = fileContentSplitByNewLine.filter((line: string) => line.length > 0 && line.indexOf('\\src\\loc\\locales\\') === -1)
-  let modulesThatNeedPruning = fileContentSplitByNewLine.filter((line: string) => line.indexOf('used in module') === -1)
-  // Remove duplicates
-  modulesThatNeedPruning = [...new Set(modulesThatNeedPruning)]
+  const modulesThatNeedPruning = fileContentSplitByNewLine.filter((line: string) => line.indexOf('used in module') === -1)
   return {
     modulesThatNeedPruning,
     numberOfModules: fileContentSplitByNewLine.length,
