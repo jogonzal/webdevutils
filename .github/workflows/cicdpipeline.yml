@@ -10,7 +10,7 @@ env:
   AZURE_WEBAPP_PACKAGE_PATH: './webdevserver/webdevserver'      # set this to the path to your web app project, defaults to the repository root
   DOTNET_VERSION: '3.1'           # set this to the dot net version to use
 jobs:
-  buildTestAndDeploy-webServer:
+  webServer-buildTestAndDeploy:
     runs-on: ubuntu-latest
     steps:
       # Checkout the repo
@@ -38,7 +38,7 @@ jobs:
           package: './myapp'
         working-directory: ./webdevserver/webdevserver
 
-  buildTestAndDeploy-webClient:
+  webClient-buildTestAndDeploy:
     runs-on: ubuntu-latest
     steps:
       - run: echo "🎉 The job was automatically triggered by a ${{ github.event_name }} event."
