@@ -31,8 +31,7 @@ jobs:
         with: 
           app-name: webdevutils # Replace with your app name
           publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE  }} # Define secret variable in repository settings as per action documentation
-          package: './myapp'
-        working-directory: ./webdevserver/webdevserver
+          package: './webdevserver/webdevserver/myapp'
 
   webClient-buildTestAndDeploy:
     runs-on: ubuntu-latest
