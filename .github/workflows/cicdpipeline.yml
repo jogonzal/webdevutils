@@ -6,8 +6,8 @@ on:
     branches:
       - master
 env:
-  AZURE_WEBAPP_NAME: WebDevServer    # set this to your application's name
-  AZURE_WEBAPP_PACKAGE_PATH: './webdevserver'      # set this to the path to your web app project, defaults to the repository root
+  AZURE_WEBAPP_NAME: WebDevUtils    # set this to your application's name
+  AZURE_WEBAPP_PACKAGE_PATH: './webdevserver/webdevserver'      # set this to the path to your web app project, defaults to the repository root
   DOTNET_VERSION: '3.1'           # set this to the dot net version to use
 jobs:
   buildTestAndDeploy-webServer:
@@ -26,7 +26,8 @@ jobs:
         run: |
           dotnet restore
           dotnet build --configuration Release
-          dotnet publish -c Release -o '${{ env.AZURE_WEBAPP_PACKAGE_PATH }}/myapp' 
+          dotnet publish -c Release -o ./myapp
+        working-directory: ./webdevserver/webdevserver
           
       # Deploy to Azure Web apps
       - name: 'Run Azure webapp deploy action using publish profile credentials'
@@ -34,7 +35,9 @@ jobs:
         with: 
           app-name: ${{ env.AZURE_WEBAPP_NAME }} # Replace with your app name
           publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE  }} # Define secret variable in repository settings as per action documentation
-          package: '${{ env.AZURE_WEBAPP_PACKAGE_PATH }}/myapp'
+          package: './myapp'
+        working-directory: ./webdevserver/webdevserver
+
   buildTestAndDeploy-webClient:
     runs-on: ubuntu-latest
     steps:
