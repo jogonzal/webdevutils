@@ -5,6 +5,9 @@ module.exports = {
     node: true,
   },
   settings: {
+    react: {
+      "version": "detect"
+    },
     polyfills: [
       "Promise",
       "Headers",
