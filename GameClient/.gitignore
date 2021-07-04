@@ -9,3 +9,4 @@ tests/**/*.jsx
 junit.xml
 coverage
 pruneoutput.txt
+pruneoutputNoInclude.txt
