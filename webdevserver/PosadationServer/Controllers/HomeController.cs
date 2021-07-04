@@ -4,13 +4,13 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Caching.Memory;
-using PosadationServer.Logging;
-using PosadationServer.Models;
+using WebDevServer.Logging;
+using WebDevServer.Models;
 using HtmlAgilityPack;
 using Newtonsoft.Json;
 using System.Net.Http;
 
-namespace PosadationServer.Controllers
+namespace WebDevServer.Controllers
 {
 	public class HomeController : Controller
 	{

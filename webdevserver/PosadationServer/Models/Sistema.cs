@@ -1,4 +1,4 @@
-﻿namespace PosadationServer.Models
+﻿namespace WebDevServer.Models
 {
 	public class Sistema
 	{

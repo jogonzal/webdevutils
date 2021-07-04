@@ -1,6 +1,6 @@
 using System;
 
-namespace PosadationServer.Models
+namespace WebDevServer.Models
 {
 	public class ErrorViewModel
 	{

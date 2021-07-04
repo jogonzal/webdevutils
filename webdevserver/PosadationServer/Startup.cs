@@ -9,9 +9,9 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Posadation.Hubs;
-using PosadationServer.Storage;
+using WebDevServer.Storage;
 
-namespace PosadationServer
+namespace WebDevServer
 {
 	public class Startup
 	{

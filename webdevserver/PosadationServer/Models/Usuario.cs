@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace PosadationServer.Models
+namespace WebDevServer.Models
 {
 	public class Usuario
 	{

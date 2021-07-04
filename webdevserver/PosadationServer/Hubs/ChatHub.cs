@@ -1,8 +1,8 @@
 ﻿using Microsoft.AspNetCore.Http.Connections.Features;
 using Microsoft.AspNetCore.SignalR;
 using Microsoft.Extensions.Logging;
-using PosadationServer.Logging;
-using PosadationServer.Models;
+using WebDevServer.Logging;
+using WebDevServer.Models;
 using System;
 using System.Threading.Tasks;
 

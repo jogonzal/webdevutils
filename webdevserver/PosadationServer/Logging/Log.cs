@@ -1,6 +1,6 @@
 ﻿using Microsoft.Extensions.Logging;
 
-namespace PosadationServer.Logging
+namespace WebDevServer.Logging
 {
 	public static class Log
 	{

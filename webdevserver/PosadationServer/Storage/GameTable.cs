@@ -1,13 +1,13 @@
 ﻿using Microsoft.Azure.Cosmos.Table;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
-using PosadationServer.Logging;
+using WebDevServer.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace PosadationServer.Storage
+namespace WebDevServer.Storage
 {
 	public class User
 	{
