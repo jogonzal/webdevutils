@@ -92,7 +92,7 @@ namespace WebDevServer.Controllers
 #if DEBUG
 					fileUrl = "http://localhost:8080/" + fileName;
 #else
-						fileUrl = "https://jorgewebdeployment.blob.core.windows.net/websocketgame/" + fileName;
+						fileUrl = "https://jorgewebdeployment.blob.core.windows.net/webdevutils/" + fileName;
 #endif
 
 					var result = await httpClient.GetAsync(fileUrl);

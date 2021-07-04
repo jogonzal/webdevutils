@@ -42,7 +42,7 @@ jobs:
         with:
           azcliversion: 2.0.72
           inlineScript: |
-              az storage blob upload-batch --account-name jorgewebdeployment -d 'websocketgame' -s ./webdevclient/dist
+              az storage blob upload-batch --account-name jorgewebdeployment -d 'webdevutils' -s ./webdevclient/dist
       - name: logout
         run: |
               az logout
