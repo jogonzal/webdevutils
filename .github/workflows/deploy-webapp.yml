@@ -1,7 +1,10 @@
-name: CI
+name: CI/CD pipeline
 on:
   push:
     branches: [ master ]
+  pull_request:
+    branches:
+      - master
 jobs:
   buildTestAndDeploy:
     runs-on: ubuntu-latest
@@ -39,12 +42,13 @@ jobs:
         uses: azure/login@v1
         with:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
-      - name: Upload to blob storage
+      - name: Upload to blob storage (only in master)
         uses: azure/CLI@v1
         with:
           azcliversion: 2.0.72
           inlineScript: |
               az storage blob upload-batch --account-name jorgewebdeployment -d 'webdevutils' -s ./webdevclient/dist
+        if: github.ref == 'refs/heads/master'
       - name: logout
         run: |
               az logout
