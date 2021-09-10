@@ -8,3 +8,7 @@ Accessible via https://webdevutils.azurewebsites.net/
 
 ### Client: /webdevclient
 - React, webpack, typescript
+
+### Wishlist
+pretty json+xml
+diff

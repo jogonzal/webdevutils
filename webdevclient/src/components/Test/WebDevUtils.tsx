@@ -1,9 +1,11 @@
 import { IStackTokens, Pivot, PivotItem, Stack } from '@fluentui/react'
 import * as React from 'react'
 
+import { CharWordCount } from './CharWordCount'
 import { ClipboardUtils } from './ClipboardUtils'
 import { EncodeDecodeUI } from './EncodeDecodeUI'
 import { JWTParse } from './JWTParse'
+import { PrettyJsonXml } from './PrettyJsonXml'
 import { QueryParamParse } from './QueryParamParse'
 
 const childrenTokens: IStackTokens = {
@@ -19,7 +21,7 @@ export const WebDevUtils: React.FC = () => {
           <EncodeDecodeUI
             encodeFunc={ (val) => btoa(val) }
             decodeFunc={ (val) => atob(val) } />
-        </PivotItem>
+        </PivotItem>``
         <PivotItem headerText='URL encode/decode'>
           <EncodeDecodeUI
             encodeFunc={ (val) => encodeURIComponent(val) }
@@ -33,6 +35,12 @@ export const WebDevUtils: React.FC = () => {
         </PivotItem>
         <PivotItem headerText='Clipboard utils'>
           <ClipboardUtils />
+        </PivotItem>
+        <PivotItem headerText='Char/word count'>
+          <CharWordCount />
+        </PivotItem>
+        <PivotItem headerText='Pretty JSON/XML'>
+          <PrettyJsonXml />
         </PivotItem>
       </Pivot>
     </Stack>
