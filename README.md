@@ -10,5 +10,4 @@ Accessible via https://webdevutils.azurewebsites.net/
 - React, webpack, typescript
 
 ### Wishlist
-pretty json+xml
 diff

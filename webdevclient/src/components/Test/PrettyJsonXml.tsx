@@ -1,4 +1,5 @@
 import { IStackTokens, Stack, TextField } from '@fluentui/react'
+import { j2xParser, parse } from 'fast-xml-parser'
 import * as React from 'react'
 
 import { getErrorAsString } from '../../shared/logging/getErrorAsString'
@@ -16,8 +17,19 @@ export const PrettyJsonXml: React.FC = () => {
       const json = JSON.parse(input)
       return JSON.stringify(json, undefined, '\t')
     } catch (error: unknown) {
-      // TODO: XML!
-      return getErrorAsString(error)
+      try {
+        const newJson = parse(input)
+        const parser = new j2xParser({
+          format: true,
+        })
+        const xml = parser.parse(newJson)
+        if (!xml) {
+          throw new Error('parsing error')
+        }
+        return xml
+      } catch (error2: unknown) {
+        return getErrorAsString(error)
+      }
     }
   }
 
