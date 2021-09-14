@@ -31,7 +31,8 @@ module.exports = {
     // "jsx-a11y", // No a11y LINT
     "react",
     "react-hooks",
-    "simple-import-sort"
+    "simple-import-sort",
+    "deprecation"
   ],
   extends: [
     "eslint:recommended",
@@ -112,6 +113,7 @@ module.exports = {
         }
       }
     ],
+    "deprecation/deprecation": "error"
 
     // Esta regla causo problemas porque algunos campos son null...
     // "@typescript-eslint/strict-boolean-expressions": [ "error", { "allowNullableObject": true, "allowNullableBoolean": true, "allowAny": true } ],
