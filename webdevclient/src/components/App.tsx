@@ -13,6 +13,7 @@ import { PlayGame } from './PlayGame'
 import { Settings } from './Settings/Settings'
 import { WebDevUtils } from './Test/WebDevUtils'
 import { TestStacks } from './TestStacks'
+import { TestWebRequest } from './TestWebRequest'
 
 type State = {
 }
@@ -57,6 +58,7 @@ export class App extends React.Component<Props, State> {
             <Route path='/test/signalr' component={ SignalRTest } />
             <Route path='/blacky' component={ Blacky } />
             <Route path='/teststacks' component={ TestStacks } />
+            <Route path='/testwebrequest' component={ TestWebRequest } />
 
             <Route component={ NotFound } />
             <Route />
