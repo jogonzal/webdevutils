@@ -12,7 +12,7 @@ export const CharWordCount: React.FC = () => {
   const [input, setInput] = React.useState('')
 
   const getCountResults = () => {
-    const words = input.split(' ').length
+    const words = input.split(' ').filter(e => !!e).length
     const chars = input.length;
     const output = {
         words,
