@@ -12,6 +12,7 @@ import { MyAccount } from './MyAccount'
 import { PlayGame } from './PlayGame'
 import { Settings } from './Settings/Settings'
 import { WebDevUtils } from './Test/WebDevUtils'
+import { TestStacks } from './TestStacks'
 
 type State = {
 }
@@ -55,6 +56,7 @@ export class App extends React.Component<Props, State> {
             <Route path='/webdevutils' component={ WebDevUtils } />
             <Route path='/test/signalr' component={ SignalRTest } />
             <Route path='/blacky' component={ Blacky } />
+            <Route path='/teststacks' component={ TestStacks } />
 
             <Route component={ NotFound } />
             <Route />
