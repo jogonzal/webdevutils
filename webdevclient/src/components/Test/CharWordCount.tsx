@@ -43,7 +43,7 @@ export const CharWordCount: React.FC = () => {
         readOnly={ true }
         value={ getCountResults() }
         multiline={ true }
-        rows={ 3 } />
+        rows={ 4 } />
     </Stack>
   )
 }
