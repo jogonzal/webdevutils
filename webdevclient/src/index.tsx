@@ -38,6 +38,8 @@ if (faviconIco) {
   Log.logger.info('Starting app...')
 }
 
+// TODO: move to https://www.npmjs.com/package/@fluentui/react-icons. These are lighter, non-font icons
+// More docs: https://github.com/microsoft/fluentui-system-icons#readme
 initializeIcons()
 
 registerOnThemeChangeCallback((theme: ITheme) => {
