@@ -4,11 +4,11 @@ import * as React from 'react'
 import { HashRouter,Route, Switch  } from 'react-router-dom'
 
 import { SignalRTest } from '../experimental/SignalRTest'
-import { Blacky } from './Blacky'
 import { DebugPanel } from './DebugPanel'
 import { NotFound } from './MiniComponents/NotFound'
 import { MobileController } from './MobileController'
 import { MyAccount } from './MyAccount'
+import { PhoneNumberInput } from './PhoneNumberInput'
 import { PlayGame } from './PlayGame'
 import { Settings } from './Settings/Settings'
 import { WebDevUtils } from './Test/WebDevUtils'
@@ -56,9 +56,9 @@ export class App extends React.Component<Props, State> {
             <Route path='/debugpanel' component={ DebugPanel } />
             <Route path='/webdevutils' component={ WebDevUtils } />
             <Route path='/test/signalr' component={ SignalRTest } />
-            <Route path='/blacky' component={ Blacky } />
             <Route path='/teststacks' component={ TestStacks } />
             <Route path='/testwebrequest' component={ TestWebRequest } />
+            <Route path='/testphonenumberinput' component={ PhoneNumberInput } />
 
             <Route component={ NotFound } />
             <Route />
