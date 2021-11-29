@@ -3,6 +3,7 @@ import * as React from 'react'
 
 import { CharWordCount } from './CharWordCount'
 import { ClipboardUtils } from './ClipboardUtils'
+import { DiffTool } from './DiffTool'
 import { EncodeDecodeUI } from './EncodeDecodeUI'
 import { JWTParse } from './JWTParse'
 import { PrettyJsonXml } from './PrettyJsonXml'
@@ -41,6 +42,9 @@ export const WebDevUtils: React.FC = () => {
         </PivotItem>
         <PivotItem headerText='Pretty JSON/XML'>
           <PrettyJsonXml />
+        </PivotItem>
+        <PivotItem headerText='Diff tool'>
+          <DiffTool />
         </PivotItem>
       </Pivot>
     </Stack>

@@ -10,4 +10,4 @@ Accessible via https://webdevutils.azurewebsites.net/
 - React, webpack, typescript
 
 ### Wishlist
-diff
+image attribute analysis tool
