@@ -18,9 +18,13 @@ export const PrettyJsonXml: React.FC = () => {
       return JSON.stringify(json, undefined, '\t')
     } catch (error: unknown) {
       try {
-        const newJson = parse(input)
+        const newJson = parse(input, {
+          ignoreAttributes: false,
+          ignoreNameSpace: false,
+        })
         const parser = new j2xParser({
           format: true,
+          ignoreAttributes: false,
         })
         const xml = parser.parse(newJson)
         if (!xml) {
