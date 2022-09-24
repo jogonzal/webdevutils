@@ -5,6 +5,7 @@ import { CharWordCount } from './CharWordCount'
 import { ClipboardUtils } from './ClipboardUtils'
 import { DiffTool } from './DiffTool'
 import { EncodeDecodeUI } from './EncodeDecodeUI'
+import { decodeHtml, encodeHTMLEntities } from './htmlEncodeDecode'
 import { JWTParse } from './JWTParse'
 import { PrettyJsonXml } from './PrettyJsonXml'
 import { QueryParamParse } from './QueryParamParse'
@@ -22,11 +23,16 @@ export const WebDevUtils: React.FC = () => {
           <EncodeDecodeUI
             encodeFunc={ (val) => btoa(val) }
             decodeFunc={ (val) => atob(val) } />
-        </PivotItem>``
-        <PivotItem headerText='URL encode/decode'>
+        </PivotItem>
+        <PivotItem headerText='URL'>
           <EncodeDecodeUI
             encodeFunc={ (val) => encodeURIComponent(val) }
             decodeFunc={ (val) => decodeURIComponent(val) } />
+        </PivotItem>
+        <PivotItem headerText='HTML'>
+          <EncodeDecodeUI
+            encodeFunc={ (val) => encodeHTMLEntities(val) }
+            decodeFunc={ (val) => decodeHtml(val) } />
         </PivotItem>
         <PivotItem headerText='Query param parse'>
           <QueryParamParse />

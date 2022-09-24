@@ -9,6 +9,7 @@
     "*.scss"
   ],
   "scripts": {
+    "dev": "npm run start",
     "build:dev": "npm run clean-dist && webpack --config=configs/webpack/dev.js --progress",
     "build:prod": "npm run clean-dist && webpack --config=configs/webpack/prod.js --progress",
     "build": "npm run build:prod",
