@@ -2,9 +2,6 @@ name: CI/CD pipeline
 on:
   push:
     branches: [ master ]
-  pull_request:
-    branches:
-      - master
 jobs:
   webServer-buildTestAndDeploy:
     runs-on: ubuntu-latest
