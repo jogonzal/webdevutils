@@ -38,7 +38,7 @@ export const JWTParse: React.FC = () => {
         readOnly={ true }
         value={ getDecodedJWT() }
         multiline={ true }
-        rows={ 20 } />
+        rows={ 40 } />
     </Stack>
   )
 }

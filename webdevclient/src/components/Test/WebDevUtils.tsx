@@ -1,8 +1,10 @@
 import { IStackTokens, Pivot, PivotItem, Stack } from '@fluentui/react'
 import * as React from 'react'
 
+import { AnalyzeImage } from './AnalyzeImage'
 import { CharWordCount } from './CharWordCount'
 import { ClipboardUtils } from './ClipboardUtils'
+import { CSPParse } from './CSPParse'
 import { DiffTool } from './DiffTool'
 import { EncodeDecodeUI } from './EncodeDecodeUI'
 import { decodeHtml, encodeHTMLEntities } from './htmlEncodeDecode'
@@ -51,6 +53,12 @@ export const WebDevUtils: React.FC = () => {
         </PivotItem>
         <PivotItem headerText='Diff tool'>
           <DiffTool />
+        </PivotItem>
+        <PivotItem headerText='CSP parse'>
+          <CSPParse />
+        </PivotItem>
+        <PivotItem headerText='Analyze image'>
+          <AnalyzeImage />
         </PivotItem>
       </Pivot>
     </Stack>

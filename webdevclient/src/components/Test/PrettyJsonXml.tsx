@@ -55,7 +55,7 @@ export const PrettyJsonXml: React.FC = () => {
         readOnly={ true }
         value={ getCountResults() }
         multiline={ true }
-        rows={ 30 } />
+        rows={ 40 } />
     </Stack>
   )
 }

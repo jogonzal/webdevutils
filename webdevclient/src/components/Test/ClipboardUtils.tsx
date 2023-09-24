@@ -68,7 +68,7 @@ export const ClipboardUtils: React.FC<Props> = () => {
         readOnly={ true }
         value={ clipboardMetadata?.html }
         multiline={ true }
-        rows={ 20 } />
+        rows={ 40 } />
       <PrimaryButton onClick={ onReset }>Reset</PrimaryButton>
     </Stack>
   )

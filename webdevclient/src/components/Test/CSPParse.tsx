@@ -1,36 +1,24 @@
-import { IStackTokens, Stack, TextField, Toggle } from '@fluentui/react'
+import { IStackTokens, Stack, TextField } from '@fluentui/react'
+import parseCSP from 'content-security-policy-parser';
 import * as React from 'react'
 
 import { getErrorAsString } from '../../shared/logging/getErrorAsString'
-
-type Props = {
-  encodeFunc: (input: string) => string
-  decodeFunc: (input: string) => string
-}
 
 const childrenTokens: IStackTokens = {
   childrenGap: 10,
   padding: 5,
 }
 
-export const EncodeDecodeUI: React.FC<Props> = (props: Props) => {
-  const [encodeInput, setEncodeInput] = React.useState('')
-  const [encodeToggle, setEncodeToggle] = React.useState(false)
+export const CSPParse: React.FC = () => {
+  const [encodeInput, setEncodeInput] = React.useState('base-uri \'none\'; connect-src \'self\' https://api.stripe.com https://files.stripe.com https://errors.stripe.com https://r.stripe.com; default-src \'none\'; form-action \'none\'; img-src \'self\' https://q.stripe.com https://t.stripe.com; script-src \'self\'; style-src \'self\'; report-uri https://q.stripe.com/csp-report')
 
   const getEncodingResult = () => {
     try {
-      if (encodeToggle) {
-        return props.decodeFunc(encodeInput)
-      } else {
-        return props.encodeFunc(encodeInput)
-      }
+      const output = parseCSP(encodeInput)
+      return JSON.stringify(output, undefined, '\t')
     } catch (error: unknown) {
       return getErrorAsString(error)
     }
-  }
-
-  const onEncodeOrDecodeToggle = (_ev?: React.MouseEvent<HTMLElement, MouseEvent>, val?: boolean) => {
-    setEncodeToggle(val ?? false)
   }
 
   const onInputTextChanged = (_ev?: React.FormEvent<HTMLTextAreaElement | HTMLInputElement>, val?: string) => {
@@ -40,19 +28,18 @@ export const EncodeDecodeUI: React.FC<Props> = (props: Props) => {
   return (
     <Stack tokens={ childrenTokens } >
       <TextField
-        label='Input'
+        label='CSP input'
         onChange={ onInputTextChanged }
         value={ encodeInput }
         multiline={ true }
         rows={ 10 }
         autoFocus={ true } />
       <TextField
-        label='Output'
+        label='Parsed CSP'
         readOnly={ true }
         value={ getEncodingResult() }
         multiline={ true }
         rows={ 40 } />
-      <Toggle onChange={ onEncodeOrDecodeToggle } label={ encodeToggle ? 'Decode' : 'Encode' } />
     </Stack>
   )
 }

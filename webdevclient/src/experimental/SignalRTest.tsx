@@ -197,13 +197,13 @@ export class SignalRTest extends React.Component<IProps, State> {
           label='SignalRMessages'
           componentRef={ this.textFieldRef }
           value={ this.state.signalRMessages.join('\n') }
-          rows={ 20 }
+          rows={ 40 }
           multiline={ true } />
         <TextField
           label='P2PMessages'
           componentRef={ this.textFieldRef }
           value={ this.state.p2pMessages.join('\n') }
-          rows={ 20 }
+          rows={ 40 }
           multiline={ true } />
       </>
     )
