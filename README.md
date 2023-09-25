@@ -10,5 +10,5 @@ Accessible via https://webdevutils.azurewebsites.net/
 - React, webpack, typescript
 
 ### Wishlist
-- image attribute analysis tool
-- CSP pretty print
+- URL routing for easier linking
+- Removing C# backend?
