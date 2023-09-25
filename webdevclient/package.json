@@ -39,7 +39,6 @@
     "@typescript-eslint/eslint-plugin-tslint": "^4.28.1",
     "@typescript-eslint/parser": "^4.28.1",
     "circular-dependency-plugin": "^5.2.2",
-    "content-security-policy-parser": "^0.4.1",
     "css-loader": "^5.2.6",
     "eslint": "7.30.0",
     "eslint-config-prettier": "8.3.0",
@@ -82,6 +81,7 @@
     "@fluentui/react": "^8.22.0",
     "@microsoft/applicationinsights-web": "^2.3.1",
     "chart.js": "^2.9.3",
+    "content-security-policy-parser": "^0.4.1",
     "dexie": "^3.0.1",
     "es6-promise-pool": "^2.5.0",
     "fast-xml-parser": "^3.20.0",
@@ -97,7 +97,8 @@
     "react-sound": "^1.2.0",
     "shortid": "^2.2.16",
     "sweetalert2": "^11.0.18",
-    "sweetalert2-react-content": "^4.1.0"
+    "sweetalert2-react-content": "^4.1.0",
+    "ts-exif-parser": "^0.2.2"
   },
   "postcss": {},
   "jest": {
