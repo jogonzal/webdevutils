@@ -53,6 +53,10 @@ export class TelemetryLogger {
   }
 }
 
+export function thisFunctionIsNeverUsed() {
+  Log.logger.info('This is never used!')
+}
+
 export class Log {
   private static telemetryLogger: TelemetryLogger = new TelemetryLogger('WebDevUtils')
 
