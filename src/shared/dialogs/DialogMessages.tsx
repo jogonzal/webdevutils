@@ -9,7 +9,6 @@ const swalReact = withReactContent(sweetalert2)
 const dialogDelayInMs = 1100
 
 export class DialogMessages {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   public static async showErrorMessage(error: any, showDiagnostics: boolean = false): Promise<void> {
     await swalReact.fire({
       icon:'error',

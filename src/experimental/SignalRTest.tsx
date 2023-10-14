@@ -18,7 +18,6 @@ type State = {
   group: string
   joiningGroup: boolean
   joinedGroup: boolean
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   signalData?: any
 }
 
@@ -71,7 +70,6 @@ export class SignalRTest extends React.Component<IProps, State> {
           signalRMessages: [...this.state.signalRMessages, message ],
         }, () => {
           // Scroll to bottom by default
-          // eslint-disable-next-line @typescript-eslint/no-explicit-any
           const textField = this.textFieldRef.current as any
           if (!textField) {
             Log.logger.warn('Received a message, but chat log was null')

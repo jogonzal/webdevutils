@@ -22,7 +22,6 @@ export class DateUtils {
 
     try {
       const date = new Date(dateStr)
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       if (isNaN(date as any)) {
         throw new Error(`Date ${dateStr} is invalid!`)
       }

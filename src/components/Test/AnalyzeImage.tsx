@@ -30,7 +30,6 @@ export const AnalyzeImage: React.FC = () => {
       parser.flags.returnTags = true;
 
       const output = parser.parse();
-      // eslint-disable-next-line no-console
       console.log(output);
       const set = JSON.stringify(output, undefined, '\t');
       setParseResult(set);
@@ -47,7 +46,6 @@ export const AnalyzeImage: React.FC = () => {
         <input
           type="file"
           onChange={(e) => {
-            // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
             const file = e.target?.files![0];
             setSelectedFile(file);
           }}

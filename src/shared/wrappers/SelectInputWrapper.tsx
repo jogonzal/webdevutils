@@ -19,7 +19,6 @@ export class SelectInputWrapper<T extends EnumValueType> extends React.Component
       return
     }
 
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const key: T = option.data as any
     if (this.props.onChange) {
       this.props.onChange(key)

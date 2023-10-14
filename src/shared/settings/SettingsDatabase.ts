@@ -48,7 +48,6 @@ class SettingsDatabase extends Dexie {
       appSettings: '++id,theme,tableType'
     }).upgrade(trans => {
       const db = trans.db as SettingsDatabase
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       return db.appSettings.toCollection().modify((row: any) => {
         row.tableType = TableType.ReactTable.databaseValue
       })
@@ -59,7 +58,6 @@ class SettingsDatabase extends Dexie {
       appSettings: '++id,theme'
     }).upgrade(trans => {
       const db = trans.db as SettingsDatabase
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       return db.appSettings.toCollection().modify((row: any) => {
         delete row.tableType
       })

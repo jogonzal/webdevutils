@@ -41,7 +41,6 @@ export class BoxLabel extends React.Component<Props, State> {
     return (
       <StackItem grow={ this.props.grow } styles={ { root: style } } >
         <div style={ { padding: '8px', border: '1px solid rgb(138, 136, 134)', marginTop: '15px', marginBottom: '15px' } }>
-          { /* eslint-disable-next-line @typescript-eslint/no-explicit-any */ }
           <Text style={ { marginTop: '-21px', marginBottom: '0px', display: 'table', backgroundColor: theme.semanticColors.bodyBackground, fontWeight:'600' as any } }>{ this.props.label }</Text>
           { this.props.children }
         </div>

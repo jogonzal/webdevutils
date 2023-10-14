@@ -144,7 +144,6 @@ export class PlayGame extends React.Component<Props, State> {
       user,
     })
 
-    // eslint-disable-next-line @typescript-eslint/strict-boolean-expressions
     const gameId = this.props.match.params.gameId || shortId.generate().substr(0, 5)
     const url = `/#/g/${gameId}`
     window.location.href = url
