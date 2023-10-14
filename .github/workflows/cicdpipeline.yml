@@ -12,26 +12,6 @@ jobs:
       # Checkout the repo
       - uses: actions/checkout@master
 
-      # Setup .NET Core SDK
-      - name: Setup .NET Core
-        uses: actions/setup-dotnet@v1
-        with:
-          dotnet-version: 3.1
-      # Run dotnet build and publish
-      - name: dotnet build and publish
-        run: |
-          dotnet restore ./webdevserver/WebDevServer/WebDevServer.csproj
-          dotnet build ./webdevserver/WebDevServer/WebDevServer.csproj --configuration Release
-          dotnet publish ./webdevserver/WebDevServer/WebDevServer.csproj -c Release -o ./webdevserver/WebDevServer/publishedApp
-
-      # Deploy to Azure Web apps
-      - name: 'Run Azure webapp deploy action using publish profile credentials'
-        uses: azure/webapps-deploy@v2
-        with: 
-          app-name: webdevutils # Replace with your app name
-          publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE  }} # Define secret variable in repository settings as per action documentation
-          package: './webdevserver/WebDevServer/publishedApp'
-
   webClient-buildTestAndDeploy:
     runs-on: ubuntu-latest
     steps:
@@ -64,18 +44,3 @@ jobs:
         working-directory: ./webdevclient
       - run: yarn build:prod
         working-directory: ./webdevclient
-      - name: Login to azure
-        uses: azure/login@v1
-        with:
-          creds: ${{ secrets.AZURE_CREDENTIALS }}
-      - name: Upload to blob storage (only in master)
-        uses: azure/CLI@v1
-        with:
-          inlineScript: |
-              az storage blob upload-batch --account-name jorgewebdeployment -d 'webdevutils' -s ./webdevclient/dist
-        if: github.ref == 'refs/heads/master'
-      - name: logout
-        run: |
-              az logout
-        if: always()
-      

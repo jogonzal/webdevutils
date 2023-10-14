@@ -1,14 +1,12 @@
-# WebDevUtils
-Utilities for web developers like inspect clipboard, URL/Base64 encoding, query param parsing, JWT token parsing.
+# Web dev utils
 
-Accessible via https://webdevutils.azurewebsites.net/
+Utilities I've found helpful and don't want to use random websites for. These include:
+- Base 64 encoding
+- URL query param parsing
+- CSP parsing
+- JSON parsing
+- JWT parsing and pretty print
+- Looking at clipboard metadata
+- Diffing text
 
-### Server: /webdevserver
-- ASP.NET core MVC + websockets
-
-### Client: /webdevclient
-- React, webpack, typescript
-
-### Wishlist
-- URL routing for easier linking
-- Removing C# backend?
+Sounds from menu come from here: https://www.sounds-resource.com/gamecube/ssbm/

@@ -1,1 +1,0 @@
-Sounds from menu come from here: https://www.sounds-resource.com/gamecube/ssbm/
