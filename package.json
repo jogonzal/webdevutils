@@ -15,6 +15,7 @@
     "clean-dist": "rimraf dist",
     "lint": "next lint",
     "test": "jest",
+    "typescript-build": "tsc",
     "detect-dead-code:noinclude": "ts-prune -p tsconfig.ts-pruneNoInclude.json > pruneoutput.txt",
     "detect-dead-code:include": "ts-prune -p tsconfig.ts-prune.json > pruneoutputNoInclude.txt ",
     "detect-dead-code": "npm run detect-dead-code:include && npm run detect-dead-code:noinclude && ts-node --project scripts/tsconfig.json scripts/printPruneInfo.ts",
@@ -46,7 +47,6 @@
   "dependencies": {
     "@aspnet/signalr": "^1.1.4",
     "@fluentui/react": "^8.22.0",
-    "@microsoft/applicationinsights-web": "^2.3.1",
     "chart.js": "^2.9.3",
     "content-security-policy-parser": "^0.4.1",
     "dexie": "^3.0.1",
