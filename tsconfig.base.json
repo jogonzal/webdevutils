@@ -11,16 +11,11 @@
     "strict": true,
     "target": "ES2019",
     "lib": ["es2015", "es2017", "es2018", "es2019", "dom"],
-    "typeRoots": [ "./typings", "./node_modules/@types" ],
+    "typeRoots": ["./typings", "./node_modules/@types"],
     "sourceMap": true,
     "resolveJsonModule": true,
     "allowSyntheticDefaultImports": true
   },
-  "include": [
-    "./typings/**/*",
-    "src/**/*",
-    "scripts/**/*",
-    "tests/**/*"
-  ],
-  "exclude": [ "node_modules" ]
+  "include": ["./typings/**/*", "src/**/*", "scripts/**/*", "tests/**/*"],
+  "exclude": ["node_modules"]
 }

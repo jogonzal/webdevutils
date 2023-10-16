@@ -1,11 +1,5 @@
 {
   "extends": "./tsconfig.base.json",
-  "include": [
-    "./typings/**/*",
-    "src/**/*",
-    "scripts/**/*"
-  ],
-  "files": [
-    "src/index.tsx"
-  ]
+  "include": ["./typings/**/*", "src/**/*", "scripts/**/*"],
+  "files": ["src/index.tsx"]
 }

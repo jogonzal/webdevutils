@@ -1,1 +1,1 @@
-declare module '*.ico'
+declare module "*.ico";

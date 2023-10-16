@@ -1,4 +1,4 @@
-import { getPruneInfo, printPruneInfo } from './tsPruneUtils'
+import { getPruneInfo, printPruneInfo } from "./tsPruneUtils";
 
-const pruneInfo = getPruneInfo()
-printPruneInfo(pruneInfo)
+const pruneInfo = getPruneInfo();
+printPruneInfo(pruneInfo);

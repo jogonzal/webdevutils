@@ -1,13 +1,14 @@
-const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
-const HtmlWebpackPlugin = require('html-webpack-plugin')
-const ScriptExtHtmlWebpackPlugin = require('script-ext-html-webpack-plugin')
-const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin')
-const CircularDependencyPlugin = require('circular-dependency-plugin')
+const BundleAnalyzerPlugin = require("webpack-bundle-analyzer")
+  .BundleAnalyzerPlugin;
+const HtmlWebpackPlugin = require("html-webpack-plugin");
+const ScriptExtHtmlWebpackPlugin = require("script-ext-html-webpack-plugin");
+const ForkTsCheckerWebpackPlugin = require("fork-ts-checker-webpack-plugin");
+const CircularDependencyPlugin = require("circular-dependency-plugin");
 
-module.exports = env => {
+module.exports = (env) => {
   return {
     entry: {
-      webdevutils: './src/index.tsx'
+      webdevutils: "./src/index.tsx",
     },
     plugins: [
       // Run eslint and typescript in a separate process
@@ -25,7 +26,7 @@ module.exports = env => {
         // don't eslint test while compiling
         eslint: {
           files: "./src/**/*.{ts,tsx}",
-        }
+        },
       }),
 
       // Check for circular dependencies
@@ -43,7 +44,7 @@ module.exports = env => {
 
       // HTML entries
       new HtmlWebpackPlugin({
-        template: './src/index.html'
+        template: "./src/index.html",
       }),
 
       // Get full error detail for errors caught by windows.onerror (https://blog.sentry.io/2016/05/17/what-is-script-error.html)
@@ -53,21 +54,21 @@ module.exports = env => {
         custom: [
           {
             test: /\.js$/,
-            attribute: 'crossorigin',
-            value: 'anonymous'
-          }
-        ]
+            attribute: "crossorigin",
+            value: "anonymous",
+          },
+        ],
       }),
 
       // Run the bundle analyzer on every build
       new BundleAnalyzerPlugin({
-        analyzerMode: 'static',
+        analyzerMode: "static",
         openAnalyzer: false,
         // generateStatsFile: true, // Build hangs when generating stats file, why?
       }),
     ],
     resolve: {
-      extensions: ['.js', '.jsx', '.ts', '.tsx'],
+      extensions: [".js", ".jsx", ".ts", ".tsx"],
     },
     module: {
       rules: [
@@ -76,41 +77,39 @@ module.exports = env => {
           exclude: /node_modules/,
           use: [
             {
-              loader: 'ts-loader',
+              loader: "ts-loader",
               options: {
                 transpileOnly: true,
                 experimentalWatchApi: true,
                 reportFiles: [
                   // Filters out any error happening inside of the imported node_modules code.
                   "src/**/*",
-                ]
-              }
-            }
-          ]
+                ],
+              },
+            },
+          ],
         },
         {
           test: /\.(jpe?g|png|gif|svg|ttf|woff|woff2|eot|ico|json|mp3|wav)$/i,
-          loader: 'file-loader',
-          options:{
-            name: 'asset/[name].[ext]?h=[contenthash]'
-          }
-        }
-      ]
+          loader: "file-loader",
+          options: {
+            name: "asset/[name].[ext]?h=[contenthash]",
+          },
+        },
+      ],
     },
-    devtool: 'source-map',
+    devtool: "source-map",
     devServer: {
       // These are to allow for local development without CORS issues
       historyApiFallback: true,
-      allowedHosts: [
-        '*'
-      ],
+      allowedHosts: ["*"],
       headers: {
-        'Access-Control-Allow-Origin': '*',
-        'Access-Control-Allow-Methods': 'GET',
-        'Access-Control-Allow-Headers': '*',
-        'Access-Control-Expose-Headers': '*',
-        'Cache-Control': 'no-cache, no-store, must-revalidate'
-      }
-    }
-  }
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Methods": "GET",
+        "Access-Control-Allow-Headers": "*",
+        "Access-Control-Expose-Headers": "*",
+        "Cache-Control": "no-cache, no-store, must-revalidate",
+      },
+    },
+  };
 };

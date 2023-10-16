@@ -1,25 +1,27 @@
-import { IStackTokens, Stack, TextField } from '@fluentui/react'
-import * as React from 'react'
-import {ExifParserFactory} from 'ts-exif-parser';
+import { IStackTokens, Stack, TextField } from "@fluentui/react";
+import * as React from "react";
+import { ExifParserFactory } from "ts-exif-parser";
 
-import { getErrorAsString } from '../../shared/logging/getErrorAsString'
+import { getErrorAsString } from "../../shared/logging/getErrorAsString";
 
 const childrenTokens: IStackTokens = {
   childrenGap: 10,
   padding: 5,
-}
+};
 
 export const AnalyzeImage: React.FC = () => {
-  const [selectedFile, setSelectedFile] = React.useState<File | undefined>(undefined);
-  const [parseResult, setParseResult] = React.useState<string>('')
+  const [selectedFile, setSelectedFile] = React.useState<File | undefined>(
+    undefined
+  );
+  const [parseResult, setParseResult] = React.useState<string>("");
 
   React.useEffect(() => {
     getEncodingResult();
-  }, [selectedFile])
+  }, [selectedFile]);
 
   const getEncodingResult = async () => {
     if (!selectedFile) {
-      return '';
+      return "";
     }
 
     try {
@@ -31,31 +33,32 @@ export const AnalyzeImage: React.FC = () => {
 
       const output = parser.parse();
       console.log(output);
-      const set = JSON.stringify(output, undefined, '\t');
+      const set = JSON.stringify(output, undefined, "\t");
       setParseResult(set);
     } catch (error: unknown) {
-      const set = getErrorAsString(error)
+      const set = getErrorAsString(error);
       setParseResult(set);
     }
 
     return;
-  }
+  };
 
   return (
-    <Stack tokens={ childrenTokens } >
-        <input
-          type="file"
-          onChange={(e) => {
-            const file = e.target?.files![0];
-            setSelectedFile(file);
-          }}
-        />
+    <Stack tokens={childrenTokens}>
+      <input
+        type="file"
+        onChange={(e) => {
+          const file = e.target?.files![0];
+          setSelectedFile(file);
+        }}
+      />
       <TextField
-        label='Parsed image metadata'
-        readOnly={ true }
-        value={ parseResult }
-        multiline={ true }
-        rows={ 40 } />
+        label="Parsed image metadata"
+        readOnly={true}
+        value={parseResult}
+        multiline={true}
+        rows={40}
+      />
     </Stack>
-  )
-}
+  );
+};
