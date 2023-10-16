@@ -25,7 +25,6 @@ export const WebDevUtils: React.FC = () => {
   const router = useRouter();
   const slug = router.query.slug as string;
   let currentTab = slug ?? "base64";
-  console.log("Slug is ", slug);
 
   return (
     <Stack tokens={childrenTokens}>
