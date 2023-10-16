@@ -12,6 +12,7 @@ import * as React from "react";
 type Props = {
   label: string;
   grow?: boolean;
+  children?: React.ReactNode;
 };
 
 type State = {
