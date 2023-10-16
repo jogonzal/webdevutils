@@ -13,6 +13,9 @@ import { PrettyJsonXml } from "./PrettyJsonXml";
 import { QueryParamParse } from "./QueryParamParse";
 import { useRouter } from "next/router";
 
+// General setup
+import "../../generalsetup";
+
 const childrenTokens: IStackTokens = {
   childrenGap: 10,
   padding: 5,
