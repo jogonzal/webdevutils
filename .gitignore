@@ -11,3 +11,4 @@ coverage
 pruneoutput.txt
 pruneoutputNoInclude.txt
 .next/
+tsconfig.tsbuildinfo
