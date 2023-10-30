@@ -23,6 +23,7 @@ export const checkIsFontSupported = (fontFamily: string) => {
       };
     }
   } catch (error: any) {
+    console.log(`Error checking font ${fontFamily}`, error?.message);
     return {
       font: fontFamily,
       message: "false - " + error?.message,
@@ -53,6 +54,7 @@ export const CheckFontSupport: React.FC = () => {
         mostPreferredFontFamily
       );
       if (isMostPreferredSupported.message === "true") {
+        isMostPreferredSupported.message = `great - preferred font (${mostPreferredFontFamily})`;
         return isMostPreferredSupported;
       }
 
@@ -61,14 +63,14 @@ export const CheckFontSupport: React.FC = () => {
         const fallbackFont = cleanFontFamily(fallbackFontFamily);
         const isFallbackSupported = checkIsFontSupported(fallbackFont);
         if (isFallbackSupported.message === "true") {
-          isFallbackSupported.message = `true - fallback font (${fallbackFont})`;
+          isFallbackSupported.message = `ok - fallback font (${fallbackFont})`;
           return isFallbackSupported;
         }
       }
 
       return {
         font: mostPreferredFontFamily,
-        message: "false",
+        message: "no font supported",
       };
     });
 
