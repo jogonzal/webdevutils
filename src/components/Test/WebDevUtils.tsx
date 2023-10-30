@@ -1,4 +1,11 @@
-import { IStackTokens, Pivot, PivotItem, Stack } from "@fluentui/react";
+import {
+  IStackTokens,
+  Pivot,
+  PivotItem,
+  Stack,
+  Text,
+  Link,
+} from "@fluentui/react";
 import * as React from "react";
 
 import { AnalyzeImage } from "./AnalyzeImage";
@@ -29,6 +36,12 @@ export const WebDevUtils: React.FC = () => {
 
   return (
     <Stack tokens={childrenTokens}>
+      <Text>
+        I built this app for myself to allow me to test web development related
+        things without having to use random websites with adds. If you&apos;d
+        like to contribute or see the source code,{" "}
+        <Link href="https://github.com/jogonzal/webdevutils">here</Link> it is!
+      </Text>
       <Pivot
         onLinkClick={(item) => {
           if (!item) {
