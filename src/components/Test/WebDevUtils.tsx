@@ -15,6 +15,7 @@ import { useRouter } from "next/router";
 
 // General setup
 import "../../generalsetup";
+import { CheckFontSupport } from "./CheckFontSupport";
 
 const childrenTokens: IStackTokens = {
   childrenGap: 10,
@@ -79,6 +80,9 @@ export const WebDevUtils: React.FC = () => {
         </PivotItem>
         <PivotItem headerText="Analyze image" itemKey="analyzeimage">
           <AnalyzeImage />
+        </PivotItem>
+        <PivotItem headerText="Fonts" itemKey="fonts">
+          <CheckFontSupport />
         </PivotItem>
       </Pivot>
     </Stack>
