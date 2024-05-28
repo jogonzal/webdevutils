@@ -16,12 +16,13 @@
     "lint": "next lint",
     "test": "jest",
     "typescript-build": "tsc",
-    "detect-dead-code:noinclude": "ts-prune -p tsconfig.ts-pruneNoInclude.json > pruneoutput.txt",
+    "detect-dead-code:noinclude": "ts-prune -p tsconfig.ts-pruneNoInclude.json > pruneoutput.txt --ignore 'src/WebDevUtils.tsx'",
     "detect-dead-code:include": "ts-prune -p tsconfig.ts-prune.json > pruneoutputNoInclude.txt ",
     "detect-dead-code": "npm run detect-dead-code:include && npm run detect-dead-code:noinclude && ts-node --project scripts/tsconfig.json scripts/printPruneInfo.ts",
     "fail-if-dead-code": "npm run detect-dead-code:include && npm run detect-dead-code:noinclude && ts-node --project scripts/tsconfig.json scripts/failIfPruningNeeded.ts",
     "start:ngrok": "ngrok http 5000",
-    "pretty": "prettier --write \"./**/*.{js,jsx,mjs,cjs,ts,tsx,json}\""
+    "pretty": "prettier --write \"./**/*.{js,jsx,mjs,cjs,ts,tsx,json}\"",
+    "validate-change": "npm run lint && npm run test"
   },
   "devDependencies": {
     "@types/jest": "^26.0.23",

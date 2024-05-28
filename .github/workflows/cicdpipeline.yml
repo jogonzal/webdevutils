@@ -33,7 +33,5 @@ jobs:
       - name: Install node and yarn
         uses: actions/setup-node@v2
       - run: yarn install --frozen-lockfile
-      - run: yarn lint
-      - run: yarn test
-      - run: yarn fail-if-dead-code
+      - run: yarn validate-change
       - run: yarn build:prod
