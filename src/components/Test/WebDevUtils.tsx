@@ -23,6 +23,7 @@ import { useRouter } from "next/router";
 // General setup
 import "../../generalsetup";
 import { CheckFontSupport } from "./CheckFontSupport";
+import { jsonToJs, jsToJson } from "../../shared/utils/JsonToJs";
 
 const childrenTokens: IStackTokens = {
   childrenGap: 10,
@@ -96,6 +97,12 @@ export const WebDevUtils: React.FC = () => {
         </PivotItem>
         <PivotItem headerText="Fonts" itemKey="fonts">
           <CheckFontSupport />
+        </PivotItem>
+        <PivotItem headerText="JS to JSON" itemKey="jstojson">
+          <EncodeDecodeUI
+            encodeFunc={(val) => jsToJson(val)}
+            decodeFunc={(val) => jsonToJs(val)}
+          />
         </PivotItem>
       </Pivot>
     </Stack>
