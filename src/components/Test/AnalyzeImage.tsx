@@ -16,32 +16,32 @@ export const AnalyzeImage: React.FC = () => {
   const [parseResult, setParseResult] = React.useState<string>("");
 
   React.useEffect(() => {
+    const getEncodingResult = async () => {
+      if (!selectedFile) {
+        return "";
+      }
+
+      try {
+        const data = await selectedFile.arrayBuffer();
+        const parser = ExifParserFactory.create(data);
+        parser.flags.readBinaryTags = true;
+        parser.flags.resolveTagNames = true;
+        parser.flags.returnTags = true;
+
+        const output = parser.parse();
+        console.log(output);
+        const set = JSON.stringify(output, undefined, "\t");
+        setParseResult(set);
+      } catch (error: unknown) {
+        const set = getErrorAsString(error);
+        setParseResult(set);
+      }
+
+      return;
+    };
+
     getEncodingResult();
   }, [selectedFile]);
-
-  const getEncodingResult = async () => {
-    if (!selectedFile) {
-      return "";
-    }
-
-    try {
-      const data = await selectedFile.arrayBuffer();
-      const parser = ExifParserFactory.create(data);
-      parser.flags.readBinaryTags = true;
-      parser.flags.resolveTagNames = true;
-      parser.flags.returnTags = true;
-
-      const output = parser.parse();
-      console.log(output);
-      const set = JSON.stringify(output, undefined, "\t");
-      setParseResult(set);
-    } catch (error: unknown) {
-      const set = getErrorAsString(error);
-      setParseResult(set);
-    }
-
-    return;
-  };
 
   return (
     <Stack tokens={childrenTokens}>
