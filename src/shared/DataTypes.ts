@@ -1,4 +1,4 @@
-export type EnumValueType = string | number;
+type EnumValueType = string | number;
 
 export class EnumValue<TDatabaseValueType extends EnumValueType> {
   public readonly databaseValue: TDatabaseValueType;
@@ -8,7 +8,3 @@ export class EnumValue<TDatabaseValueType extends EnumValueType> {
     this.niceDisplayString = niceDisplayString;
   }
 }
-
-export type EnumClass<TDatabaseValue extends EnumValueType> = {
-  [key: string]: EnumValue<TDatabaseValue>;
-};

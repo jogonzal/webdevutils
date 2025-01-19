@@ -6,7 +6,7 @@ const childrenTokens: IStackTokens = {
   padding: 5,
 };
 
-export const checkIsFontSupported = (fontFamily: string) => {
+const checkIsFontSupported = (fontFamily: string) => {
   try {
     // This is a basic "I am able to render" check
     const supported = document.fonts.check(`12px ${fontFamily}`);
@@ -31,7 +31,7 @@ export const checkIsFontSupported = (fontFamily: string) => {
   }
 };
 
-export const cleanFontFamily = (fontFamily: string) => {
+const cleanFontFamily = (fontFamily: string) => {
   return fontFamily
     .trim() // Remove spaces
     .replace("'", ""); // Take out the '

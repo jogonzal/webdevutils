@@ -5,7 +5,10 @@ import {
 } from "@fluentui/react";
 
 import { Log } from "./shared/logging/Log";
-import { initializeSettings as initializeAppSettings } from "./shared/settings/SettingsDatabase";
+import {
+  initializeSettings as initializeAppSettings,
+  settingsDatabase,
+} from "./shared/settings/SettingsDatabase";
 import { ThemeUtils } from "./shared/theme/ThemeUtils";
 
 let isInitialized = false;
@@ -28,6 +31,11 @@ const initialize = async () => {
 
   const settings = await initializeAppSettings();
   ThemeUtils.loadTheme(settings.theme);
+
+  // Get latest value of theme
+  settingsDatabase.appSettings.get(0).then((theme) => {
+    Log.logger.info(`Latest theme is ${theme?.theme}`);
+  });
 };
 
 initialize();

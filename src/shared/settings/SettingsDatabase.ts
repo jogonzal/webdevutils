@@ -4,13 +4,13 @@ import { EnumValue } from "../DataTypes";
 import { Log } from "../logging/Log";
 import { Theme } from "../theme/ThemeUtils";
 
-export type TableType = "ReactTable" | "OfficeUIFabric";
-export const TableType = {
+type TableType = "ReactTable" | "OfficeUIFabric";
+const TableType = {
   ReactTable: new EnumValue<TableType>("ReactTable"),
   OfficeUIFabric: new EnumValue<TableType>("OfficeUIFabric"),
 };
 
-export interface IAppSettings {
+interface IAppSettings {
   id?: number;
   theme: Theme;
 }
