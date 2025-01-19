@@ -1,11 +1,5 @@
-import {
-  IStackTokens,
-  Pivot,
-  PivotItem,
-  Stack,
-  Text,
-  Link,
-} from "@fluentui/react";
+import type { IStackTokens } from "@fluentui/react";
+import { Pivot, PivotItem, Stack, Text, Link } from "@fluentui/react";
 import * as React from "react";
 
 import { AnalyzeImage } from "./AnalyzeImage";

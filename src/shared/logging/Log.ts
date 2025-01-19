@@ -1,5 +1,5 @@
 import { ConsoleLogger } from "./ConsoleLogger";
-import { IPrimitiveProperties } from "./LoggingActivity";
+import type { IPrimitiveProperties } from "./LoggingActivity";
 
 export class TelemetryLogger {
   private consoleLogger: ConsoleLogger;

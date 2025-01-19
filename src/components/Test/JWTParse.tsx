@@ -1,4 +1,5 @@
-import { IStackTokens, Stack, TextField } from "@fluentui/react";
+import type { IStackTokens } from "@fluentui/react";
+import { Stack, TextField } from "@fluentui/react";
 import jwt_decode from "jwt-decode";
 import * as React from "react";
 

@@ -1,4 +1,5 @@
-import { IStackTokens, Stack, TextField } from "@fluentui/react";
+import type { IStackTokens } from "@fluentui/react";
+import { Stack, TextField } from "@fluentui/react";
 import * as React from "react";
 import { ExifParserFactory } from "ts-exif-parser";
 

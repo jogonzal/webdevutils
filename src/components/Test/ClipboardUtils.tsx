@@ -1,4 +1,5 @@
-import { IStackTokens, PrimaryButton, Stack, TextField } from "@fluentui/react";
+import type { IStackTokens } from "@fluentui/react";
+import { PrimaryButton, Stack, TextField } from "@fluentui/react";
 import * as React from "react";
 
 type Props = {};
