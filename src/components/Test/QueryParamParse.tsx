@@ -13,7 +13,7 @@ export const QueryParamParse: React.FC = () => {
 
   const onInputTextChanged = (
     _ev?: React.FormEvent<HTMLTextAreaElement | HTMLInputElement>,
-    val?: string
+    val?: string,
   ) => {
     setEncodeInput(val ?? "");
   };
@@ -29,7 +29,7 @@ export const QueryParamParse: React.FC = () => {
             label={queryParamKey}
             readOnly={true}
             value={queryParamValue ?? ""}
-          />
+          />,
         );
       });
 

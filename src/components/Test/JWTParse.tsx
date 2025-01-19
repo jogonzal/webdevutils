@@ -22,7 +22,7 @@ export const JWTParse: React.FC = () => {
 
   const onInputTextChanged = (
     _ev?: React.FormEvent<HTMLTextAreaElement | HTMLInputElement>,
-    val?: string
+    val?: string,
   ) => {
     setEncodeInput(val ?? "");
   };

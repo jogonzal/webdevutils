@@ -11,7 +11,7 @@ const childrenTokens: IStackTokens = {
 
 export const AnalyzeImage: React.FC = () => {
   const [selectedFile, setSelectedFile] = React.useState<File | undefined>(
-    undefined
+    undefined,
   );
   const [parseResult, setParseResult] = React.useState<string>("");
 

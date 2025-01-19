@@ -39,7 +39,7 @@ export const PrettyJsonXml: React.FC = () => {
 
   const onInputTextChanged = (
     _ev?: React.FormEvent<HTMLTextAreaElement | HTMLInputElement>,
-    val?: string
+    val?: string,
   ) => {
     setInput(val ?? "");
   };

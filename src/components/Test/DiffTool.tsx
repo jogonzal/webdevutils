@@ -13,14 +13,14 @@ export const DiffTool: React.FC = () => {
 
   const onInput1TextChanged = (
     _ev?: React.FormEvent<HTMLTextAreaElement | HTMLInputElement>,
-    val?: string
+    val?: string,
   ) => {
     setInput1(val ?? "");
   };
 
   const onInput2TextChanged = (
     _ev?: React.FormEvent<HTMLTextAreaElement | HTMLInputElement>,
-    val?: string
+    val?: string,
   ) => {
     setInput2(val ?? "");
   };

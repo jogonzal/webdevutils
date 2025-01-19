@@ -11,7 +11,7 @@ const childrenTokens: IStackTokens = {
 
 export const CSPParse: React.FC = () => {
   const [encodeInput, setEncodeInput] = React.useState(
-    "base-uri 'none'; connect-src 'self' https://api.stripe.com https://files.stripe.com https://errors.stripe.com https://r.stripe.com; default-src 'none'; form-action 'none'; img-src 'self' https://q.stripe.com https://t.stripe.com; script-src 'self'; style-src 'self'; report-uri https://q.stripe.com/csp-report"
+    "base-uri 'none'; connect-src 'self' https://api.stripe.com https://files.stripe.com https://errors.stripe.com https://r.stripe.com; default-src 'none'; form-action 'none'; img-src 'self' https://q.stripe.com https://t.stripe.com; script-src 'self'; style-src 'self'; report-uri https://q.stripe.com/csp-report",
   );
 
   const getEncodingResult = () => {
@@ -25,7 +25,7 @@ export const CSPParse: React.FC = () => {
 
   const onInputTextChanged = (
     _ev?: React.FormEvent<HTMLTextAreaElement | HTMLInputElement>,
-    val?: string
+    val?: string,
   ) => {
     setEncodeInput(val ?? "");
   };

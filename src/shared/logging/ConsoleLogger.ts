@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import { IPrimitiveProperties } from "./LoggingActivity";
 
 export class ConsoleLogger {
@@ -24,7 +23,7 @@ export class ConsoleLogger {
     const message = (payload ? payload.Message : "") ?? "";
     console.info(
       `[${this.namespace}] [${eventName}] ${message}`,
-      payload ?? ""
+      payload ?? "",
     );
   }
 }

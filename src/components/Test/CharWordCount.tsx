@@ -27,7 +27,7 @@ export const CharWordCount: React.FC = () => {
 
   const onInputTextChanged = (
     _ev?: React.FormEvent<HTMLTextAreaElement | HTMLInputElement>,
-    val?: string
+    val?: string,
   ) => {
     setInput(val ?? "");
   };

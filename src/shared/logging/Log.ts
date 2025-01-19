@@ -29,7 +29,7 @@ export class TelemetryLogger {
 
 export class Log {
   private static telemetryLogger: TelemetryLogger = new TelemetryLogger(
-    "WebDevUtils"
+    "WebDevUtils",
   );
 
   static get logger(): TelemetryLogger {

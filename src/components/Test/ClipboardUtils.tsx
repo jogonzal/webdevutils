@@ -43,14 +43,14 @@ export const ClipboardUtils: React.FC<Props> = () => {
 
     if (pastedContentTypes.includes(ClipboardOption.html)) {
       newMetadata.html = clipboardEvent.clipboardData.getData(
-        ClipboardOption.html
+        ClipboardOption.html,
       );
       newMetadata.text = clipboardEvent.clipboardData.getData(
-        ClipboardOption.plainText
+        ClipboardOption.plainText,
       );
     } else if (pastedContentTypes.includes(ClipboardOption.plainText)) {
       newMetadata.text = clipboardEvent.clipboardData.getData(
-        ClipboardOption.plainText
+        ClipboardOption.plainText,
       );
     }
 

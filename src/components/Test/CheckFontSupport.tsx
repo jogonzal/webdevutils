@@ -51,7 +51,7 @@ export const CheckFontSupport: React.FC = () => {
       const mostPreferredFontFamily = cleanFontFamily(listOfFontFamilies[0]);
 
       const isMostPreferredSupported = checkIsFontSupported(
-        mostPreferredFontFamily
+        mostPreferredFontFamily,
       );
       if (isMostPreferredSupported.message === "true") {
         isMostPreferredSupported.message = `great - preferred font (${mostPreferredFontFamily})`;
@@ -79,7 +79,7 @@ export const CheckFontSupport: React.FC = () => {
 
   const onInputTextChanged = (
     _ev?: React.FormEvent<HTMLTextAreaElement | HTMLInputElement>,
-    val?: string
+    val?: string,
   ) => {
     setInput(val ?? "");
   };

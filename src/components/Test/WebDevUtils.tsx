@@ -33,7 +33,7 @@ const childrenTokens: IStackTokens = {
 export const WebDevUtils: React.FC = () => {
   const router = useRouter();
   const slug = router.query.slug as string;
-  let currentTab = slug ?? "base64";
+  const currentTab = slug ?? "base64";
 
   return (
     <Stack tokens={childrenTokens}>

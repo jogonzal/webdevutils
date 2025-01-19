@@ -31,14 +31,14 @@ export const EncodeDecodeUI: React.FC<Props> = (props: Props) => {
 
   const onEncodeOrDecodeToggle = (
     _ev?: React.MouseEvent<HTMLElement, MouseEvent>,
-    val?: boolean
+    val?: boolean,
   ) => {
     setEncodeToggle(val ?? false);
   };
 
   const onInputTextChanged = (
     _ev?: React.FormEvent<HTMLTextAreaElement | HTMLInputElement>,
-    val?: string
+    val?: string,
   ) => {
     setEncodeInput(val ?? "");
   };
