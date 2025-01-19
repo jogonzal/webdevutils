@@ -35,7 +35,7 @@ const darkTheme = createTheme({
     white: "#222222",
   },
 });
-export const lightTheme = createTheme({
+const lightTheme = createTheme({
   palette: {
     themePrimary: "#0078d4",
     themeLighterAlt: "#eff6fc",
