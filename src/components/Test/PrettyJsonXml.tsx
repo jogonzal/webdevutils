@@ -1,4 +1,5 @@
-import { IStackTokens, Stack, TextField } from "@fluentui/react";
+import type { IStackTokens } from "@fluentui/react";
+import { Stack, TextField } from "@fluentui/react";
 import { j2xParser, parse } from "fast-xml-parser";
 import * as React from "react";
 

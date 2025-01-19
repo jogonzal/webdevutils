@@ -1,6 +1,6 @@
+import type { ITheme } from "@fluentui/react";
 import {
   initializeIcons,
-  ITheme,
   registerOnThemeChangeCallback,
 } from "@fluentui/react";
 

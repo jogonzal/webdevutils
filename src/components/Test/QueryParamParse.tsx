@@ -1,4 +1,5 @@
-import { IStackTokens, Separator, Stack, TextField } from "@fluentui/react";
+import type { IStackTokens } from "@fluentui/react";
+import { Separator, Stack, TextField } from "@fluentui/react";
 import * as React from "react";
 
 import { getErrorAsString } from "../../shared/logging/getErrorAsString";

@@ -1,4 +1,4 @@
-import { IPrimitiveProperties } from "./LoggingActivity";
+import type { IPrimitiveProperties } from "./LoggingActivity";
 
 export class ConsoleLogger {
   private namespace: string;
