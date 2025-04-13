@@ -14,13 +14,13 @@ const compat = new FlatCompat({
   allConfig: js.configs.all,
 });
 
-export default [
+const settings = [
   ...compat.extends(
     "next/core-web-vitals",
     "eslint:recommended",
     "plugin:@typescript-eslint/eslint-recommended",
     "plugin:@typescript-eslint/recommended",
-    "prettier",
+    "prettier"
   ),
   {
     plugins: {
@@ -44,3 +44,5 @@ export default [
     },
   },
 ];
+
+export default settings;
