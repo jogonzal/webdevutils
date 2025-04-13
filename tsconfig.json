@@ -9,6 +9,7 @@
     "isolatedModules": true,
     "strict": true,
     "jsx": "preserve",
-    "incremental": true
+    "incremental": true,
+    "verbatimModuleSyntax": true
   }
 }
