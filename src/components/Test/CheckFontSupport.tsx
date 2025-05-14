@@ -92,7 +92,7 @@ export const CheckFontSupport: React.FC = () => {
       // Query for all available fonts and log metadata.
       try {
         if (!("queryLocalFonts" in window)) {
-          return "queryLocalFonts not supported";
+          setSupportedFonts("queryLocalFonts not supported");
         }
 
         const availableFonts = await (window as any).queryLocalFonts();
