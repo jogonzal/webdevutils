@@ -52,7 +52,7 @@ export const CheckFontSupport: React.FC = () => {
       const mostPreferredFontFamily = cleanFontFamily(listOfFontFamilies[0]);
 
       const isMostPreferredSupported = checkIsFontSupported(
-        mostPreferredFontFamily,
+        mostPreferredFontFamily
       );
       if (isMostPreferredSupported.message === "true") {
         isMostPreferredSupported.message = `great - preferred font (${mostPreferredFontFamily})`;
@@ -80,13 +80,51 @@ export const CheckFontSupport: React.FC = () => {
 
   const onInputTextChanged = (
     _ev?: React.FormEvent<HTMLTextAreaElement | HTMLInputElement>,
-    val?: string,
+    val?: string
   ) => {
     setInput(val ?? "");
   };
 
+  const [supportedFonts, setSupportedFonts] = React.useState<string>("");
+  React.useEffect(() => {
+    const runAsync = async () => {
+      // Calculate all supported fonts in this browser
+      // Query for all available fonts and log metadata.
+      try {
+        if (!("queryLocalFonts" in window)) {
+          return "queryLocalFonts not supported";
+        }
+
+        const availableFonts = await (window as any).queryLocalFonts();
+        for (const fontData of availableFonts) {
+          console.log(fontData.postscriptName);
+          console.log(fontData.fullName);
+          console.log(fontData.family);
+          console.log(fontData.style);
+        }
+        setSupportedFonts(
+          availableFonts
+            .map((fontData: any) => {
+              return fontData.family;
+            })
+            .join("\n")
+        );
+      } catch (err) {
+        setSupportedFonts("Ran into an error!" + "\n" + (err as Error).message);
+      }
+    };
+    runAsync();
+  }, []);
+
   return (
     <Stack tokens={childrenTokens}>
+      <TextField
+        label="Supported fonts in this system are... (readonly)"
+        value={supportedFonts}
+        multiline={true}
+        rows={10}
+        readOnly={true}
+      />
       <TextField
         label="Enter font families separated by newline"
         onChange={onInputTextChanged}
