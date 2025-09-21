@@ -2,7 +2,6 @@
   "typescript.tsdk": "./node_modules/typescript/lib",
   "files.eol": "\n",
   "eslint.lintTask.enable": true,
-  "editor.formatOnSave": true,
   "editor.codeActionsOnSave": {
     "source.fixAll.eslint": "always"
   },
