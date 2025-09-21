@@ -1,0 +1,4 @@
+{
+  "entry": ["pages/index.tsx"],
+  "project": ["**/*.{js,ts,tsx}"]
+}
