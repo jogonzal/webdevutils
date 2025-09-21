@@ -33,14 +33,20 @@ const settings = [
     },
 
     rules: {
+      // Prettier rules
       "prettier/prettier": "error",
-      "@typescript-eslint/no-empty-interface": "off",
-      "@typescript-eslint/ban-types": "off",
-      "@typescript-eslint/no-unused-vars": "off",
-      "@typescript-eslint/no-explicit-any": "off",
-      "@typescript-eslint/no-empty-function": "off",
-      "@typescript-eslint/no-empty-object-type": "off",
-      "@typescript-eslint/consistent-type-imports": "error",
+
+      // TypeScript rules
+      "@typescript-eslint/no-empty-interface": "off", // Allow empty interfaces
+      "@typescript-eslint/ban-types": "off", // Allow banned types for flexibility
+      "@typescript-eslint/no-unused-vars": [
+        "error",
+        { argsIgnorePattern: "^_*" },
+      ], // Ignore unused vars prefixed with _
+      "@typescript-eslint/no-explicit-any": "off", // Allow `any` for legacy code
+      "@typescript-eslint/no-empty-function": "off", // Allow empty functions
+      "@typescript-eslint/no-empty-object-type": "off", // Allow empty object types
+      "@typescript-eslint/consistent-type-imports": "error", // Enforce consistent type imports
     },
   },
 ];

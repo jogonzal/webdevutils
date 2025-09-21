@@ -32,6 +32,7 @@ export const PrettyJsonXml: React.FC = () => {
           throw new Error("parsing error");
         }
         return xml;
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
       } catch (error2: unknown) {
         return getErrorAsString(error);
       }
